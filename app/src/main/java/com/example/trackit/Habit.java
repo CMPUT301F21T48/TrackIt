@@ -1,4 +1,4 @@
-package com.example.trackit.ui;
+package com.example.trackit;
 
 import java.lang.*;
 import java.util.*;
