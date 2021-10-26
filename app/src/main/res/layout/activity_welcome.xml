@@ -41,21 +41,23 @@
             android:id="@+id/login_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="32dp"
             android:layout_marginTop="32dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="32dp"
             android:layout_marginBottom="4dp"
-            android:text="LOGIN" />
+            android:text="LOGIN"
+            android:onClick="goToLogin"/>
 
         <Button
             android:id="@+id/register_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="32dp"
             android:layout_marginTop="4dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="32dp"
             android:layout_marginBottom="32dp"
-            android:text="REGISTER" />
+            android:text="REGISTER"
+            android:onClick="goToRegister"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
