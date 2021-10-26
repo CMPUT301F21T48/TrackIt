@@ -45,7 +45,7 @@
             android:layout_marginTop="32dp"
             android:layout_marginEnd="32dp"
             android:layout_marginBottom="4dp"
-            android:text="LOGIN"
+            android:text="@string/button_login"
             android:onClick="goToLogin"/>
 
         <Button
@@ -56,7 +56,7 @@
             android:layout_marginTop="4dp"
             android:layout_marginEnd="32dp"
             android:layout_marginBottom="32dp"
-            android:text="REGISTER"
+            android:text="@string/button_register"
             android:onClick="goToRegister"/>
     </LinearLayout>
 

@@ -24,5 +24,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
     public void goToRegister(View view) {
         // add Intent here
+        Intent intent = new Intent(this, RegisterActivity.class);
+        startActivity(intent);
     }
 }
