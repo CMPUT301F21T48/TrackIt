@@ -3,6 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/akars/Desktop/Studies/UNI/CMPUT_301/TrackIt/app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.2703125" />
+        <entry key="..\:/Users/akars/Desktop/Studies/UNI/CMPUT_301/TrackIt/app/src/main/res/layout/activity_add_habit.xml" value="0.264" />
+        <entry key="..\:/Users/akars/Desktop/Studies/UNI/CMPUT_301/TrackIt/app/src/main/res/layout/activity_edit_habit.xml" value="0.264" />
+        <entry key="..\:/Users/akars/Desktop/Studies/UNI/CMPUT_301/TrackIt/app/src/main/res/layout/activity_main.xml" value="0.4" />
+        <entry key="..\:/Users/akars/Desktop/Studies/UNI/CMPUT_301/TrackIt/app/src/main/res/layout/activity_welcome.xml" value="0.4" />
+        <entry key="..\:/Users/akars/Desktop/Studies/UNI/CMPUT_301/TrackIt/app/src/main/res/layout/fragment_dashboard.xml" value="0.536" />
+        <entry key="..\:/Users/akars/Desktop/Studies/UNI/CMPUT_301/TrackIt/app/src/main/res/layout/main_screen.xml" value="0.6" />
         <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.14427083333333332" />
         <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.14427083333333332" />
         <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/drawable/ic_home_black_24dp.xml" value="0.14427083333333332" />
