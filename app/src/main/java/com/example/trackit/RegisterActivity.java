@@ -19,7 +19,7 @@ import java.util.HashMap;
 public class RegisterActivity extends AppCompatActivity {
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();;
-    final CollectionReference collectionReference = db.collection("Cities");
+    final CollectionReference collectionReference = db.collection("Users");
     EditText inputUsername;
     EditText inputPassword;
     Button registerButton;
