@@ -205,7 +205,8 @@
         app:layout_constraintBottom_toTopOf="@+id/button_cancel"
         android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
-        android:text="@string/button_add_habit"/>
+        android:text="@string/button_add_habit"
+        android:onClick="addHabit"/>
 
     <Button
         android:id="@+id/button_cancel"
@@ -220,6 +221,7 @@
         android:backgroundTint="@color/white"
         style="?android:attr/borderlessButtonStyle"
         android:text="@string/button_cancel"
-        android:textColor="@color/red"/>
+        android:textColor="@color/red"
+        android:onClick="cancelAddHabit"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
