@@ -11,18 +11,17 @@
         <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/drawable/login_button_white.xml" value="0.14375" />
         <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/layout-w1240dp/activity_login.xml" value="0.1606425702811245" />
         <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/layout-w936dp/activity_login.xml" value="0.1875" />
-        <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/layout/activity_add_habit.xml" value="0.2" />
+        <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/layout/activity_add_habit.xml" value="0.1" />
         <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/layout/activity_main.xml" value="0.2359375" />
         <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/layout/activity_register.xml" value="0.264" />
-        <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/layout/activity_welcome.xml" value="0.4" />
+        <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/layout/activity_todays_habit.xml" value="0.1" />
+        <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/layout/activity_todays_habits.xml" value="0.16" />
+        <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/layout/activity_welcome.xml" value="0.152" />
         <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/layout/fragment_dashboard.xml" value="0.25" />
         <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/layout/fragment_home.xml" value="0.2359375" />
         <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/layout/fragment_notifications.xml" value="0.25" />
         <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/menu/bottom_nav_menu.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/activity_edit_habit.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_register.xml" value="0.10677083333333333" />
-        <entry key="app/src/main/res/layout/activity_todays_habit.xml" value="0.22327898550724637" />
       </map>
     </option>
   </component>
