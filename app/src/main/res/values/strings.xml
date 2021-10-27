@@ -17,10 +17,12 @@
     <string name="button_register">Register</string>
     <string name="button_add_habit">Add Habit</string>
     <string name="button_cancel">Cancel</string>
+    <string name="button_edit_habit">Edit Habit</string>
 
     <!-- Title bar strings -->
     <string name="title_register">Register</string>
     <string name="title_add_habit">Add Habit</string>
+    <string name="title_edit_habit">Edit Habit</string>
 
     <!-- EditText hints -->
     <string name="add_title_hint">(max. 20 characters)</string>

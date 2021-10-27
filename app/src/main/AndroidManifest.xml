@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TrackIt">
         <activity
+            android:name=".EditHabitActivity"
+            android:exported="true" />
+        <activity
             android:name=".AddHabitActivity"
             android:exported="true">
             <intent-filter>
@@ -20,12 +23,10 @@
         </activity>
         <activity
             android:name=".RegisterActivity"
-            android:exported="false">
-        </activity>
+            android:exported="false"></activity>
         <activity
             android:name=".WelcomeActivity"
-            android:exported="false">
-        </activity>
+            android:exported="false"></activity>
     </application>
 
 </manifest>
