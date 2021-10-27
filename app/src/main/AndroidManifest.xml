@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TrackIt">
         <activity
-            android:name=".TodaysHabitActivity"
+            android:name=".TodaysHabitsActivity"
             android:exported="true" />
         <activity
             android:name=".EditHabitActivity"

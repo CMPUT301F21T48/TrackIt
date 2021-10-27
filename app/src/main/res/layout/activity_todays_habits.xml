@@ -5,7 +5,7 @@
     android:id="@+id/edit_button"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TodaysHabitActivity">
+    tools:context=".TodaysHabitsActivity">
 
     <Button
         android:id="@+id/button"
@@ -23,7 +23,7 @@
     <Button
         android:id="@+id/add_button"
         android:layout_width="191dp"
-        android:layout_height="41dp"
+        android:layout_height="48dp"
         android:layout_marginTop="552dp"
         android:text="Temp Add button"
         app:layout_constraintEnd_toEndOf="parent"
