@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">TrackIt</string>
+    <string name="subtitle">Form and track all your habits</string>
 
     <!-- UI strings -->
     <string name="register_username">Create a unique username:</string>
@@ -24,5 +25,14 @@
     <!-- EditText hints -->
     <string name="add_title_hint">(max. 20 characters)</string>
     <string name="add_reason_hint">(max. 30 characters)</string>
+
+    <!-- Checkbox labels -->
+    <string name="checkbox_monday">M</string>
+    <string name="checkbox_tuesday">T</string>
+    <string name="checkbox_wednesday">W</string>
+    <string name="checkbox_thursday">R</string>
+    <string name="checkbox_friday">F</string>
+    <string name="checkbox_saturday">S</string>
+    <string name="checkbox_sunday">S</string>
 
 </resources>

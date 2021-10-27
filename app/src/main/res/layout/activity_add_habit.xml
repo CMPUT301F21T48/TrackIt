@@ -45,7 +45,8 @@
         app:layout_constraintTop_toBottomOf="@+id/add_title_text"
         android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
-        tools:ignore="SpeakableTextPresentCheck" />
+        tools:ignore="SpeakableTextPresentCheck"
+        android:importantForAutofill="no" />
 
     <TextView
         android:id="@+id/add_reason_text"
@@ -72,7 +73,8 @@
         app:layout_constraintTop_toBottomOf="@+id/add_reason_text"
         android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
-        tools:ignore="SpeakableTextPresentCheck" />
+        tools:ignore="SpeakableTextPresentCheck"
+        android:importantForAutofill="no" />
 
     <LinearLayout
         android:id="@+id/add_start_date_layout"
@@ -159,37 +161,37 @@
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="M"
+            android:text="@string/checkbox_monday"
             android:layout_weight="1"/>
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="T"
+            android:text="@string/checkbox_tuesday"
             android:layout_weight="1"/>
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="W"
+            android:text="@string/checkbox_wednesday"
             android:layout_weight="1"/>
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="R"
+            android:text="@string/checkbox_thursday"
             android:layout_weight="1"/>
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="F"
+            android:text="@string/checkbox_friday"
             android:layout_weight="1"/>
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="S"
+            android:text="@string/checkbox_saturday"
             android:layout_weight="1"/>
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="S"
+            android:text="@string/checkbox_sunday"
             android:layout_weight="1"/>
     </LinearLayout>
 
