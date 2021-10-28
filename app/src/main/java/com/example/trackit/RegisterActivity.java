@@ -3,6 +3,7 @@ package com.example.trackit;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -42,7 +43,7 @@ public class RegisterActivity extends AppCompatActivity {
             // Ensure we have a unique name
             if(names.contains(registerUsername)){
                 inputUsername.requestFocus();
-                inputUsername.setError("Name is not unique");
+                inputUsername.setError("Username is not unique");
             }
 
             // Add data to file
@@ -57,19 +58,23 @@ public class RegisterActivity extends AppCompatActivity {
 
                 inputUsername.setText("");
                 inputPassword.setText("");
+                Intent intent = new Intent(this, TodaysHabitsActivity.class);
+                intent.putExtra("Username", registerUsername);
+                intent.putExtra("Password", registerPassword);
+                startActivity(intent);
             }
         }
 
         // Ensure name is not ""
         else if (registerUsername.length()==0){
             inputUsername.requestFocus();
-            inputUsername.setError("Name cannot be null");
+            inputUsername.setError(getString(R.string.error_username_empty));
         }
 
         // Ensure password is not ""
         else{
             inputPassword.requestFocus();
-            inputPassword.setError("Password cannot be null");
+            inputPassword.setError("Password field cannot be empty");
         }
     }
 

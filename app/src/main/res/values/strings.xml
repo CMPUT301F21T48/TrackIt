@@ -36,5 +36,6 @@
     <string name="checkbox_friday">F</string>
     <string name="checkbox_saturday">S</string>
     <string name="checkbox_sunday">S</string>
+    <string name="error_username_empty">Username field cannot be empty</string>
 
 </resources>
