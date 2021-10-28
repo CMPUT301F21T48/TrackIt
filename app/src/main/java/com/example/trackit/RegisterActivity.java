@@ -19,15 +19,42 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+import java.util.concurrent.CountDownLatch;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    FirebaseFirestore db = FirebaseFirestore.getInstance();;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
     final CollectionReference collectionReference = db.collection("Users");
     EditText inputUsername;
     EditText inputPassword;
     Button registerButton;
     final String TAG = "Sample";
+
+    private void verifyInput(String registerUsername, String registerPassword, Set<String> names){
+
+        HashMap<String, String> data = new HashMap<>();
+        if (registerUsername.length()>0 && registerPassword.length()>0) {
+            if(names.contains(registerUsername)){
+                inputUsername.requestFocus();
+                inputUsername.setError("Name is not unique");
+            }
+            else {
+                data.put("Password", registerPassword);
+
+                collectionReference
+                        .document(registerUsername)
+                        .set(data)
+                        .addOnSuccessListener(unused -> Log.d(TAG, "Data has been added successfully!"))
+                        .addOnFailureListener(e -> Log.d(TAG, "Data could not be added!" + e.toString()));
+
+                inputUsername.setText("");
+                inputPassword.setText("");
+            }
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,54 +64,32 @@ public class RegisterActivity extends AppCompatActivity {
         inputUsername = findViewById(R.id.register_username);
         inputPassword = findViewById(R.id.register_password);
         registerButton = findViewById(R.id.register);
-        boolean[] isUnique = {true};
 
-        registerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final String registerUsername = inputUsername.getText().toString();
-                final String registerPassword = inputPassword.getText().toString();
+        registerButton.setOnClickListener(view -> {
+            final String registerUsername = inputUsername.getText().toString();
+            final String registerPassword = inputPassword.getText().toString();
+            Set<String> names = new HashSet<>();
 
-//  TODO: check if username is unique
-//                collectionReference
-//                        .get()
-//                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//                            @Override
-//                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                                if (task.isSuccessful()) {
-//                                    for (QueryDocumentSnapshot document : task.getResult()) {
-//                                        Log.d(TAG, document.getId() + " => " + document.getData());
-//                                    }
-//                                } else {
-//                                    Log.d(TAG, "Error getting documents: ", task.getException());
-//                                }
-//                            }
-//                        });
 
-                HashMap<String, String> data = new HashMap<>();
-                if (registerUsername.length()>0 && registerPassword.length()>0) {
-                    data.put("Password", registerPassword);
+            collectionReference
+                    .get()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                                names.add(document.getId());
+                            }
+                            verifyInput(registerUsername, registerPassword, names);
 
-                    collectionReference
-                            .document(registerUsername)
-                            .set(data)
-                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void unused) {
-                                    Log.d(TAG, "Data has been added successfully!");
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Log.d(TAG, "Data could not be added!" + e.toString());
-                                }
-                            });
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    });
 
-                    inputUsername.setText("");
-                    inputPassword.setText("");
-                }
-            }
+
+
+
+
         });
     }
 }
