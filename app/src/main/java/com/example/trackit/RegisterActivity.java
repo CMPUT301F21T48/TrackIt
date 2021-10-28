@@ -36,11 +36,16 @@ public class RegisterActivity extends AppCompatActivity {
     private void verifyInput(String registerUsername, String registerPassword, Set<String> names){
 
         HashMap<String, String> data = new HashMap<>();
+
         if (registerUsername.length()>0 && registerPassword.length()>0) {
+
+            // Ensure we have a unique name
             if(names.contains(registerUsername)){
                 inputUsername.requestFocus();
                 inputUsername.setError("Name is not unique");
             }
+
+            // Add data to file
             else {
                 data.put("Password", registerPassword);
 
@@ -53,6 +58,18 @@ public class RegisterActivity extends AppCompatActivity {
                 inputUsername.setText("");
                 inputPassword.setText("");
             }
+        }
+
+        // Ensure name is not ""
+        else if (registerUsername.length()==0){
+            inputUsername.requestFocus();
+            inputUsername.setError("Name cannot be null");
+        }
+
+        // Ensure password is not ""
+        else{
+            inputPassword.requestFocus();
+            inputPassword.setError("Password cannot be null");
         }
     }
 
@@ -85,11 +102,6 @@ public class RegisterActivity extends AppCompatActivity {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                     });
-
-
-
-
-
         });
     }
 }
