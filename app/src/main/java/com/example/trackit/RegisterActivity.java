@@ -9,10 +9,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
 
@@ -33,12 +37,29 @@ public class RegisterActivity extends AppCompatActivity {
         inputUsername = findViewById(R.id.register_username);
         inputPassword = findViewById(R.id.register_password);
         registerButton = findViewById(R.id.register);
+        boolean[] isUnique = {true};
 
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final String registerUsername = inputUsername.getText().toString();
                 final String registerPassword = inputPassword.getText().toString();
+
+//  TODO: check if username is unique
+//                collectionReference
+//                        .get()
+//                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                            @Override
+//                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                                if (task.isSuccessful()) {
+//                                    for (QueryDocumentSnapshot document : task.getResult()) {
+//                                        Log.d(TAG, document.getId() + " => " + document.getData());
+//                                    }
+//                                } else {
+//                                    Log.d(TAG, "Error getting documents: ", task.getException());
+//                                }
+//                            }
+//                        });
 
                 HashMap<String, String> data = new HashMap<>();
                 if (registerUsername.length()>0 && registerPassword.length()>0) {
