@@ -32,10 +32,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <fragment
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
         tools:layout="@layout/navigation_bar"
-        class="com.example.trackit.NavigationFragment"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        class="com.example.trackit.NavigationFragment" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
