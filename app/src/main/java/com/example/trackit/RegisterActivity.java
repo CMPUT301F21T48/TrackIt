@@ -60,7 +60,6 @@ public class RegisterActivity extends AppCompatActivity {
                 inputPassword.setText("");
                 Intent intent = new Intent(this, TodaysHabitsActivity.class);
                 intent.putExtra("Username", registerUsername);
-                intent.putExtra("Password", registerPassword);
                 startActivity(intent);
             }
         }
