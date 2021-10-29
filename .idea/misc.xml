@@ -7,9 +7,6 @@
         <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.14427083333333332" />
         <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/drawable/ic_home_black_24dp.xml" value="0.14427083333333332" />
         <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/drawable/ic_launcher_background.xml" value="0.14427083333333332" />
-        <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/drawable/ic_menu_camera.xml" value="0.10460526315789474" />
-        <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/drawable/ic_menu_gallery.xml" value="0.10460526315789474" />
-        <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/drawable/ic_menu_slideshow.xml" value="0.10460526315789474" />
         <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/drawable/ic_notifications_black_24dp.xml" value="0.14427083333333332" />
         <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/drawable/login_button_white.xml" value="0.14375" />
         <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/layout-w1240dp/activity_login.xml" value="0.1606425702811245" />
@@ -19,20 +16,13 @@
         <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/layout/activity_main.xml" value="0.2359375" />
         <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/layout/activity_register.xml" value="0.264" />
-        <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/layout/activity_search.xml" value="0.1" />
         <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/layout/activity_todays_habit.xml" value="0.1" />
-        <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/layout/activity_todays_habits.xml" value="0.128" />
+        <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/layout/activity_todays_habits.xml" value="0.16" />
         <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/layout/activity_welcome.xml" value="0.152" />
-        <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/layout/content.xml" value="0.22894736842105262" />
-        <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/layout/content_main.xml" value="0.15789473684210525" />
         <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/layout/fragment_dashboard.xml" value="0.25" />
-        <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/layout/fragment_first.xml" value="0.15789473684210525" />
         <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/layout/fragment_home.xml" value="0.2359375" />
-        <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/layout/fragment_navigation.xml" value="0.136" />
         <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/layout/fragment_notifications.xml" value="0.25" />
-        <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/layout/navigation_bar.xml" value="0.264" />
         <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/menu/bottom_nav_menu.xml" value="0.25" />
-        <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/navigation/fragment_navigation.xml" value="0.15789473684210525" />
       </map>
     </option>
   </component>

@@ -1,7 +1,11 @@
 package com.example.trackit;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -9,11 +13,13 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class AddHabitActivity extends AppCompatActivity {
 
@@ -33,12 +39,14 @@ public class AddHabitActivity extends AppCompatActivity {
     CheckBox repeatSunday;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    final CollectionReference collectionReference = db.collection("Users");
+    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_habit);
-        Intent intent = getIntent();
+        user = (User) getIntent().getSerializableExtra("User");
 
         selectedDate = findViewById(R.id.add_start_date_text);
         datePicker = findViewById(R.id.select_start_date);
@@ -61,13 +69,19 @@ public class AddHabitActivity extends AppCompatActivity {
     }
 
     public void addHabit(View view) {
-        // Add habit to database and user profile
         String habitTitle = addHabitTitle.getText().toString();
         String habitReason = addHabitReason.getText().toString();
         String habitStartDate = addStartDate;
-        ArrayList<String> habitRepeatDays = new ArrayList<>();
+        ArrayList<String> repeatDays = new ArrayList<>();
 
-        Habit habit = new Habit(habitTitle, habitReason, habitStartDate, habitRepeatDays);
+        Habit habit = new Habit(habitTitle, habitReason, habitStartDate, repeatDays);
+
+        String id = collectionReference.document(user.getUsername()).collection("Habits").document().getId();
+
+        habit.setHabitID(id);
+
+        collectionReference.document(user.getUsername()).collection("Habits").document(id).set(habit);
+
     }
 
     public void cancelAddHabit(View view) {

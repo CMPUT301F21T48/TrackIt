@@ -1,9 +1,10 @@
 package com.example.trackit;
 
+import java.io.Serializable;
 import java.lang.*;
 import java.util.*;
 
-public class Habit {
+public class Habit implements Serializable {
     private String title;
     private String reason;
     private String startDate;
@@ -11,6 +12,7 @@ public class Habit {
     private int progress;
     private int numDone;
     private int numNotDone;
+    private String ID;
 
     public Habit(String title, String reason, String startDate, ArrayList<String> repeatDays)
     {
@@ -18,6 +20,7 @@ public class Habit {
         this.reason = reason;
         this.startDate = startDate;
         this.repeatDays = repeatDays;
+        this.ID = null;
     }
 
     //getters and setters for the variables
@@ -25,6 +28,9 @@ public class Habit {
     public void aetReason() { this.reason = reason;}
     public void setStartDate(String startDate) { this.startDate = startDate; }
     public void setRepeatDays(ArrayList<String> repeatDays) { this.repeatDays = repeatDays; }
+    public void setHabitID(String id) {
+        this.ID = id;
+    }
 
     public void setProgress(int progress) { this.progress = progress; }
 
@@ -33,6 +39,9 @@ public class Habit {
     public String getStartDate() { return startDate; }
     public ArrayList<String> getRepeatDays() { return repeatDays; }
     public int getProgress() { return progress; }
+    public String getHabitID() {
+        return ID;
+    }
 
     /**
      *  Returns the progress towards habit

@@ -2,6 +2,7 @@ package com.example.trackit;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,6 +13,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -50,8 +52,7 @@ public class RegisterActivity extends AppCompatActivity {
                 inputUsername.setText("");
                 inputPassword.setText("");
                 Intent intent = new Intent(this, TodaysHabitsActivity.class);
-                intent.putExtra("Username", user.getUsername());
-                intent.putExtra("Password", user.getPassword());
+                intent.putExtra("User", (Serializable) user);
                 startActivity(intent);
             }
         }
@@ -82,7 +83,6 @@ public class RegisterActivity extends AppCompatActivity {
             final String registerUsername = inputUsername.getText().toString();
             final String registerPassword = inputPassword.getText().toString();
             Set<String> names = new HashSet<>();
-
 
             collectionReference
                     .get()

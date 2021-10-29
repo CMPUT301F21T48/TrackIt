@@ -1,11 +1,12 @@
 package com.example.trackit;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
 
-public class User {
+public class User implements Serializable {
     private String username;
     private String password;
     List<Habit> userHabits;
