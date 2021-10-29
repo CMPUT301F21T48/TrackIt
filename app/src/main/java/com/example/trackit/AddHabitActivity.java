@@ -1,11 +1,6 @@
 package com.example.trackit;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -13,13 +8,12 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class AddHabitActivity extends AppCompatActivity {
 
@@ -37,6 +31,8 @@ public class AddHabitActivity extends AppCompatActivity {
     CheckBox repeatFriday;
     CheckBox repeatSaturday;
     CheckBox repeatSunday;
+    ArrayList<CheckBox> checkBoxes;
+    final String TAG = "Sample";
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     final CollectionReference collectionReference = db.collection("Users");
@@ -54,6 +50,13 @@ public class AddHabitActivity extends AppCompatActivity {
         cancelButton = findViewById(R.id.button_cancel);
         addHabitReason = findViewById(R.id.add_reason);
         addHabitTitle = findViewById(R.id.add_title);
+        repeatMonday = findViewById(R.id.checkbox_monday);
+        repeatTuesday = findViewById(R.id.checkbox_tuesday);
+        repeatWednesday = findViewById(R.id.checkbox_wednesday);
+        repeatThursday = findViewById(R.id.checkbox_thursday);
+        repeatFriday = findViewById(R.id.checkbox_friday);
+        repeatSaturday = findViewById(R.id.checkbox_saturday);
+        repeatSunday = findViewById(R.id.checkbox_sunday);
     }
 
     public void selectDate(View view) {
@@ -74,6 +77,28 @@ public class AddHabitActivity extends AppCompatActivity {
         String habitStartDate = addStartDate;
         ArrayList<String> repeatDays = new ArrayList<>();
 
+        if (repeatMonday.isChecked()){
+            repeatDays.add("M");
+        }
+        if (repeatTuesday.isChecked()){
+            repeatDays.add("T");
+        }
+        if (repeatWednesday.isChecked()){
+            repeatDays.add("W");
+        }
+        if (repeatThursday.isChecked()){
+            repeatDays.add("R");
+        }
+        if (repeatFriday.isChecked()){
+            repeatDays.add("F");
+        }
+        if (repeatSaturday.isChecked()){
+            repeatDays.add("S");
+        }
+        if (repeatSunday.isChecked()){
+            repeatDays.add("S");
+        }
+
         Habit habit = new Habit(habitTitle, habitReason, habitStartDate, repeatDays);
 
         String id = collectionReference.document(user.getUsername()).collection("Habits").document().getId();
@@ -82,6 +107,7 @@ public class AddHabitActivity extends AppCompatActivity {
 
         collectionReference.document(user.getUsername()).collection("Habits").document(id).set(habit);
 
+        finish();
     }
 
     public void cancelAddHabit(View view) {
