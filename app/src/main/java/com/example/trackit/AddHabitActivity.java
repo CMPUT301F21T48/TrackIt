@@ -1,7 +1,5 @@
 package com.example.trackit;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,8 +9,11 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.ArrayList;
 
 public class AddHabitActivity extends AppCompatActivity {
 
@@ -37,14 +38,14 @@ public class AddHabitActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_habit);
+        Intent intent = getIntent();
+
         selectedDate = findViewById(R.id.add_start_date_text);
         datePicker = findViewById(R.id.select_start_date);
         addHabitButton = findViewById(R.id.button_add_habit);
         cancelButton = findViewById(R.id.button_cancel);
         addHabitReason = findViewById(R.id.add_reason);
         addHabitTitle = findViewById(R.id.add_title);
-
-        Intent intent = getIntent();
     }
 
     public void selectDate(View view) {
@@ -61,7 +62,12 @@ public class AddHabitActivity extends AppCompatActivity {
 
     public void addHabit(View view) {
         // Add habit to database and user profile
-        finish();
+        String habitTitle = addHabitTitle.getText().toString();
+        String habitReason = addHabitReason.getText().toString();
+        String habitStartDate = addStartDate;
+        ArrayList<String> habitRepeatDays = new ArrayList<>();
+
+        Habit habit = new Habit(habitTitle, habitReason, habitStartDate, habitRepeatDays);
     }
 
     public void cancelAddHabit(View view) {

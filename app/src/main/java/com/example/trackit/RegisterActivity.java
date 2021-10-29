@@ -1,29 +1,20 @@
 package com.example.trackit;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-import java.util.concurrent.CountDownLatch;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -32,11 +23,10 @@ public class RegisterActivity extends AppCompatActivity {
     EditText inputUsername;
     EditText inputPassword;
     Button registerButton;
+    User user = new User("","");
     final String TAG = "Sample";
 
     private void verifyInput(String registerUsername, String registerPassword, Set<String> names){
-
-        HashMap<String, String> data = new HashMap<>();
 
         if (registerUsername.length()>0 && registerPassword.length()>0) {
 
@@ -48,18 +38,20 @@ public class RegisterActivity extends AppCompatActivity {
 
             // Add data to file
             else {
-                data.put("Password", registerPassword);
+                user.setPassword(registerPassword);
+                user.setUsername(registerUsername);
 
                 collectionReference
                         .document(registerUsername)
-                        .set(data)
+                        .set(user)
                         .addOnSuccessListener(unused -> Log.d(TAG, "Data has been added successfully!"))
                         .addOnFailureListener(e -> Log.d(TAG, "Data could not be added!" + e.toString()));
 
                 inputUsername.setText("");
                 inputPassword.setText("");
                 Intent intent = new Intent(this, TodaysHabitsActivity.class);
-                intent.putExtra("Username", registerUsername);
+                intent.putExtra("Username", user.getUsername());
+                intent.putExtra("Password", user.getPassword());
                 startActivity(intent);
             }
         }
