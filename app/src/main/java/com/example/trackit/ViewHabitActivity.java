@@ -2,6 +2,7 @@ package com.example.trackit;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,6 +12,8 @@ import android.widget.TextView;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.io.Serializable;
+
 public class ViewHabitActivity extends AppCompatActivity {
 
 
@@ -18,6 +21,7 @@ public class ViewHabitActivity extends AppCompatActivity {
     CollectionReference collectionReference;
     User user;
     Habit habit;
+    Intent intent;
     TextView habitTitle;
     TextView habitReason;
     TextView startedDate;
@@ -42,13 +46,41 @@ public class ViewHabitActivity extends AppCompatActivity {
         habitReason.setText(habit.getReason());
         startedDate.setText(habit.getStartDate());
         String textRepeat = "";
+        String day;
         for (int i = 0; i < habit.getRepeatDays().size(); i++)
         {
-            if (i == 0)
-                textRepeat = habit.getRepeatDays().get(i);
+            day = habit.getRepeatDays().get(i);
+            if (day.equals("M"))
+                day = "Monday\n";
+            else if (day.equals("T"))
+                day = "Tuesday\n";
+            else if (day.equals("W"))
+                day = "Wednesday\n";
+            else if (day.equals("R"))
+                day = "Thursday\n";
+            else if (day.equals("F"))
+                day = "Friday\n";
+            else if (day.equals("S"))
+                day = "Saturday\n";
             else
-                textRepeat = textRepeat + " " + habit.getRepeatDays().get(i);
+                day = "Sunday\n";
+
+            textRepeat += day;
         }
         repeatDays.setText(textRepeat);
+    }
+
+    public void editHabit()
+    {
+        intent = new Intent(ViewHabitActivity.this, EditHabitActivity.class);
+        intent.putExtra("User", (Serializable) user);
+        intent.putExtra("Habit", (Serializable) habit);
+        startActivity(intent);
+        finish();
+    }
+
+    public void deleteHabit()
+    {
+        finish();
     }
 }

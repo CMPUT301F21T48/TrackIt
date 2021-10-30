@@ -41,8 +41,8 @@ public class EditHabitActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        user = (User) getIntent().getSerializableExtra("user");
-        habit = (Habit) getIntent().getSerializableExtra("habit");
+        user = (User) getIntent().getSerializableExtra("User");
+        habit = (Habit) getIntent().getSerializableExtra("Habit");
         setContentView(R.layout.activity_edit_habit);
         selectedDate = findViewById(R.id.add_start_date_text);
         datePicker = findViewById(R.id.select_start_date);
