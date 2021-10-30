@@ -52,10 +52,11 @@ public class CustomList extends ArrayAdapter<Habit> {
         habitProgress.setText("Progress: " + Math.round(habit.getProgress()) + "%");
 
         LinearLayout habitMenu = view.findViewById(R.id.habit_menu);
+        LinearLayout habitData = view.findViewById(R.id.habit_data);
         TextView viewDetails = view.findViewById(R.id.view_details);
 
         final boolean[] isClicked = {false};
-        view.setOnClickListener(new View.OnClickListener() {
+        habitData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!isClicked[0]) {
@@ -67,6 +68,19 @@ public class CustomList extends ArrayAdapter<Habit> {
                 }
             }
         });
+
+//        viewDetails.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (!isClicked[0]) {
+//                    habitMenu.setVisibility(View.VISIBLE);
+//                    isClicked[0] = true;
+//                } else {
+//                    habitMenu.setVisibility(View.GONE);
+//                    isClicked[0] = false;
+//                }
+//            }
+//        });
 
         return view;
     }
