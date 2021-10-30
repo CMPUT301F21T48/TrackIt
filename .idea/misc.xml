@@ -34,13 +34,9 @@
         <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/layout/navigation_bar.xml" value="0.264" />
         <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/menu/bottom_nav_menu.xml" value="0.25" />
         <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/navigation/fragment_navigation.xml" value="0.15789473684210525" />
-        <entry key="app/src/main/res/layout/activity_add_habit.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_edit_habit.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_register.xml" value="0.223731884057971" />
+        <entry key="app/src/main/res/layout/activity_add_habit.xml" value="0.1765625" />
+        <entry key="app/src/main/res/layout/activity_edit_habit.xml" value="0.2798913043478261" />
         <entry key="app/src/main/res/layout/activity_todays_habits.xml" value="0.2798913043478261" />
-        <entry key="app/src/main/res/layout/activity_view_habit.xml" value="0.26595744680851063" />
-        <entry key="app/src/main/res/layout/habit 2.xml" value="0.16770833333333332" />
-        <entry key="app/src/main/res/layout/habit.xml" value="0.3098958333333333" />
       </map>
     </option>
   </component>
