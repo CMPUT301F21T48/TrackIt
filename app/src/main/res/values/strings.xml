@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">TrackIt</string>
     <string name="subtitle">Form and track all your habits</string>
 
@@ -17,7 +17,7 @@
     <string name="habit_repeat_text">Repeat:</string>
 
     <!-- Button labels -->
-    <string name="button_sign_up">Sign Up</string>
+    <string name="button_sign_up" tools:ignore="ExtraTranslation">Sign Up</string>
     <string name="button_login">Login</string>
     <string name="button_register">Register</string>
     <string name="button_add_habit">Add Habit</string>

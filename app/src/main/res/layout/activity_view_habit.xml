@@ -11,15 +11,13 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="48dp"
         android:layout_marginEnd="32dp"
         android:backgroundTint="@android:color/tertiary_text_light"
         android:text="@string/button_event_habit"
         android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/button_edit_habit"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_repeat_days" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/title_bar"
@@ -182,12 +180,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
+        android:onClick="editHabit"
         android:text="@string/button_edit_habit"
+        app:layout_constraintBottom_toTopOf="@+id/button_delete_habit"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_view_events"
-        android:onClick="editHabit"/>
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/button_delete_habit"
@@ -195,13 +192,15 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
+        android:layout_marginBottom="16dp"
         android:backgroundTint="@color/background"
+        android:onClick="deleteHabit"
         android:text="@string/button_delete_habit"
         android:textColor="@color/red"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_edit_habit"
         app:rippleColor="@color/white"
-        android:onClick="deleteHabit"/>
+        style="?android:attr/borderlessButtonStyle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
