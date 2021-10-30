@@ -4,7 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EditHabitActivity">
+    tools:context=".ViewHabitActivity">
+
+    <Button
+        android:id="@+id/button_view_events"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="204dp"
+        android:layout_marginEnd="32dp"
+        android:backgroundTint="@android:color/tertiary_text_light"
+        android:text="@string/button_event_habit"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_repeat_days" />
 
     <TextView
         android:id="@+id/title_bar"
@@ -12,7 +27,7 @@
         android:layout_height="?actionBarSize"
         android:background="@color/status_bar"
         android:gravity="center_vertical|center_horizontal"
-        android:text="@string/title_edit_habit"
+        android:text="@string/title_view_habit"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -21,12 +36,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/add_title_text"
+        android:id="@+id/habit_title_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
-        android:text="@string/add_title_text"
+        android:text="@string/habit_title_text"
         android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,23 +53,24 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="text"
+        android:maxLength="20"
         android:minHeight="48dp"
-        app:layout_constraintEnd_toEndOf="parent"
         android:hint=" "
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_title_text"
+        app:layout_constraintTop_toBottomOf="@+id/habit_title_text"
         android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
         tools:ignore="SpeakableTextPresentCheck"
         android:importantForAutofill="no" />
 
     <TextView
-        android:id="@+id/add_reason_text"
+        android:id="@+id/habit_reason_text"
         android:layout_width="0dp"
-        android:text="@string/add_reason_text"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
+        android:text="@string/habit_reason_text"
         android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -66,15 +82,35 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="text"
+        android:maxLength="30"
         android:minHeight="48dp"
         android:hint=" "
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_reason_text"
+        app:layout_constraintTop_toBottomOf="@+id/habit_reason_text"
         android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
         tools:ignore="SpeakableTextPresentCheck"
         android:importantForAutofill="no" />
+
+    <EditText
+        android:id="@+id/add_repeat_days"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="32dp"
+        android:ems="10"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:maxLength="30"
+        android:minHeight="48dp"
+        android:hint=" "
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/habit_repeat_text"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <LinearLayout
         android:id="@+id/add_start_date_layout"
@@ -114,32 +150,11 @@
         android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
         android:orientation="horizontal">
-        <DatePicker
-            android:id="@+id/select_start_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="visible"
-            android:calendarViewShown="false"
-            android:datePickerMode="spinner" />
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/button_select_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="?android:attr/textCheckMark"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:onClick="selectDate" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 
     <TextView
-        android:id="@+id/add_repeat_text"
+        android:id="@+id/habit_repeat_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -149,86 +164,46 @@
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/select_date_layout" />
-    <LinearLayout
-        android:id="@+id/add_repeat_layout"
+
+    <TextView
+        android:id="@+id/add_repeat_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_repeat_text"
-        android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
-        android:orientation="horizontal">
-        <CheckBox
-            android:id="@+id/checkbox_monday"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/checkbox_monday"
-            android:layout_weight="1"/>
-        <CheckBox
-            android:id="@+id/checkbox_tuesday"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/checkbox_tuesday"
-            android:layout_weight="1"/>
-        <CheckBox
-            android:id="@+id/checkbox_wednesday"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/checkbox_wednesday"
-            android:layout_weight="1"/>
-        <CheckBox
-            android:id="@+id/checkbox_thursday"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/checkbox_thursday"
-            android:layout_weight="1"/>
-        <CheckBox
-            android:id="@+id/checkbox_friday"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/checkbox_friday"
-            android:layout_weight="1"/>
-        <CheckBox
-            android:id="@+id/checkbox_saturday"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/checkbox_saturday"
-            android:layout_weight="1"/>
-        <CheckBox
-            android:id="@+id/checkbox_sunday"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/checkbox_sunday"
-            android:layout_weight="1"/>
-    </LinearLayout>
+        android:layout_marginTop="16dp"
+
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/habit_repeat_text" />
 
     <Button
         android:id="@+id/button_edit_habit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/cancel_button"
-        android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
-        android:text="@string/button_save_habit"
-        android:onClick="saveChanges"/>
+        android:layout_marginEnd="32dp"
+        android:text="@string/button_edit_habit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_view_events" />
 
     <Button
-        android:id="@+id/cancel_button"
+        android:id="@+id/button_delete_habit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
-        android:layout_marginBottom="16dp"
-        android:backgroundTint="@color/white"
-        style="?android:attr/borderlessButtonStyle"
-        android:text="@string/button_cancel"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="32dp"
+        android:backgroundTint="@color/background"
+        android:text="@string/button_delete_habit"
         android:textColor="@color/red"
-        android:onClick="cancelAddHabit"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_TopOf="@+id/button_edit_habit"
+        app:layout_constraintTop_toBottomOf="@+id/button_edit_habit"
+        app:rippleColor="@color/white" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
