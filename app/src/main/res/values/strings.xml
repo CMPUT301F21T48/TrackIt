@@ -10,6 +10,7 @@
     <string name="add_start_date_text">Date started:</string>
     <string name="start_date_format">MM/DD/YYYY</string>
     <string name="add_repeat_text">Repeat:</string>
+    <string name="view_details">View habit details</string>
 
     <!-- Button labels -->
     <string name="button_sign_up">Sign Up</string>
