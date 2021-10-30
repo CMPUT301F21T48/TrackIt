@@ -2,13 +2,11 @@ package com.example.trackit;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +21,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class TodaysHabitsActivity extends AppCompatActivity {
 
@@ -30,6 +29,8 @@ public class TodaysHabitsActivity extends AppCompatActivity {
     ListView habitList;
     ArrayAdapter<Habit> habitAdapter;
     ArrayList<Habit> habitDataList;
+    Calendar calendar;
+    int day;
 
     CustomList customList;
     User user;
@@ -51,6 +52,8 @@ public class TodaysHabitsActivity extends AppCompatActivity {
         habitDataList = new ArrayList<>();
         habitAdapter = new CustomList(this, habitDataList);
         habitList.setAdapter(habitAdapter);
+        calendar = Calendar.getInstance();
+        day = calendar.get(Calendar.DAY_OF_WEEK);
 
         FloatingActionButton addButton = findViewById(R.id.add_button);
 
@@ -82,7 +85,60 @@ public class TodaysHabitsActivity extends AppCompatActivity {
                     newHabit.setNumDone(numDone);
                     newHabit.setNumNotDone(numNotDone);
                     newHabit.setProgress();
-                    habitDataList.add(newHabit);
+                    if (day == Calendar.MONDAY) {
+                        String repeatDay = "M";
+                        if (newHabit.getRepeatDays().contains(repeatDay)) {
+                            habitDataList.add(newHabit);
+                        }
+                    }
+                    else if (day == Calendar.TUESDAY) {
+                        String repeatDay = "T";
+                        if (newHabit.getRepeatDays().contains(repeatDay)) {
+                            if (!habitDataList.contains(newHabit)) {
+                                habitDataList.add(newHabit);
+                            }
+                        }
+                    }
+                    else if (day == Calendar.WEDNESDAY) {
+                        String repeatDay = "W";
+                        if (newHabit.getRepeatDays().contains(repeatDay)) {
+                            if (!habitDataList.contains(newHabit)) {
+                                habitDataList.add(newHabit);
+                            }
+                        }
+                    }
+                    else if (day == Calendar.THURSDAY) {
+                        String repeatDay = "R";
+                        if (newHabit.getRepeatDays().contains(repeatDay)) {
+                            if (!habitDataList.contains(newHabit)) {
+                                habitDataList.add(newHabit);
+                            }
+                        }
+                    }
+                    else if (day == Calendar.FRIDAY) {
+                        String repeatDay = "F";
+                        if (newHabit.getRepeatDays().contains(repeatDay)) {
+                            if (!habitDataList.contains(newHabit)) {
+                                habitDataList.add(newHabit);
+                            }
+                        }
+                    }
+                    else if (day == Calendar.SATURDAY) {
+                        String repeatDay = "S";
+                        if (newHabit.getRepeatDays().contains(repeatDay)) {
+                            if (!habitDataList.contains(newHabit)) {
+                                habitDataList.add(newHabit);
+                            }
+                        }
+                    }
+                    else if (day == Calendar.SUNDAY) {
+                        String repeatDay = "Su";
+                        if (newHabit.getRepeatDays().contains(repeatDay)) {
+                            if (!habitDataList.contains(newHabit)) {
+                                habitDataList.add(newHabit);
+                            }
+                        }
+                    }
                 }
                 habitAdapter.notifyDataSetChanged();
             }
