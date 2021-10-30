@@ -3,8 +3,10 @@ package com.example.trackit;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -83,5 +85,12 @@ public class TodaysHabitsActivity extends AppCompatActivity {
             }
         });
 
+        //my edits to be removed before commit
     }
+//    public void viewHabit(View view)
+//    {
+//        intent = new Intent(TodaysHabitsActivity.this, ViewHabitActivity.class);
+//        intent.putExtra("User", (Serializable) user);
+//        startActivity(intent);
+//    }
 }

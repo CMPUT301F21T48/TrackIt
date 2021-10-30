@@ -11,13 +11,13 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="204dp"
+        android:layout_marginTop="192dp"
         android:layout_marginEnd="32dp"
         android:backgroundTint="@android:color/tertiary_text_light"
         android:text="@string/button_event_habit"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/add_repeat_days" />
 
@@ -51,16 +51,16 @@
         android:id="@+id/add_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
         android:ems="10"
+        android:importantForAutofill="no"
         android:maxLength="20"
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/habit_title_text"
-        android:layout_marginEnd="32dp"
-        android:layout_marginStart="32dp"
-        tools:ignore="SpeakableTextPresentCheck"
-        android:importantForAutofill="no" />
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <TextView
         android:id="@+id/habit_reason_text"
@@ -78,16 +78,16 @@
         android:id="@+id/add_reason"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
         android:ems="10"
+        android:importantForAutofill="no"
         android:maxLength="30"
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/habit_reason_text"
-        android:layout_marginEnd="32dp"
-        android:layout_marginStart="32dp"
-        tools:ignore="SpeakableTextPresentCheck"
-        android:importantForAutofill="no" />
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <TextView
         android:id="@+id/add_repeat_days"
@@ -110,40 +110,42 @@
         android:id="@+id/add_start_date_layout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_reason"
-        android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
-        android:orientation="horizontal">
+        android:layout_marginEnd="32dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_reason">
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:text="@string/add_start_date_text"
             android:textColor="@color/black"
-            android:layout_weight="1"
             android:textSize="16sp" />
+
         <TextView
             android:id="@+id/add_start_date_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/start_date_format"
-            android:textColor="@color/black"
             android:layout_weight="1"
-            android:gravity="end"/>
+            android:gravity="end"
+            android:text="@string/start_date_format"
+            android:textColor="@color/black" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/select_date_layout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_start_date_layout"
-        android:layout_marginEnd="32dp"
-        android:layout_marginStart="32dp"
-        android:orientation="horizontal">
+        app:layout_constraintTop_toBottomOf="@+id/add_start_date_layout">
 
     </LinearLayout>
 
@@ -185,18 +187,13 @@
 
     <Button
         android:id="@+id/button_delete_habit"
-        android:layout_width="0dp"
+        android:layout_width="347dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="32dp"
         android:backgroundTint="@color/background"
         android:text="@string/button_delete_habit"
         android:textColor="@color/red"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_TopOf="@+id/button_edit_habit"
         app:layout_constraintTop_toBottomOf="@+id/button_edit_habit"
         app:rippleColor="@color/white" />
 
