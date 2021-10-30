@@ -96,7 +96,8 @@
                     android:text="@string/view_details"
                     android:textSize="16sp"
                     android:padding="16dp"
-                    android:background="@color/status_bar" />
+                    android:background="@color/status_bar"
+                    android:onClick="viewHabit"/>
             </LinearLayout>
 
         </LinearLayout>

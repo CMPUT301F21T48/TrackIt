@@ -187,7 +187,7 @@
 
     <Button
         android:id="@+id/button_delete_habit"
-        android:layout_width="347dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/background"
         android:text="@string/button_delete_habit"

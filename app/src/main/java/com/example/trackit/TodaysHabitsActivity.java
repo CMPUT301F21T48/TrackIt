@@ -2,6 +2,7 @@ package com.example.trackit;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -31,6 +32,7 @@ public class TodaysHabitsActivity extends AppCompatActivity {
 
     CustomList customList;
     User user;
+    Habit habit;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     CollectionReference collectionReference;
@@ -86,11 +88,25 @@ public class TodaysHabitsActivity extends AppCompatActivity {
         });
 
         //my edits to be removed before commit
+        habitList.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View view, int position, long arg3)
+            {
+                habitList.setSelection(position);
+                habit = (Habit) habitList.getItemAtPosition(position);
+            }
+        });
+
+
     }
-//    public void viewHabit(View view)
-//    {
-//        intent = new Intent(TodaysHabitsActivity.this, ViewHabitActivity.class);
-//        intent.putExtra("User", (Serializable) user);
-//        startActivity(intent);
-//    }
+    public void viewHabit(View view)
+    {
+        if (habit == null)
+            Log.d(TAG, "habit is null");
+        intent = new Intent(TodaysHabitsActivity.this, ViewHabitActivity.class);
+        intent.putExtra("User", (Serializable) user);
+        intent.putExtra("Habit", (Serializable) habit);
+        startActivity(intent);
+    }
 }
