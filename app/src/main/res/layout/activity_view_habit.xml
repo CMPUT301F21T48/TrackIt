@@ -47,15 +47,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title_bar" />
 
-    <EditText
+    <TextView
         android:id="@+id/add_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="text"
         android:maxLength="20"
         android:minHeight="48dp"
-        android:hint=" "
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/habit_title_text"
@@ -76,15 +74,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/add_title" />
 
-    <EditText
+    <TextView
         android:id="@+id/add_reason"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="text"
         android:maxLength="30"
         android:minHeight="48dp"
-        android:hint=" "
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/habit_reason_text"
@@ -93,7 +89,7 @@
         tools:ignore="SpeakableTextPresentCheck"
         android:importantForAutofill="no" />
 
-    <EditText
+    <TextView
         android:id="@+id/add_repeat_days"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -102,10 +98,8 @@
         android:layout_marginEnd="32dp"
         android:ems="10"
         android:importantForAutofill="no"
-        android:inputType="text"
         android:maxLength="30"
         android:minHeight="48dp"
-        android:hint=" "
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"

@@ -37,6 +37,7 @@
         <entry key="app/src/main/res/layout/activity_add_habit.xml" value="0.1765625" />
         <entry key="app/src/main/res/layout/activity_edit_habit.xml" value="0.2798913043478261" />
         <entry key="app/src/main/res/layout/activity_todays_habits.xml" value="0.2798913043478261" />
+        <entry key="app/src/main/res/layout/activity_view_habit.xml" value="0.1510436124176789" />
       </map>
     </option>
   </component>
