@@ -1,8 +1,10 @@
 package com.example.trackit;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -10,6 +12,8 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -66,22 +70,23 @@ public class EditHabitActivity extends AppCompatActivity {
         Integer month = Integer.parseInt(habit.getStartDate().substring(3,5))-1;
         Integer day = Integer.parseInt(habit.getStartDate().substring(0,2));
         datePicker.updateDate(day,month,year);
+
         ArrayList<String> repeatDays = habit.getRepeatDays();
         for (int i = 0; i < repeatDays.size(); i++)
         {
-            if (repeatDays.get(i) == "M")
+            if (repeatDays.get(i).equals("M"))
                 repeatMonday.setChecked(true);
-            if (repeatDays.get(i) == "T")
+            else if (repeatDays.get(i).equals("T"))
                 repeatTuesday.setChecked(true);
-            if (repeatDays.get(i) == "W")
+            else if (repeatDays.get(i).equals("W"))
                 repeatWednesday.setChecked(true);
-            if (repeatDays.get(i) == "R")
+            else if (repeatDays.get(i).equals("R"))
                 repeatThursday.setChecked(true);
-            if (repeatDays.get(i) == "F")
+            else if (repeatDays.get(i).equals("F"))
                 repeatFriday.setChecked(true);
-            if (repeatDays.get(i) == "S")
+            else if (repeatDays.get(i).equals("S"))
                 repeatSaturday.setChecked(true);
-            if (repeatDays.get(i) == "Su")
+            else if (repeatDays.get(i).equals("Su"))
                 repeatSunday.setChecked(true);
         }
     }
@@ -89,19 +94,22 @@ public class EditHabitActivity extends AppCompatActivity {
     public void selectDate(View view) {
         // Retrieve and set selected start date
         String date = Integer.toString(datePicker.getDayOfMonth());
+        if (Integer.valueOf(date) < 10) {
+            date = "0" + date;
+        }
         String month = Integer.toString(datePicker.getMonth() + 1);
         if (Integer.valueOf(month) < 10) {
             month = "0" + month;
         }
         String year = Integer.toString(datePicker.getYear());
-        addStartDate = date + "-" + month + "-" + year;
+        addStartDate = date + "/" + month + "/" + year;
         selectedDate.setText(addStartDate);
     }
 
     public void saveChanges(View view) {
         String habitTitle = editHabitTitle.getText().toString();
         String habitReason = editHabitReason.getText().toString();
-        String habitStartDate = addStartDate;
+        String habitStartDate = selectedDate.getText().toString();
         ArrayList<String> repeatDays = new ArrayList<>();
 
         if (repeatMonday.isChecked()){
@@ -132,11 +140,8 @@ public class EditHabitActivity extends AppCompatActivity {
         habit.setRepeatDays(repeatDays);
         String id = habit.getHabitID();
         collectionReference.document(user.getUsername()).collection("Habits").document(id).set(habit);
-
-        finish();
-    }
-    public void cancelAddHabit(View view) {
         finish();
     }
 
+    public void cancelAddHabit(View view) { finish(); }
 }

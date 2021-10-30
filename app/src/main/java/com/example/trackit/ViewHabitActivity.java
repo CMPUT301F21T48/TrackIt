@@ -1,14 +1,18 @@
 package com.example.trackit;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -26,13 +30,17 @@ public class ViewHabitActivity extends AppCompatActivity {
     TextView habitReason;
     TextView startedDate;
     TextView repeatDays;
-    Button editHabit;
-    Button viewEvents;
+    Button edit;
+    Button delete;
+    final String TAG = "Sample";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_habit);
+        edit = findViewById(R.id.button_edit_habit);
+        delete = findViewById(R.id.button_delete_habit);
+
         habitTitle = findViewById(R.id.add_title);
         habitReason = findViewById(R.id.add_reason);
         startedDate = findViewById(R.id.add_start_date_text);
@@ -70,7 +78,7 @@ public class ViewHabitActivity extends AppCompatActivity {
         repeatDays.setText(textRepeat);
     }
 
-    public void editHabit()
+    public void editHabit(View view)
     {
         intent = new Intent(ViewHabitActivity.this, EditHabitActivity.class);
         intent.putExtra("User", (Serializable) user);
@@ -79,8 +87,22 @@ public class ViewHabitActivity extends AppCompatActivity {
         finish();
     }
 
-    public void deleteHabit()
+    public void deleteHabit(View view)
     {
+        collectionReference.document(habit.getHabitID())
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error deleting document", e);
+                    }
+                });
         finish();
     }
 }
