@@ -70,10 +70,13 @@ public class TodaysHabitsActivity extends AppCompatActivity {
                     String reason = (String) doc.getData().get("reason");
                     String startDate = (String) doc.getData().get("startDate");
                     ArrayList<String> repeatDays = (ArrayList<String>) doc.getData().get("repeatDays");
-//                    Integer progress = (Integer) doc.getData().get("progress");
+                    int numDone = (int) ((long) doc.getData().get("numDone"));
+                    int numNotDone = (int) ((long) doc.getData().get("numNotDone"));
                     Habit newHabit = new Habit(title, reason, startDate, repeatDays);
-//                    newHabit.setProgress(progress);
                     newHabit.setHabitID(ID);
+                    newHabit.setNumDone(numDone);
+                    newHabit.setNumNotDone(numNotDone);
+                    newHabit.setProgress();
                     habitDataList.add(newHabit);
                 }
                 habitAdapter.notifyDataSetChanged();

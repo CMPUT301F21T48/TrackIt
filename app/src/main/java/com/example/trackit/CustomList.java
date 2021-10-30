@@ -39,14 +39,16 @@ public class CustomList extends ArrayAdapter<Habit> {
         TextView habitTitle = view.findViewById(R.id.habit_title_display);
         TextView habitRepeat = view.findViewById(R.id.habit_repeat_display);
         TextView habitReason = view.findViewById(R.id.habit_reason_display);
+        TextView habitProgress = view.findViewById(R.id.habit_progress);
 
         habitTitle.setText(habit.getTitle());
         String repeatDays = "";
         for (int i = 0; i < habit.getRepeatDays().size(); i++){
             repeatDays = repeatDays + " " + habit.getRepeatDays().get(i);
         }
-        habitRepeat.setText("Repeat: " + repeatDays);
+        habitRepeat.setText("Repeat:" + repeatDays);
         habitReason.setText("Reason: " + habit.getReason());
+        habitProgress.setText("Progress: " + habit.getProgress());
 
         return view;
     }
