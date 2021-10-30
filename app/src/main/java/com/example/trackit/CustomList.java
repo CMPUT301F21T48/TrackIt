@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -39,14 +40,33 @@ public class CustomList extends ArrayAdapter<Habit> {
         TextView habitTitle = view.findViewById(R.id.habit_title_display);
         TextView habitRepeat = view.findViewById(R.id.habit_repeat_display);
         TextView habitReason = view.findViewById(R.id.habit_reason_display);
+        TextView habitProgress = view.findViewById(R.id.habit_progress);
 
         habitTitle.setText(habit.getTitle());
         String repeatDays = "";
         for (int i = 0; i < habit.getRepeatDays().size(); i++){
             repeatDays = repeatDays + " " + habit.getRepeatDays().get(i);
         }
-        habitRepeat.setText("Repeat: " + repeatDays);
+        habitRepeat.setText("Repeat:" + repeatDays);
         habitReason.setText("Reason: " + habit.getReason());
+        habitProgress.setText("Progress: " + Math.round(habit.getProgress()) + "%");
+
+        LinearLayout habitMenu = view.findViewById(R.id.habit_menu);
+        TextView viewDetails = view.findViewById(R.id.view_details);
+
+        final boolean[] isClicked = {false};
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isClicked[0]) {
+                    habitMenu.setVisibility(View.VISIBLE);
+                    isClicked[0] = true;
+                } else {
+                    habitMenu.setVisibility(View.GONE);
+                    isClicked[0] = false;
+                }
+            }
+        });
 
         return view;
     }
