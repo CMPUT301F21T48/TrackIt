@@ -96,7 +96,7 @@ public class AddHabitActivity extends AppCompatActivity {
             repeatDays.add("S");
         }
         if (repeatSunday.isChecked()){
-            repeatDays.add("S");
+            repeatDays.add("Su");
         }
 
         Habit habit = new Habit(habitTitle, habitReason, habitStartDate, repeatDays);
