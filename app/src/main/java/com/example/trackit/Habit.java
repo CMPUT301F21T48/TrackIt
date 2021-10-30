@@ -31,9 +31,7 @@ public class Habit implements Serializable {
     public void setReason(String reason) { this.reason = reason;}
     public void setStartDate(String startDate) { this.startDate = startDate; }
     public void setRepeatDays(ArrayList<String> repeatDays) { this.repeatDays = repeatDays; }
-    public void setHabitID(String id) {
-        this.ID = id;
-    }
+    public void setHabitID(String id) { this.ID = id; }
     public void setNumDone(Integer numDone) {this.numDone = numDone;}
     public void setNumNotDone(Integer numNotDone) { this.numNotDone = numNotDone;}
     public void setProgress() {
