@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddHabitActivity">
+    tools:context=".EditHabitActivity">
 
     <TextView
         android:id="@+id/title_bar"
@@ -39,6 +39,8 @@
         android:ems="10"
         android:inputType="text"
         android:minHeight="48dp"
+        android:maxLength="20"
+        android:hint=" "
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/add_title_text"
@@ -66,6 +68,8 @@
         android:ems="10"
         android:inputType="text"
         android:minHeight="48dp"
+        android:maxLength="30"
+        android:hint=" "
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/add_reason_text"
@@ -131,7 +135,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:onClick="selectDate" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 
@@ -157,36 +162,43 @@
         android:layout_marginStart="32dp"
         android:orientation="horizontal">
         <CheckBox
+            android:id="@+id/checkbox_monday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/checkbox_monday"
             android:layout_weight="1"/>
         <CheckBox
+            android:id="@+id/checkbox_tuesday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/checkbox_tuesday"
             android:layout_weight="1"/>
         <CheckBox
+            android:id="@+id/checkbox_wednesday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/checkbox_wednesday"
             android:layout_weight="1"/>
         <CheckBox
+            android:id="@+id/checkbox_thursday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/checkbox_thursday"
             android:layout_weight="1"/>
         <CheckBox
+            android:id="@+id/checkbox_friday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/checkbox_friday"
             android:layout_weight="1"/>
         <CheckBox
+            android:id="@+id/checkbox_saturday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/checkbox_saturday"
             android:layout_weight="1"/>
         <CheckBox
+            android:id="@+id/checkbox_sunday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/checkbox_sunday"
@@ -194,6 +206,7 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/button_edit_habit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -201,7 +214,8 @@
         app:layout_constraintBottom_toTopOf="@+id/cancel_button"
         android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
-        android:text="@string/button_edit_habit"/>
+        android:text="@string/button_save_habit"
+        android:onClick="saveChanges"/>
 
     <Button
         android:id="@+id/cancel_button"
@@ -216,6 +230,7 @@
         android:backgroundTint="@color/white"
         style="?android:attr/borderlessButtonStyle"
         android:text="@string/button_cancel"
-        android:textColor="@color/red"/>
+        android:textColor="@color/red"
+        android:onClick="cancelAddHabit"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

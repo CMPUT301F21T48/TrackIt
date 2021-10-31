@@ -39,6 +39,7 @@
         android:ems="10"
         android:inputType="text"
         android:hint="@string/add_title_hint"
+        android:maxLength="20"
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -67,6 +68,7 @@
         android:ems="10"
         android:inputType="text"
         android:hint="@string/add_reason_hint"
+        android:maxLength="30"
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -160,36 +162,43 @@
         android:layout_marginStart="32dp"
         android:orientation="horizontal">
         <CheckBox
+            android:id="@+id/checkbox_monday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/checkbox_monday"
             android:layout_weight="1"/>
         <CheckBox
+            android:id="@+id/checkbox_tuesday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/checkbox_tuesday"
             android:layout_weight="1"/>
         <CheckBox
+            android:id="@+id/checkbox_wednesday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/checkbox_wednesday"
             android:layout_weight="1"/>
         <CheckBox
+            android:id="@+id/checkbox_thursday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/checkbox_thursday"
             android:layout_weight="1"/>
         <CheckBox
+            android:id="@+id/checkbox_friday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/checkbox_friday"
             android:layout_weight="1"/>
         <CheckBox
+            android:id="@+id/checkbox_saturday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/checkbox_saturday"
             android:layout_weight="1"/>
         <CheckBox
+            android:id="@+id/checkbox_sunday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/checkbox_sunday"
@@ -205,7 +214,8 @@
         app:layout_constraintBottom_toTopOf="@+id/button_cancel"
         android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
-        android:text="@string/button_add_habit"/>
+        android:text="@string/button_add_habit"
+        android:onClick="addHabit"/>
 
     <Button
         android:id="@+id/button_cancel"
@@ -220,6 +230,7 @@
         android:backgroundTint="@color/white"
         style="?android:attr/borderlessButtonStyle"
         android:text="@string/button_cancel"
-        android:textColor="@color/red"/>
+        android:textColor="@color/red"
+        android:onClick="cancelAddHabit"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

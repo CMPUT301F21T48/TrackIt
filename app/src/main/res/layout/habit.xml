@@ -4,57 +4,102 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="9dp"
-        card_view:cardCornerRadius="3dp"
+        android:layout_margin="4dp"
+        card_view:cardCornerRadius="4dp"
         android:id="@+id/card_view">
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="4dp"
-            android:layout_margin="3dp">
+            android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/habit_title_display"
-        android:layout_width="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_height="wrap_content"
-        android:text="Sample Title"
-        android:textSize="30sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:layout_margin="4dp"
+                android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/habit_repeat_display"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:text="Sample Schedule"
-        android:layout_below="@id/habit_reason_display"
-        android:textSize="20sp" />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+                    <TextView
+                        android:id="@+id/habit_title_display"
+                        android:layout_width="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_height="wrap_content"
+                        android:text="Sample Title"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
 
-    <TextView
-        android:id="@+id/habit_reason_display"
-        android:textSize="20sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/habit_title_display"
-        android:text="Sample Reason" />
+                    <TextView
+                        android:id="@+id/habit_repeat_display"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:layout_below="@id/habit_reason_display"
+                        android:text="Sample Schedule"
+                        />
 
-    <TextView
-        android:id="@+id/progress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:text="Progress"
-        android:layout_below="@id/habit_title_display"
-        android:textSize="20sp" />
+                    <TextView
+                        android:id="@+id/habit_reason_display"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/habit_title_display"
+                        android:text="Sample Reason"
+                        android:textSize="16sp" />
+                </LinearLayout>
 
-        </RelativeLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/habit_progress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/habit_progress"
+                        android:layout_alignParentRight="true"
+                        android:layout_gravity="center_horizontal|center_vertical"
+                        android:gravity="center"
+                        android:text="Sample Progress"
+                        android:textSize="16sp"
+                        android:textColor="@color/black"
+                        card_view:layout_constraintBottom_toBottomOf="parent"
+                        card_view:layout_constraintEnd_toEndOf="parent"
+                        card_view:layout_constraintStart_toStartOf="parent"
+                        card_view:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/habit_menu"
+                android:layout_marginTop="4dp"
+                android:visibility="gone"
+                android:layout_below="@+id/habit_repeat_display">
+                <TextView
+                    android:id="@+id/view_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/view_details"
+                    android:textSize="16sp"
+                    android:padding="16dp"
+                    android:background="@color/status_bar"
+                    android:onClick="viewHabit"/>
+            </LinearLayout>
+
+        </LinearLayout>
     </androidx.cardview.widget.CardView>
 </LinearLayout>

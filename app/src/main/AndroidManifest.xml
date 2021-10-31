@@ -10,10 +10,27 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TrackIt">
         <activity
+            android:name=".ViewHabitActivity"
+            android:exported="false" />
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <activity
+            android:name=".TodaysHabitsActivity"
+            android:exported="false" />
+        <activity
             android:name=".EditHabitActivity"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".AddHabitActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".WelcomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,12 +38,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".RegisterActivity"
-            android:exported="false"></activity>
-        <activity
-            android:name=".WelcomeActivity"
-            android:exported="false"></activity>
     </application>
 
 </manifest>
