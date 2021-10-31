@@ -2,6 +2,7 @@ package com.example.trackit;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -22,7 +23,9 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class TodaysHabitsActivity extends AppCompatActivity {
 
@@ -75,14 +78,32 @@ public class TodaysHabitsActivity extends AppCompatActivity {
                     String reason = (String) doc.getData().get("reason");
                     String startDate = (String) doc.getData().get("startDate");
                     ArrayList<String> repeatDays = (ArrayList<String>) doc.getData().get("repeatDays");
-                    int numDone = (int) ((long) doc.getData().get("numDone"));
-                    int numNotDone = (int) ((long) doc.getData().get("numNotDone"));
-                    Habit newHabit = new Habit(title, reason, startDate, repeatDays);
-                    newHabit.setHabitID(ID);
-                    newHabit.setNumDone(numDone);
-                    newHabit.setNumNotDone(numNotDone);
-                    newHabit.setProgress();
-                    habitDataList.add(newHabit);
+
+                    int flag = 0;
+                    String day = LocalDate.now().getDayOfWeek().name();
+                    String dayFirstLetter = String.valueOf(day.charAt(0));
+                    for (int i = 0; i < repeatDays.size(); i++){
+                        if (repeatDays.get(i).length() > 1) {
+                            if (day.substring(0,2).equals(repeatDays.get(i))) {
+                                flag = 1;
+                            }
+                        }
+                        else if (dayFirstLetter.equals(repeatDays.get(i))) {
+                            flag = 1;
+                        }
+                    }
+
+                    if (flag == 1) {
+                        int numDone = (int) ((long) doc.getData().get("numDone"));
+                        int numNotDone = (int) ((long) doc.getData().get("numNotDone"));
+                        Habit newHabit = new Habit(title, reason, startDate, repeatDays);
+                        newHabit.setHabitID(ID);
+                        newHabit.setNumDone(numDone);
+                        newHabit.setNumNotDone(numNotDone);
+                        newHabit.setProgress();
+                        habitDataList.add(newHabit);
+                    }
+
                 }
                 habitAdapter.notifyDataSetChanged();
             }
