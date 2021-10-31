@@ -33,24 +33,31 @@ public class LoginActivity extends AppCompatActivity {
     private void verifyCredentials(String loginUsername, String loginPassword, HashMap<String, String>credentials){
 
         if (loginUsername.length()>0 && loginPassword.length()>0) {
+
+            // Ensure name is valid
             if (credentials.containsKey(loginUsername)){
-                Log.d(TAG, loginUsername + " => " + credentials.get(loginUsername));
+
+                // Ensure password is correct
                 if (credentials.get(loginUsername).equals(loginPassword)){
 
                     user.setPassword(loginPassword);
                     user.setUsername(loginUsername);
-                    
-                    inputUsername.setText("");
-                    inputPassword.setText("");
+
+//                    inputUsername.setText("");
+//                    inputPassword.setText("");
                     Intent intent = new Intent(this, TodaysHabitsActivity.class);
                     intent.putExtra("User", (Serializable) user);
                     startActivity(intent);
                 }
+
+                // If password invalid
                 else{
                     inputPassword.requestFocus();
-                    inputUsername.setError("Invalid Password");
+                    inputPassword.setError("Invalid Password");
                 }
             }
+
+            // If no such user
             else{
                 inputUsername.requestFocus();
                 inputUsername.setError("Username not registered");
@@ -58,13 +65,13 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         // Ensure name is not ""
-        if (loginUsername.length()==0){
+        else if (loginUsername.length()==0){
             inputUsername.requestFocus();
             inputUsername.setError(getString(R.string.error_username_empty));
         }
 
         // Ensure password is not ""
-        else{
+        else {
             inputPassword.requestFocus();
             inputPassword.setError("Password field cannot be empty");
         }
