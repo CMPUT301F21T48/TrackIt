@@ -50,15 +50,17 @@ public class UserProfile extends AppCompatActivity {
         setContentView(R.layout.user_profile);
 
         user = (User) getIntent().getSerializableExtra("User");
+        habit = (Habit) getIntent().getSerializableExtra("Habit");
         collectionReference = db.collection("Users").document(user.getUsername()).collection("Habits");
-        String username = collectionReference.getId().toString();
 
         title = findViewById(R.id.title_bar);
-        title.setText(username);
+        title.setText(user.getUsername());
 
         habitList = findViewById(R.id.habit_list);
         habitDataList = new ArrayList<>();
         habitAdapter = new CustomList(this, habitDataList);
+
+        habitAdapter.addAll();
         habitList.setAdapter(habitAdapter);
 
 
