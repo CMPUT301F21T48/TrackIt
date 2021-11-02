@@ -13,8 +13,7 @@ public class WelcomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
-        Intent intent= new Intent(this, userSearchClass.class);
-        startActivity(intent);
+
         final Button loginButton = findViewById(R.id.login_button);
         final Button registerButton = findViewById(R.id.register_button);
     }
