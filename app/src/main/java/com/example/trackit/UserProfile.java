@@ -3,6 +3,7 @@ package com.example.trackit;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
@@ -50,18 +53,31 @@ public class UserProfile extends AppCompatActivity {
         setContentView(R.layout.user_profile);
 
         user = (User) getIntent().getSerializableExtra("User");
-        habit = (Habit) getIntent().getSerializableExtra("Habit");
+        //habit = (Habit) getIntent().getSerializableExtra("Habit");
         collectionReference = db.collection("Users").document(user.getUsername()).collection("Habits");
 
         title = findViewById(R.id.title_bar);
         title.setText(user.getUsername());
 
         habitList = findViewById(R.id.habit_list);
-        habitDataList = new ArrayList<>();
+
         habitAdapter = new CustomList(this, habitDataList);
 
-        habitAdapter.addAll();
-        habitList.setAdapter(habitAdapter);
+        collectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                //List<Missions> mMissionsList = new ArrayList<>();
+                if(task.isSuccessful()){
+                    for(QueryDocumentSnapshot document : task.getResult()) {
+                        Habit habit_ = document.toObject(Habit.class);
+                        habitDataList.add(habit_);
+                    }
+                    habitList.setAdapter(habitAdapter);
+                } else {
+                    Log.d("HabitActivity", "Error getting documents: ", task.getException());
+                }
+            }
+        });
 
 
 

@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -56,6 +57,7 @@ public class TodaysHabitsActivity extends AppCompatActivity {
         habitList.setAdapter(habitAdapter);
 
         FloatingActionButton addButton = findViewById(R.id.add_button);
+        Button userButton = findViewById(R.id.user);
 
         addButton.setOnClickListener(new View.OnClickListener()
         {
@@ -63,6 +65,18 @@ public class TodaysHabitsActivity extends AppCompatActivity {
             public void onClick(View v)
             {
                 intent = new Intent(TodaysHabitsActivity.this, AddHabitActivity.class);
+                intent.putExtra("User", (Serializable) user);
+                startActivity(intent);
+            }
+        });
+
+
+        userButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                intent = new Intent(TodaysHabitsActivity.this, UserProfile.class);
                 intent.putExtra("User", (Serializable) user);
                 startActivity(intent);
             }
