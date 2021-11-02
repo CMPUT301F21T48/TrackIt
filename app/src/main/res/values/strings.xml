@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">TrackIt</string>
     <string name="subtitle">Form and track all your habits</string>
 
@@ -10,20 +10,29 @@
     <string name="add_start_date_text">Date started:</string>
     <string name="start_date_format">MM/DD/YYYY</string>
     <string name="add_repeat_text">Repeat:</string>
+    <string name="view_details">View habit details</string>
+    <string name="habit_title_text">Habit:</string>
+    <string name="habit_reason_text">Reason:</string>
+    <string name="habit_start_date_text">Date started:</string>
+    <string name="habit_repeat_text">Repeat:</string>
 
     <!-- Button labels -->
-    <string name="button_sign_up">Sign Up</string>
+    <string name="button_sign_up" tools:ignore="ExtraTranslation">Sign Up</string>
     <string name="button_login">Login</string>
     <string name="button_register">Register</string>
     <string name="button_add_habit">Add Habit</string>
     <string name="button_cancel">Cancel</string>
+    <string name="button_save_habit">Save Changes</string>
     <string name="button_edit_habit">Edit Habit</string>
+    <string name="button_delete_habit">Delete Habit</string>
+    <string name="button_event_habit">View Events</string>
 
     <!-- Title bar strings -->
     <string name="title_register">Register</string>
     <string name="title_add_habit">Add Habit</string>
     <string name="title_edit_habit">Edit Habit</string>
     <string name="title_todays_habits">Today\'s Habits</string>
+    <string name="title_view_habit">View Habits</string>
 
     <!-- EditText hints -->
     <string name="add_title_hint">(max. 20 characters)</string>
@@ -38,5 +47,7 @@
     <string name="checkbox_saturday">S</string>
     <string name="checkbox_sunday">S</string>
     <string name="error_username_empty">Username field cannot be empty</string>
+    <string name="password">Password:</string>
+    <string name="username">Username:</string>
 
 </resources>
