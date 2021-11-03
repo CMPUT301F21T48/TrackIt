@@ -9,7 +9,7 @@ public class Habit implements Serializable {
     private String reason;
     private String startDate;
     private ArrayList<String> repeatDays;
-    private float progress;
+    private double progress;
     private int numDone;
     private int numNotDone;
     private String ID;
@@ -45,7 +45,7 @@ public class Habit implements Serializable {
     public String getReason() { return this.reason; }
     public String getStartDate() { return this.startDate; }
     public ArrayList<String> getRepeatDays() { return this.repeatDays; }
-    public float getProgress() { return this.progress; }
+    public double getProgress() { return this.progress; }
     public String getHabitID() { return this.ID; }
     public int getNumDone() {return this.numDone;}
     public int getNumNotDone() {return this.numNotDone;}
