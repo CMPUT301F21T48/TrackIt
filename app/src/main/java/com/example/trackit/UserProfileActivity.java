@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class userProfileActivity extends AppCompatActivity {
+public class UserProfileActivity extends AppCompatActivity {
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     final CollectionReference collectionReference = db.collection("Users");

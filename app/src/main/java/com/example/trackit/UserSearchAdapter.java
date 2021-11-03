@@ -13,14 +13,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Locale;
 
-public class userSearchAdapter extends RecyclerView.Adapter<userSearchAdapter.ViewHolder> implements Filterable {
+public class UserSearchAdapter extends RecyclerView.Adapter<UserSearchAdapter.ViewHolder> implements Filterable {
 
     List<String> userNames;
     List<String> userNamesComplete;
@@ -34,7 +31,7 @@ public class userSearchAdapter extends RecyclerView.Adapter<userSearchAdapter.Vi
         mOnEntryClickListener = onEntryClickListener;
     }
 
-    public userSearchAdapter(List<String> userNamesR){
+    public UserSearchAdapter(List<String> userNamesR){
         this.userNames = userNamesR;
         this.userNamesComplete = userNamesR;
     }
@@ -44,7 +41,7 @@ public class userSearchAdapter extends RecyclerView.Adapter<userSearchAdapter.Vi
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.userdisplay_item, parent, false);
+        View view = layoutInflater.inflate(R.layout.user_item, parent, false);
 
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;

@@ -139,15 +139,12 @@ public class TodaysHabitsActivity extends AppCompatActivity {
         navBar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                if (item.getTitle() == "Search") {
-                    Intent intent = new Intent(TodaysHabitsActivity.this, userSearchClass.class);
+                String selectedItem = item.getTitle().toString();
+                if (selectedItem.equals("Search")) {
+//                    Toast.makeText(TodaysHabitsActivity.this, "Item selected: " + selectedItem, Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(TodaysHabitsActivity.this, UserSearchActivity.class);
                     startActivity(intent);
                 }
-                if (item.getTitle() == "Profile") {
-                    Intent intent = new Intent(TodaysHabitsActivity.this, userSearchClass.class);
-                    startActivity(intent);
-                }
-
                 return false;
             }
         });
