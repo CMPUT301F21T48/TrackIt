@@ -2,15 +2,18 @@ package com.example.trackit;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
@@ -27,6 +30,7 @@ public class TodaysHabitsActivity extends AppCompatActivity {
 
     Intent intent;
     ListView habitList;
+    BottomNavigationView navBar;
     ArrayAdapter<Habit> habitAdapter;
     ArrayList<Habit> habitDataList;
 
@@ -47,6 +51,7 @@ public class TodaysHabitsActivity extends AppCompatActivity {
         collectionReference = db.collection("Users").document(user.getUsername()).collection("Habits");
 
         habitList = findViewById(R.id.habit_list);
+        navBar = findViewById(R.id.navigation);
         habitDataList = new ArrayList<>();
         habitAdapter = new CustomList(this, habitDataList);
         habitList.setAdapter(habitAdapter);
@@ -131,17 +136,36 @@ public class TodaysHabitsActivity extends AppCompatActivity {
             }
         });
 
+        navBar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                if (item.getTitle() == "Search") {
+                    Intent intent = new Intent(TodaysHabitsActivity.this, userSearchClass.class);
+                    startActivity(intent);
+                }
+                if (item.getTitle() == "Profile") {
+                    Intent intent = new Intent(TodaysHabitsActivity.this, userSearchClass.class);
+                    startActivity(intent);
+                }
+
+                return false;
+            }
+        });
+
     }
+
     public void viewHabit(View view) {
         intent = new Intent(TodaysHabitsActivity.this, ViewHabitActivity.class);
         intent.putExtra("User", (Serializable) user);
         intent.putExtra("Habit", (Serializable) habit);
         startActivity(intent);
     }
+
     public void habitDone(View view) {
         habit.updateNumDone();
         collectionReference.document(habit.getHabitID()).set(habit);
     }
+
     public void habitNotDone(View view) {
         habit.updateNumNotDone();
         collectionReference.document(habit.getHabitID()).set(habit);
