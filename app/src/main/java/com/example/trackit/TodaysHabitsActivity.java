@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -34,6 +35,7 @@ public class TodaysHabitsActivity extends AppCompatActivity {
     BottomNavigationView navBar;
     ArrayAdapter<Habit> habitAdapter;
     ArrayList<Habit> habitDataList;
+    TextView emptyMessage;
 
     CustomList customList;
     User user;
@@ -53,6 +55,7 @@ public class TodaysHabitsActivity extends AppCompatActivity {
 
         habitList = findViewById(R.id.habit_list);
         navBar = findViewById(R.id.navigation);
+        emptyMessage = findViewById(R.id.no_habit_message);
         habitDataList = new ArrayList<>();
         habitAdapter = new CustomList(this, habitDataList);
         habitList.setAdapter(habitAdapter);
@@ -105,7 +108,9 @@ public class TodaysHabitsActivity extends AppCompatActivity {
                         newHabit.setProgress();
                         habitDataList.add(newHabit);
                     }
-
+                }
+                if (habitDataList.size()==0) {
+                    emptyMessage.setVisibility(View.VISIBLE);
                 }
                 habitAdapter.notifyDataSetChanged();
             }
