@@ -5,9 +5,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 
-public class HabitTest {
+class HabitTest {
 
-    public Habit mockHabit()
+    private Habit mockHabit()
     {
         ArrayList<String> repeatedDays = new ArrayList<String>();
         repeatedDays.add("M");
@@ -18,8 +18,9 @@ public class HabitTest {
         String startDate = "02/11/2021";
         return new Habit(title,reason, startDate, repeatedDays);
     }
+
     @Test
-    public void testGetSet()
+    void testGetSet()
     {
         //getting habit object
         Habit habit = mockHabit();
