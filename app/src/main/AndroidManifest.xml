@@ -43,6 +43,7 @@
         </activity>
         <activity android:name=".userSearchClass" />
         <activity android:name=".userProfileActivity" />
+        <activity android:name=".tester" />
     </application>
 
 </manifest>
