@@ -42,6 +42,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".userSearchClass" />
+        <activity android:name=".userProfileActivity" />
     </application>
 
 </manifest>

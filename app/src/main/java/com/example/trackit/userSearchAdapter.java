@@ -24,6 +24,15 @@ public class userSearchAdapter extends RecyclerView.Adapter<userSearchAdapter.Vi
 
     List<String> userNames;
     List<String> userNamesComplete;
+    private OnEntryClickListener mOnEntryClickListener;
+
+    public interface OnEntryClickListener{
+        void onEntryClick(View view, int position);
+    }
+
+    public void setOnEntryClickListener (OnEntryClickListener onEntryClickListener){
+        mOnEntryClickListener = onEntryClickListener;
+    }
 
     public userSearchAdapter(List<String> userNamesR){
         this.userNames = userNamesR;
@@ -93,14 +102,21 @@ public class userSearchAdapter extends RecyclerView.Adapter<userSearchAdapter.Vi
         return userNames.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder{
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         TextView userName;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
+            itemView.setOnClickListener(this);
             userName = itemView.findViewById(R.id.userName);
+        }
+
+        @Override
+        public void onClick(View view) {
+            if (mOnEntryClickListener != null) {
+                mOnEntryClickListener.onEntryClick(view, getLayoutPosition());
+            }
         }
     }
 }
