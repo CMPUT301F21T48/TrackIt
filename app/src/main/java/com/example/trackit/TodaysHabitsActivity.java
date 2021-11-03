@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -141,9 +142,14 @@ public class TodaysHabitsActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 String selectedItem = item.getTitle().toString();
                 if (selectedItem.equals("Search")) {
-//                    Toast.makeText(TodaysHabitsActivity.this, "Item selected: " + selectedItem, Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(TodaysHabitsActivity.this, UserSearchActivity.class);
                     startActivity(intent);
+                }
+                else if (selectedItem.equals("Profile")) {
+                    Toast.makeText(TodaysHabitsActivity.this, "Item selected: " + selectedItem, Toast.LENGTH_SHORT).show();
+//                    Intent intent = new Intent(TodaysHabitsActivity.this, UserProfileActivity.class);
+//                    intent.putExtra("User", user);
+//                    startActivity(intent);
                 }
                 return false;
             }
