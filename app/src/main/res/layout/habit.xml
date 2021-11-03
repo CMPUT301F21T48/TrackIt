@@ -11,9 +11,9 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="4dp"
         card_view:cardCornerRadius="4dp"
-        android:id="@+id/card_view">
+        android:id="@+id/card_view"
+        android:padding="8dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -22,15 +22,10 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="4dp"
+                android:padding="8dp"
                 android:layout_margin="4dp"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight="1">
                     <TextView
                         android:id="@+id/habit_title_display"
                         android:layout_width="wrap_content"
@@ -39,15 +34,17 @@
                         android:layout_height="wrap_content"
                         android:text="Sample Title"
                         android:textColor="@color/black"
-                        android:textSize="20sp" />
+                        android:textSize="16sp"
+                        android:paddingBottom="4dp"/>
 
                     <TextView
                         android:id="@+id/habit_repeat_display"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="16sp"
+                        android:textSize="12sp"
                         android:layout_below="@id/habit_reason_display"
-                        android:text="Sample Schedule" />
+                        android:text="Sample Schedule"
+                        android:paddingBottom="4dp"/>
 
                     <TextView
                         android:id="@+id/habit_reason_display"
@@ -55,29 +52,16 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/habit_title_display"
                         android:text="Sample Reason"
-                        android:textSize="16sp" />
-                </LinearLayout>
+                        android:textSize="12sp"
+                        android:paddingBottom="4dp"/>
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
-
-                    <TextView
+                    <ProgressBar
                         android:id="@+id/habit_progress"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_gravity="center_horizontal|center_vertical"
-                        android:gravity="center"
-                        android:text="Sample Progress"
-                        android:textSize="16sp"
-                        android:textColor="@color/black"
-                        card_view:layout_constraintBottom_toBottomOf="parent"
-                        card_view:layout_constraintEnd_toEndOf="parent"
-                        card_view:layout_constraintStart_toStartOf="parent"
-                        card_view:layout_constraintTop_toTopOf="parent" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                        style="@android:style/Widget.Material.ProgressBar.Horizontal"
+                        android:progress="0"
+                        android:indeterminate="false"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
