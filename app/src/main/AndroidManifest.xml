@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TrackIt">
         <activity
+            android:name=".LoginActivity"
+            android:exported="true" />
+        <activity
             android:name=".ViewHabitActivity"
             android:exported="false" />
 
@@ -38,6 +41,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".userSearchClass" />
+        <activity android:name=".userProfileActivity" />
     </application>
 
 </manifest>

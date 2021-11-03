@@ -76,7 +76,7 @@ public class TodaysHabitsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-                intent = new Intent(TodaysHabitsActivity.this, UserProfile.class);
+                intent = new Intent(TodaysHabitsActivity.this, userProfileActivity.class);
                 intent.putExtra("User", (Serializable) user);
                 startActivity(intent);
             }
