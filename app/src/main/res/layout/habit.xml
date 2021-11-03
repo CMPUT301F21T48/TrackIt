@@ -68,7 +68,6 @@
                         android:id="@+id/habit_progress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/habit_progress"
                         android:layout_alignParentRight="true"
                         android:layout_gravity="center_horizontal|center_vertical"
                         android:gravity="center"
@@ -86,8 +85,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/habit_menu"
                 android:layout_marginTop="4dp"
-                android:visibility="gone"
-                android:layout_below="@+id/habit_repeat_display">
+                android:visibility="gone">
                 <TextView
                     android:id="@+id/view_details"
                     android:layout_width="match_parent"

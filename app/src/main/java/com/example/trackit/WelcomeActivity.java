@@ -20,6 +20,8 @@ public class WelcomeActivity extends AppCompatActivity {
 
     public void goToLogin(View view) {
         // add Intent here
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
     }
 
     public void goToRegister(View view) {
