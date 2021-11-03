@@ -3,6 +3,7 @@ package com.example.trackit;
 import static android.content.ContentValues.TAG;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -10,11 +11,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -119,6 +122,17 @@ public class userSearchClass extends AppCompatActivity {
 //                return false;
 //            }
 //        });
+
+
+        usersearchAdapter.setOnEntryClickListener(new userSearchAdapter.OnEntryClickListener() {
+            @Override
+            public void onEntryClick(View view, int position){
+                Intent intent = new Intent(getApplicationContext(), userProfileActivity.class);
+                intent.putExtra("currentUser", "amir");
+                intent.putExtra("chosenUser", userNames.get(position));
+                startActivity(intent);
+            }
+        });
 
 
     }
