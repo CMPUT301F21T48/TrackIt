@@ -31,8 +31,6 @@ public class AddHabitActivity extends AppCompatActivity {
     CheckBox repeatFriday;
     CheckBox repeatSaturday;
     CheckBox repeatSunday;
-    ArrayList<CheckBox> checkBoxes;
-    final String TAG = "Sample";
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     final CollectionReference collectionReference = db.collection("Users");
@@ -62,6 +60,9 @@ public class AddHabitActivity extends AppCompatActivity {
     public void selectDate(View view) {
         // Retrieve and set selected start date
         String date = Integer.toString(datePicker.getDayOfMonth());
+        if (Integer.valueOf(date) < 10) {
+            date = "0" + date;
+        }
         String month = Integer.toString(datePicker.getMonth() + 1);
         if (Integer.valueOf(month) < 10) {
             month = "0" + month;
@@ -74,7 +75,7 @@ public class AddHabitActivity extends AppCompatActivity {
     public void addHabit(View view) {
         String habitTitle = addHabitTitle.getText().toString();
         String habitReason = addHabitReason.getText().toString();
-        String habitStartDate = addStartDate;
+        String habitStartDate = selectedDate.getText().toString();
         ArrayList<String> repeatDays = new ArrayList<>();
 
         if (repeatMonday.isChecked()){
@@ -96,15 +97,12 @@ public class AddHabitActivity extends AppCompatActivity {
             repeatDays.add("S");
         }
         if (repeatSunday.isChecked()){
-            repeatDays.add("S");
+            repeatDays.add("Su");
         }
 
         Habit habit = new Habit(habitTitle, habitReason, habitStartDate, repeatDays);
-
         String id = collectionReference.document(user.getUsername()).collection("Habits").document().getId();
-
         habit.setHabitID(id);
-
         collectionReference.document(user.getUsername()).collection("Habits").document(id).set(habit);
 
         finish();
