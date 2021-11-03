@@ -1,7 +1,8 @@
 package com.example.trackit;
 
-import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
@@ -58,6 +59,7 @@ class HabitTest {
         assertEquals(startDate, habit.getStartDate());
         for (int i = 0; i < repeatedDays.size(); i++)
         {
+
             assertEquals(habit.getRepeatDays().get(i), repeatedDays.get(i));
         }
     }
