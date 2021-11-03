@@ -2,14 +2,11 @@ package com.example.trackit;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.format.DateUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,7 +22,6 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 public class TodaysHabitsActivity extends AppCompatActivity {
 
@@ -136,11 +132,18 @@ public class TodaysHabitsActivity extends AppCompatActivity {
         });
 
     }
-    public void viewHabit(View view)
-    {
+    public void viewHabit(View view) {
         intent = new Intent(TodaysHabitsActivity.this, ViewHabitActivity.class);
         intent.putExtra("User", (Serializable) user);
         intent.putExtra("Habit", (Serializable) habit);
         startActivity(intent);
+    }
+    public void habitDone(View view) {
+        habit.updateNumDone();
+        collectionReference.document(habit.getHabitID()).set(habit);
+    }
+    public void habitNotDone(View view) {
+        habit.updateNumNotDone();
+        collectionReference.document(habit.getHabitID()).set(habit);
     }
 }
