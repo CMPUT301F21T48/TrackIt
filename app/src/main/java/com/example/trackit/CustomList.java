@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -50,6 +51,15 @@ public class CustomList extends ArrayAdapter<Habit> {
         habitRepeat.setText("Repeat:" + repeatDays);
         habitReason.setText("Reason: " + habit.getReason());
         habitProgress.setText("Progress: " + Math.round(habit.getProgress()) + "%");
+
+        TextView habitDetails = view.findViewById(R.id.view_details);
+
+        ImageView buttonDone = view.findViewById(R.id.button_done);
+        ImageView buttonNotDone = view.findViewById(R.id.button_not_done);
+
+        ViewGroup.LayoutParams buttonParams = habitDetails.getLayoutParams();
+        buttonDone.setLayoutParams(buttonParams);
+        buttonNotDone.setLayoutParams(buttonParams);
 
         return view;
     }
