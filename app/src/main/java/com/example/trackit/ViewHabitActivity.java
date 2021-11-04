@@ -1,15 +1,14 @@
 package com.example.trackit;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -25,6 +24,7 @@ public class ViewHabitActivity extends AppCompatActivity {
     CollectionReference collectionReference;
     User user;
     Habit habit;
+    String habitID;
     Intent intent;
     TextView habitTitle;
     TextView habitReason;
@@ -48,6 +48,7 @@ public class ViewHabitActivity extends AppCompatActivity {
 
         user = (User) getIntent().getSerializableExtra("User");
         habit = (Habit) getIntent().getSerializableExtra("Habit");
+        habitID = getIntent().getStringExtra("HabitID");
         collectionReference = db.collection("Users").document(user.getUsername()).collection("Habits");
 
         habitTitle.setText(habit.getTitle());

@@ -1,10 +1,6 @@
 package com.example.trackit;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -12,8 +8,9 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -25,6 +22,7 @@ public class EditHabitActivity extends AppCompatActivity {
     EditText editHabitReason;
     Button editHabitButton;
     Button cancelButton;
+    String habitID;
     DatePicker datePicker;
     TextView selectedDate;
     String addStartDate;
@@ -47,6 +45,7 @@ public class EditHabitActivity extends AppCompatActivity {
 
         user = (User) getIntent().getSerializableExtra("User");
         habit = (Habit) getIntent().getSerializableExtra("Habit");
+        habitID = habit.getHabitID();
         setContentView(R.layout.activity_edit_habit);
         selectedDate = findViewById(R.id.add_start_date_text);
         datePicker = findViewById(R.id.select_start_date);
@@ -134,13 +133,17 @@ public class EditHabitActivity extends AppCompatActivity {
             repeatDays.add("Su");
         }
 
-        habit.setTitle(habitTitle);
-        habit.setReason(habitReason);
-        habit.setStartDate(habitStartDate);
-        habit.setRepeatDays(repeatDays);
-        String id = habit.getHabitID();
-        collectionReference.document(user.getUsername()).collection("Habits").document(id).set(habit);
-        finish();
+        if (habitTitle.isEmpty() || habitReason.isEmpty() || habitStartDate.isEmpty() || repeatDays.isEmpty()) {
+            Snackbar.make(this, view, "Do not leave any field(s) empty", Snackbar.LENGTH_LONG).show();
+        }
+        else {
+            habit.setTitle(habitTitle);
+            habit.setReason(habitReason);
+            habit.setStartDate(habitStartDate);
+            habit.setRepeatDays(repeatDays);
+            collectionReference.document(user.getUsername()).collection("Habits").document(habitID).set(habit);
+            finish();
+        }
     }
 
     public void cancelAddHabit(View view) { finish(); }

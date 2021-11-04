@@ -165,7 +165,8 @@ public class TodaysHabitsActivity extends AppCompatActivity {
     public void viewHabit(View view) {
         intent = new Intent(TodaysHabitsActivity.this, ViewHabitActivity.class);
         intent.putExtra("User", (Serializable) user);
-        intent.putExtra("Habit", (Serializable) habit);
+        intent.putExtra("HabitID", habit.getHabitID());
+        intent.putExtra("Habit", habit);
         startActivity(intent);
     }
 
@@ -177,5 +178,9 @@ public class TodaysHabitsActivity extends AppCompatActivity {
     public void habitNotDone(View view) {
         habit.updateNumNotDone();
         collectionReference.document(habit.getHabitID()).set(habit);
+    }
+
+    public void logoutProfile(View view) {
+        finish();
     }
 }

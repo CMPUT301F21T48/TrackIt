@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -100,12 +101,17 @@ public class AddHabitActivity extends AppCompatActivity {
             repeatDays.add("Su");
         }
 
-        Habit habit = new Habit(habitTitle, habitReason, habitStartDate, repeatDays);
-        String id = collectionReference.document(user.getUsername()).collection("Habits").document().getId();
-        habit.setHabitID(id);
-        collectionReference.document(user.getUsername()).collection("Habits").document(id).set(habit);
+        if (habitTitle.isEmpty() || habitReason.isEmpty() || habitStartDate.isEmpty() || repeatDays.isEmpty()) {
+            Snackbar.make(this, view, "Do not leave any field(s) empty", Snackbar.LENGTH_LONG).show();
+        }
+        else {
+            Habit habit = new Habit(habitTitle, habitReason, habitStartDate, repeatDays);
+            String id = collectionReference.document(user.getUsername()).collection("Habits").document().getId();
+            habit.setHabitID(id);
+            collectionReference.document(user.getUsername()).collection("Habits").document(id).set(habit);
 
-        finish();
+            finish();
+        }
     }
 
     public void cancelAddHabit(View view) {
