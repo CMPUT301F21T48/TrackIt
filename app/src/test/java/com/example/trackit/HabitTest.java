@@ -2,13 +2,16 @@ package com.example.trackit;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
 class HabitTest {
+    Habit habit;
 
-    private Habit mockHabit()
+    @BeforeEach
+    private void mockHabit()
     {
         ArrayList<String> repeatedDays = new ArrayList<String>();
         repeatedDays.add("M");
@@ -17,26 +20,46 @@ class HabitTest {
         String title = "Exercise everyday";
         String reason = "To stay healthy";
         String startDate = "02/11/2021";
-        return new Habit(title,reason, startDate, repeatedDays);
+        habit = new Habit(title,reason, startDate, repeatedDays);
     }
 
     @Test
-    void testGetSet()
+    void testHabitName()
     {
-        //getting habit object
-        Habit habit = mockHabit();
+        String title = "Exercise everyday";
+        assertEquals(habit.getTitle(), title);
+        title = "Exercise some days";
+        habit.setTitle(title);
+        assertEquals(title, habit.getTitle());
+    }
 
-        //testing the getters
+    @Test
+    void testHabitReason()
+    {
+        String reason = "To stay healthy";
+        assertEquals(habit.getReason(), reason);
+        reason = "To stay healthy and live longer";
+        habit.setReason(reason);
+        assertEquals(reason, habit.getReason());
+    }
+
+    @Test
+    void testHabitStartDate()
+    {
+        String startDate = "02/11/2021";
+        assertEquals(habit.getStartDate(), startDate);
+        startDate = "03/11/2021";
+        habit.setStartDate(startDate);
+        assertEquals(startDate, habit.getStartDate());
+    }
+
+    @Test
+    void testHabitRepeatedArray()
+    {
         ArrayList<String> repeatedDays = new ArrayList<String>();
         repeatedDays.add("M");
         repeatedDays.add("T");
         repeatedDays.add("W");
-        String title = "Exercise everyday";
-        String reason = "To stay healthy";
-        String startDate = "02/11/2021";
-        assertEquals(habit.getTitle(), title);
-        assertEquals(habit.getReason(), reason);
-        assertEquals(habit.getStartDate(), startDate);
         for (int i = 0; i < repeatedDays.size(); i++)
         {
             assertEquals(habit.getRepeatDays().get(i), repeatedDays.get(i));
@@ -48,15 +71,7 @@ class HabitTest {
         repeatedDays.add("T");
         repeatedDays.add("W");
         repeatedDays.add("R");
-        title = "Exercise some days";
-        reason = "To stay healthy and live longer";
-        startDate = "03/11/2021";
-        habit.setTitle(title);
-        assertEquals(title, habit.getTitle());
-        habit.setReason(reason);
-        assertEquals(reason, habit.getReason());
-        habit.setStartDate(startDate);
-        assertEquals(startDate, habit.getStartDate());
+
         for (int i = 0; i < repeatedDays.size(); i++)
         {
 
@@ -67,7 +82,6 @@ class HabitTest {
     @Test
     void testProgressUpdate()
     {
-        Habit habit = mockHabit();
         assertEquals(0, habit.getProgress());
         habit.updateNumDone();
         assertEquals(1.0, habit.getProgress());
@@ -76,6 +90,5 @@ class HabitTest {
         habit.updateNumDone();
         habit.updateNumDone();
         assertEquals(0.75, habit.getProgress());
-
     }
 }
