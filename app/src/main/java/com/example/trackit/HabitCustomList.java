@@ -13,14 +13,14 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
-public class CustomList extends ArrayAdapter<Habit> {
+public class HabitCustomList extends ArrayAdapter<Habit> {
 
     private final ArrayList<Habit> habits;
     private final Context context;
     private Habit habit;
 
     // constructor
-    public CustomList(Context context, ArrayList<Habit> habits) {
+    public HabitCustomList(Context context, ArrayList<Habit> habits) {
         super(context, 0, habits);
         this.habits = habits;
         this.context = context;
