@@ -25,8 +25,11 @@ public class UserProfileActivity extends AppCompatActivity {
     CollectionReference collectionReference;
     Button followButton;
     TextView userNameView, userFollowers, userFollowing;
-    String currentUserName;
-    String chosenUserName;
+    User currentUser = new User("","");
+    User chosenUser = new User("","");
+    Integer followers = 0;
+    Integer following = 0;
+    static Integer checkValue = 0;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -41,39 +44,79 @@ public class UserProfileActivity extends AppCompatActivity {
         AtomicReference<String> Username = new AtomicReference<>("test");
         AtomicReference<String> Password = new AtomicReference<>("test");
 
-        currentUserName = (String) getIntent().getStringExtra("currentUser");
-        chosenUserName = (String) getIntent().getStringExtra("chosenUser");
+        String currentUserName = "amir";
+        String chosenUserName = getIntent().getStringExtra("chosenUser");
 
         Log.d("msg", "this is what you wanted " + Username + " => ");
+        Toast toast = Toast.makeText(this, chosenUser.getUsername(),Toast.LENGTH_SHORT);
+        toast.show();
 
         userNameView.setText(chosenUserName);
+
+        getDatafromFB(new AsyncCall() {
+            @Override
+            public void onCallBack(Integer finalCheckValue) {
+                checkValue = finalCheckValue;
+                userFollowers.setText("Followers: " + finalCheckValue);
+            }
+
+        }, chosenUserName, "Followers");
+
+        userFollowers.setText("Followers: " + checkValue);
+//        getDatafromFB(new AsyncCall() {
+//            @Override
+//            public void onCallBack(Integer finalCheckValue) {
+//                checkValue = finalCheckValue;
+//                userFollowers.setText("Following: " + finalCheckValue);
+//            }
+//        }, chosenUserName, "Following");
+//
+//        userFollowing.setText("Following: " + checkValue);
+//
+//        checkValue = 0;
+
 
         if(chosenUserName.compareTo(currentUserName) == 0){
             followButton.setText("Your Profile");
             followButton.setEnabled(false);
-            db.collection("Users").document(chosenUserName).collection("Followers")
-                    .get()
-                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()) {
-                                if (task.getResult().size() > 0) {
-                                    for (DocumentSnapshot document : task.getResult()) {
-                                        Log.d("msg", "Room already exists, start the chat");
 
-                                    }
-                                } else {
-                                    Toast toast = Toast.makeText(getApplicationContext(), "NO FOLLOWERS", Toast.LENGTH_SHORT);
-                                    toast.show();
-                                }
-                            }
-                        }
-                    });
 
         }
         else{
-
+            userFollowers.setText("Followers: " + followerCount(chosenUserName, "Followers"));
         }
+    }
 
+    public Integer followerCount(String Username, String CollectionList) {
+        final Integer[] count = {0};
+
+        return count[0];
+    }
+
+    public interface AsyncCall{
+        void onCallBack(Integer finalCheckValue);
+    }
+
+    public void getDatafromFB(AsyncCall asyncCall, String Username, String CollectionList){
+        final Integer[] Value = {0};
+        db.collection("Users").document(Username).collection(CollectionList)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            if (task.getResult().size() > 0) {
+                                for (DocumentSnapshot document : task.getResult().getDocuments()) {
+                                    Log.d("look", (String) document.get("Value"));
+                                    if ( document.get("Value").toString().compareTo("true") == 0) {
+                                        Value[0]++; //this is where i left at for some reason the value doesnt increase outside of this
+
+                                    }
+                                }
+                            }
+                            asyncCall.onCallBack(Value[0]);
+                        }
+                    }
+                });
     }
 }
