@@ -1,8 +1,10 @@
 package com.example.trackit;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +20,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class UserProfileActivity extends AppCompatActivity {
@@ -80,12 +84,45 @@ public class UserProfileActivity extends AppCompatActivity {
                 public void onCallBack(Boolean exists) {
                     if(exists) {
                         followButton.setText("Unfollow");
+                        followButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                db.collection("Users").document(currentUserName).collection("Following").document(chosenUserName)
+                                        .delete();
+                                db.collection("Users").document(chosenUserName).collection("Followers").document(currentUserName)
+                                        .delete();
+                                Boolean currentCheck = (Boolean) db.collection("Users").document(currentUserName).collection("Following").document(chosenUserName).get().getResult().get("Value");
+                                Boolean chosenCheck = (Boolean) db.collection("Users").document(chosenUserName).collection("Followers").document(currentUserName).get().getResult().get("Value");
+
+                                if(currentCheck && chosenCheck){
+//                 YOU HAVE TO ADD THE CODE HERE UNDER THIS IF STATEMENT "BABUSHKA"
+                                }
+
+                                Intent intent = getIntent();
+                                finish();
+                                startActivity(intent);
+                            }
+                        });
                     }
                     else{
                         followButton.setText("Follow");
+                        followButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Map<String, Object> obj =  new HashMap<>();
+                                obj.put("Value", "false");
+                                db.collection("Users").document(currentUserName).collection("Following").document(chosenUserName)
+                                        .set(obj);
+                                db.collection("Users").document(chosenUserName).collection("Followers").document(currentUserName)
+                                        .set(obj);
+                                Intent intent = getIntent();
+                                finish();
+                                startActivity(intent);
+                            }
+                        });
                     }
                 }
-            },"Following" , chosenUserName, currentUserName);
+            },"Followers" , chosenUserName, currentUserName);
 
 
         }
