@@ -5,24 +5,28 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class UserProfileActivity extends AppCompatActivity {
 
@@ -35,6 +39,9 @@ public class UserProfileActivity extends AppCompatActivity {
     Integer followers = 0;
     Integer following = 0;
     static Integer checkValue = 0;
+    ListView habitList;
+    ArrayAdapter<Habit> habitAdapter;
+    ArrayList<Habit> habitDataList;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -46,6 +53,11 @@ public class UserProfileActivity extends AppCompatActivity {
         userNameView = findViewById(R.id.userNameView);
         userFollowers = findViewById(R.id.followerCount);
         userFollowing = findViewById(R.id.followingCount);
+
+        habitList = findViewById(R.id.habitList);
+        habitDataList = new ArrayList<>();
+        habitAdapter = new HabitCustomList(this, habitDataList);
+        habitList.setAdapter(habitAdapter);
 
         String currentUserName = "amir";
         String chosenUserName = getIntent().getStringExtra("chosenUser");
@@ -94,15 +106,38 @@ public class UserProfileActivity extends AppCompatActivity {
                                 Boolean currentCheck = (Boolean) db.collection("Users").document(currentUserName).collection("Following").document(chosenUserName).get().getResult().get("Value");
                                 Boolean chosenCheck = (Boolean) db.collection("Users").document(chosenUserName).collection("Followers").document(currentUserName).get().getResult().get("Value");
 
-                                if(currentCheck && chosenCheck){
+//                                if(currentCheck && chosenCheck){
 //                 YOU HAVE TO ADD THE CODE HERE UNDER THIS IF STATEMENT "BABUSHKA"
-                                }
+                                    collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
+                                            habitDataList.clear();
+                                            for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                                                String ID = doc.getId();
+                                                String title = (String) doc.getData().get("title");
+                                                String reason = (String) doc.getData().get("reason");
+                                                String startDate = (String) doc.getData().get("startDate");
+                                                ArrayList<String> repeatDays = (ArrayList<String>) doc.getData().get("repeatDays");
+
+                                                int numDone = (int) ((long) doc.getData().get("numDone"));
+                                                int numNotDone = (int) ((long) doc.getData().get("numNotDone"));
+                                                Habit newHabit = new Habit(title, reason, startDate, repeatDays);
+                                                newHabit.setHabitID(ID);
+                                                newHabit.setNumDone(numDone);
+                                                newHabit.setNumNotDone(numNotDone);
+                                                newHabit.setProgress();
+                                                habitDataList.add(newHabit);
+                                            }
+                                            habitAdapter.notifyDataSetChanged();
+                                        };
+                                    });
+//                                }
 
                                 Intent intent = getIntent();
                                 finish();
                                 startActivity(intent);
-                            }
-                        });
+                        };
+                    });
                     }
                     else{
                         followButton.setText("Follow");
