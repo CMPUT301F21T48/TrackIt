@@ -56,7 +56,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
         habitList = findViewById(R.id.habitList);
         habitDataList = new ArrayList<>();
-        habitAdapter = new CustomList(this, habitDataList);
+        habitAdapter = new HabitCustomList(this, habitDataList);
         habitList.setAdapter(habitAdapter);
 
         String currentUserName = "amir";
