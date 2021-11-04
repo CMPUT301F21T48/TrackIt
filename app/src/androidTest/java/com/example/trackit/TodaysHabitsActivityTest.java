@@ -125,7 +125,7 @@ public class TodaysHabitsActivityTest {
     {
         //testing logging in
         solo.assertCurrentActivity("Wrong Activity", TodaysHabitsActivity.class);
-        solo.clickOnText("Existing habit title");
+        solo.clickOnText("Existing habit 1");
         solo.waitForText("View habit details", 1, 2000);
         solo.clickOnText("View habit details");
         solo.assertCurrentActivity("Wrong Activity", ViewHabitActivity.class);
@@ -180,5 +180,3 @@ public class TodaysHabitsActivityTest {
         solo.finishOpenedActivities();
     }
 }
-
-

@@ -44,7 +44,7 @@ public class ViewHabitActivityTest {
         solo.enterText((EditText) solo.getView(R.id.login_password), "testPassword");
         solo.waitForText("testPassword", 1, 2000);
         solo.clickOnText("Login");
-        solo.clickOnText("Existing Habit 3");
+        solo.clickOnText("Existing habit 3");
         solo.clickOnText("View habit details");
     }
 
