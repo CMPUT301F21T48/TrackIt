@@ -64,7 +64,6 @@ public class UserProfileActivity extends AppCompatActivity {
 
         Boolean exists = false;
 
-
         userNameView.setText(chosenUserName);
 
         getDatafromFB(new AsyncCall() {
@@ -108,7 +107,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
 //                                if(currentCheck && chosenCheck){
 //                 YOU HAVE TO ADD THE CODE HERE UNDER THIS IF STATEMENT "BABUSHKA"
-                                    collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                    db.collection("Users").document(currentUserName).collection("Habits").addSnapshotListener(new EventListener<QuerySnapshot>() {
                                         @Override
                                         public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
                                             habitDataList.clear();

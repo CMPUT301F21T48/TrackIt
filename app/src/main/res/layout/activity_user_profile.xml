@@ -79,7 +79,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/user_follow_details" />
 
-    <androidx.recyclerview.widget.RecyclerView
+    <ListView
         android:id="@+id/habitList"
         android:layout_width="match_parent"
         android:layout_height="0dp"
