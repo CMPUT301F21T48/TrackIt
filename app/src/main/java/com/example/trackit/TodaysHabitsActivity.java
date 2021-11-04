@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -99,6 +100,7 @@ public class TodaysHabitsActivity extends AppCompatActivity {
                     int flag = 0;
                     String day = LocalDate.now().getDayOfWeek().name();
                     String dayFirstLetter = String.valueOf(day.charAt(0));
+
                     for (int i = 0; i < repeatDays.size(); i++) {
                         if (repeatDays.get(i).length() > 1) {
                             if (day.substring(0, 2).equals(repeatDays.get(i))) {

@@ -56,20 +56,19 @@ public class AddHabitActivityTest {
     }
 
     /**
-     * Checks if clicking today navigation bar icon stay on the same activity
+     * Checks if a new habit is added successfully
      */
     @Test
     public void addHabitForToday()
     {
-        //testing logging in
-        solo.assertCurrentActivity("Wrong Activity", TodaysHabitsActivity.class);
+        solo.assertCurrentActivity("Wrong Activity", AddHabitActivity.class);
         solo.enterText((EditText) solo.getView(R.id.add_title), "Test habit title");
-        solo.waitForText("Test habit title");
+        solo.waitForText("Test habit title", 1, 2000);
         solo.enterText((EditText) solo.getView(R.id.add_reason), "Test habit reason");
-        solo.waitForText("Test habit reason");
-        solo.setDatePicker((DatePicker) solo.getView(R.id.select_start_date), 2021, 11+1, 04);
-        solo.enterText((EditText) solo.getView(R.id.add_start_date_text), "04/11/2021");
-        solo.waitForText("04/11/2021");
+        solo.waitForText("Test habit reason", 1, 2000);
+        solo.setDatePicker((DatePicker) solo.getView(R.id.select_start_date), 2021, 11-1, 04);
+        solo.clickOnView(solo.getView(R.id.button_select_date));
+        solo.waitForText("11/04/2021", 1, 2000);
         solo.clickOnView(solo.getView(R.id.checkbox_monday));
         solo.clickOnView(solo.getView(R.id.checkbox_tuesday));
         solo.clickOnView(solo.getView(R.id.checkbox_wednesday));
@@ -77,7 +76,105 @@ public class AddHabitActivityTest {
         solo.clickOnView(solo.getView(R.id.checkbox_friday));
         solo.clickOnView(solo.getView(R.id.checkbox_saturday));
         solo.clickOnView(solo.getView(R.id.checkbox_sunday));
-        solo.clickOnButton("Save Changes");
+        solo.clickOnButton("Add Habit");
+        solo.assertCurrentActivity("Wrong Activity", TodaysHabitsActivity.class);
+        solo.waitForText("Test habit reason", 1, 2000);
+        solo.waitForText("Repeat: M T W R F S Su", 1, 2000);
+        solo.waitForText("Reason: Test habit reason", 1, 2000);
+    }
+
+    /**
+     * Checks if empty title field shows error
+     */
+    @Test
+    public void emptyTitleField()
+    {
+        //testing logging in
+        solo.assertCurrentActivity("Wrong Activity", AddHabitActivity.class);
+        solo.enterText((EditText) solo.getView(R.id.add_reason), "Test habit reason");
+        solo.waitForText("Test habit reason", 1, 2000);
+        solo.setDatePicker((DatePicker) solo.getView(R.id.select_start_date), 2021, 11-1, 04);
+        solo.clickOnView(solo.getView(R.id.button_select_date));
+        solo.waitForText("11/04/2021", 1, 2000);
+        solo.clickOnView(solo.getView(R.id.checkbox_monday));
+        solo.clickOnView(solo.getView(R.id.checkbox_tuesday));
+        solo.clickOnView(solo.getView(R.id.checkbox_wednesday));
+        solo.clickOnView(solo.getView(R.id.checkbox_thursday));
+        solo.clickOnView(solo.getView(R.id.checkbox_friday));
+        solo.clickOnView(solo.getView(R.id.checkbox_saturday));
+        solo.clickOnView(solo.getView(R.id.checkbox_sunday));
+        solo.clickOnButton("Add Habit");
+        solo.waitForText("Do not leave any field(s) empty", 1, 2000);
+        solo.assertCurrentActivity("Wrong Activity", AddHabitActivity.class);
+    }
+
+    /**
+     * Checks if empty reason field shows error
+     */
+    @Test
+    public void emptyReasonField()
+    {
+        //testing logging in
+        solo.assertCurrentActivity("Wrong Activity", AddHabitActivity.class);
+        solo.enterText((EditText) solo.getView(R.id.add_title), "Test habit title");
+        solo.waitForText("Test habit title", 1, 2000);
+        solo.setDatePicker((DatePicker) solo.getView(R.id.select_start_date), 2021, 11-1, 04);
+        solo.clickOnView(solo.getView(R.id.button_select_date));
+        solo.waitForText("11/04/2021", 1, 2000);
+        solo.clickOnView(solo.getView(R.id.checkbox_monday));
+        solo.clickOnView(solo.getView(R.id.checkbox_tuesday));
+        solo.clickOnView(solo.getView(R.id.checkbox_wednesday));
+        solo.clickOnView(solo.getView(R.id.checkbox_thursday));
+        solo.clickOnView(solo.getView(R.id.checkbox_friday));
+        solo.clickOnView(solo.getView(R.id.checkbox_saturday));
+        solo.clickOnView(solo.getView(R.id.checkbox_sunday));
+        solo.clickOnButton("Add Habit");
+        solo.waitForText("Do not leave any field(s) empty", 1, 2000);
+        solo.assertCurrentActivity("Wrong Activity", AddHabitActivity.class);
+    }
+
+    /**
+     * Checks if error is showed if date is not entered
+     */
+    @Test
+    public void emptyDateField()
+    {
+        //testing logging in
+        solo.assertCurrentActivity("Wrong Activity", AddHabitActivity.class);
+        solo.enterText((EditText) solo.getView(R.id.add_title), "Test habit title");
+        solo.waitForText("Test habit title", 1, 2000);
+        solo.enterText((EditText) solo.getView(R.id.add_reason), "Test habit reason");
+        solo.waitForText("Test habit reason", 1, 2000);
+        solo.setDatePicker((DatePicker) solo.getView(R.id.select_start_date), 2021, 11-1, 04);
+        solo.clickOnView(solo.getView(R.id.button_select_date));
+        solo.waitForText("11/04/2021", 1, 2000);
+        solo.clickOnButton("Add Habit");
+        solo.waitForText("Do not leave any field(s) empty", 1, 2000);
+        solo.assertCurrentActivity("Wrong Activity", AddHabitActivity.class);
+    }
+
+    /**
+     * Checks if error is showed if date is not entered
+     */
+    @Test
+    public void emptyRepeatField()
+    {
+        //testing logging in
+        solo.assertCurrentActivity("Wrong Activity", AddHabitActivity.class);
+        solo.enterText((EditText) solo.getView(R.id.add_title), "Test habit title");
+        solo.waitForText("Test habit title", 1, 2000);
+        solo.enterText((EditText) solo.getView(R.id.add_reason), "Test habit reason");
+        solo.waitForText("Test habit reason", 1, 2000);
+        solo.clickOnView(solo.getView(R.id.checkbox_monday));
+        solo.clickOnView(solo.getView(R.id.checkbox_tuesday));
+        solo.clickOnView(solo.getView(R.id.checkbox_wednesday));
+        solo.clickOnView(solo.getView(R.id.checkbox_thursday));
+        solo.clickOnView(solo.getView(R.id.checkbox_friday));
+        solo.clickOnView(solo.getView(R.id.checkbox_saturday));
+        solo.clickOnView(solo.getView(R.id.checkbox_sunday));
+        solo.clickOnButton("Add Habit");
+        solo.waitForText("Do not leave any field(s) empty", 1, 2000);
+        solo.assertCurrentActivity("Wrong Activity", AddHabitActivity.class);
     }
 
     /**
