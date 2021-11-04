@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -105,5 +106,9 @@ public class ViewHabitActivity extends AppCompatActivity {
                     }
                 });
         finish();
+    }
+
+    public void viewEvents(View view) {
+        Toast.makeText(this, "Coming soon.", Toast.LENGTH_SHORT).show();
     }
 }
