@@ -133,7 +133,7 @@ public class EditHabitActivity extends AppCompatActivity {
             repeatDays.add("Su");
         }
 
-        if (habitTitle.isEmpty() || habitReason.isEmpty() || habitStartDate.isEmpty() || repeatDays.isEmpty()) {
+        if (habitTitle.isEmpty() || habitReason.isEmpty() || habitStartDate.equals("MM/DD/YYYY") || repeatDays.isEmpty()) {
             Snackbar.make(this, view, "Do not leave any field(s) empty", Snackbar.LENGTH_LONG).show();
         }
         else {

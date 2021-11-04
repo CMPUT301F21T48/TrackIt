@@ -64,8 +64,6 @@ public class LoginActivityTest {
         //testing logout
         solo.clickOnText("Logout");
         solo.assertCurrentActivity("Wrong Activity", LoginActivity.class);
-
-
     }
 
     /**
@@ -81,6 +79,22 @@ public class LoginActivityTest {
         solo.waitForText("testpassword", 1, 2000);
         solo.clickOnText("Login");
         solo.waitForText("Invalid Password", 1, 2000);
+        solo.assertCurrentActivity("Wrong Activity", LoginActivity.class);
+    }
+
+    /**
+     * Checks if the username exists
+     */
+    @Test
+    public void checkNoUser()
+    {
+        solo.assertCurrentActivity("Wrong Activity", LoginActivity.class);
+        solo.enterText((EditText) solo.getView(R.id.login_username), "NotExistUser");
+        solo.waitForText("testUser", 1, 2000);
+        solo.enterText((EditText) solo.getView(R.id.login_password), "testPassword");
+        solo.waitForText("testPassword", 1, 2000);
+        solo.clickOnText("Login");
+        solo.waitForText("Username not registered", 1, 2000);
         solo.assertCurrentActivity("Wrong Activity", LoginActivity.class);
     }
 
