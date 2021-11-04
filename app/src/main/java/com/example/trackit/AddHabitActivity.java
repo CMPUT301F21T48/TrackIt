@@ -102,7 +102,7 @@ public class AddHabitActivity extends AppCompatActivity {
             repeatDays.add("Su");
         }
 
-        if (habitTitle.isEmpty() || habitReason.isEmpty() || habitStartDate.isEmpty() || repeatDays.isEmpty()) {
+        if (habitTitle.isEmpty() || habitReason.isEmpty() || habitStartDate.equals("MM/DD/YYYY") || repeatDays.isEmpty()) {
             Snackbar.make(this, view, "Do not leave any field(s) empty", Snackbar.LENGTH_LONG).show();
         }
         else {
@@ -110,7 +110,6 @@ public class AddHabitActivity extends AppCompatActivity {
             String id = collectionReference.document(user.getUsername()).collection("Habits").document().getId();
             habit.setHabitID(id);
             collectionReference.document(user.getUsername()).collection("Habits").document(id).set(habit);
-
             finish();
         }
     }

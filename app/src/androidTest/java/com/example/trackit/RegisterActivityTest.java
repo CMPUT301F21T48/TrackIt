@@ -51,14 +51,14 @@ public class RegisterActivityTest {
      * Checks if register with unique username and password is successful and if user is able to logout
      */
     @Test
-    public void loginTest()
+    public void registerTest()
     {
         //testing registering
         solo.assertCurrentActivity("Wrong Activity", RegisterActivity.class);
-        solo.enterText((EditText) solo.getView(R.id.register_username), "testUser");
-        solo.waitForText("testUser", 1, 2000);
-        solo.enterText((EditText) solo.getView(R.id.register_password), "testPassword");
-        solo.waitForText("testPassword", 1, 2000);
+        solo.enterText((EditText) solo.getView(R.id.register_username), "testNewUser");
+        solo.waitForText("testNewUser", 1, 2000);
+        solo.enterText((EditText) solo.getView(R.id.register_password), "testNewPassword");
+        solo.waitForText("testNewPassword", 1, 2000);
         solo.clickOnText("Sign Up");
         solo.assertCurrentActivity("Wrong Activity", TodaysHabitsActivity.class);
         //testing logout
