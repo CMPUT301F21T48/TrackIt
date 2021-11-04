@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -41,56 +42,82 @@ public class UserProfileActivity extends AppCompatActivity {
         userNameView = findViewById(R.id.userNameView);
         userFollowers = findViewById(R.id.followerCount);
         userFollowing = findViewById(R.id.followingCount);
-        AtomicReference<String> Username = new AtomicReference<>("test");
-        AtomicReference<String> Password = new AtomicReference<>("test");
 
         String currentUserName = "amir";
         String chosenUserName = getIntent().getStringExtra("chosenUser");
 
-        Log.d("msg", "this is what you wanted " + Username + " => ");
-        Toast toast = Toast.makeText(this, chosenUser.getUsername(),Toast.LENGTH_SHORT);
-        toast.show();
+        Boolean exists = false;
+
 
         userNameView.setText(chosenUserName);
 
         getDatafromFB(new AsyncCall() {
             @Override
             public void onCallBack(Integer finalCheckValue) {
-                checkValue = finalCheckValue;
-                userFollowers.setText("Followers: " + finalCheckValue);
+                followers = finalCheckValue;
+                userFollowers.setText("Followers: " + followers);
             }
 
         }, chosenUserName, "Followers");
 
-        userFollowers.setText("Followers: " + checkValue);
-//        getDatafromFB(new AsyncCall() {
-//            @Override
-//            public void onCallBack(Integer finalCheckValue) {
-//                checkValue = finalCheckValue;
-//                userFollowers.setText("Following: " + finalCheckValue);
-//            }
-//        }, chosenUserName, "Following");
-//
-//        userFollowing.setText("Following: " + checkValue);
-//
-//        checkValue = 0;
+        getDatafromFB(new AsyncCall() {
+            @Override
+            public void onCallBack(Integer finalCheckValue) {
+                following = finalCheckValue;
+                userFollowing.setText("Following: " + following);
+            }
+        }, chosenUserName, "Following");
+
 
 
         if(chosenUserName.compareTo(currentUserName) == 0){
             followButton.setText("Your Profile");
             followButton.setEnabled(false);
-
-
         }
         else{
-            userFollowers.setText("Followers: " + followerCount(chosenUserName, "Followers"));
+            checkExistence(new ExistsAsyncCall() {
+                @Override
+                public void onCallBack(Boolean exists) {
+                    if(exists) {
+                        followButton.setText("Unfollow");
+                    }
+                    else{
+                        followButton.setText("Follow");
+                    }
+                }
+            },"Following" , chosenUserName, currentUserName);
+
+
         }
     }
 
-    public Integer followerCount(String Username, String CollectionList) {
-        final Integer[] count = {0};
+    public interface ExistsAsyncCall{
+        void onCallBack(Boolean exists);
+    }
 
-        return count[0];
+    public void checkExistence(ExistsAsyncCall existsAsyncCall, String CollectionList,String checkingUserName1, String checkingUserName2){
+        final Boolean[] exists = {false};
+        db.collection("Users").document(checkingUserName1).collection(CollectionList)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            if (task.getResult().size() > 0) {
+                                for (DocumentSnapshot document : task.getResult().getDocuments()) {
+                                    Log.d("look",document.getId());
+                                    if ( document.getId().toString().compareTo("Ira") == 0) {
+
+                                        exists[0] = true; //this is where i left at for some reason the value doesnt increase outside of this
+
+                                    }
+                                }
+                            }
+                            existsAsyncCall.onCallBack(exists[0]);
+                        }
+                    }
+                });
+
     }
 
     public interface AsyncCall{
@@ -119,4 +146,6 @@ public class UserProfileActivity extends AppCompatActivity {
                     }
                 });
     }
+
+//    public Boolean existsInFB(String )
 }
