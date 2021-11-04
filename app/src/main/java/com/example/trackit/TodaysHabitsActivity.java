@@ -1,5 +1,7 @@
 package com.example.trackit;
 
+import static android.view.View.GONE;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -30,20 +32,21 @@ import java.util.ArrayList;
 
 public class TodaysHabitsActivity extends AppCompatActivity {
 
+    final String TAG = "Sample";
     Intent intent;
     ListView habitList;
     BottomNavigationView navBar;
     ArrayAdapter<Habit> habitAdapter;
     ArrayList<Habit> habitDataList;
     TextView emptyMessage;
-
+    ArrayList<String> finishedHabits;
     CustomList customList;
     User user;
     Habit habit;
-
+    LinearLayout habitMenu;
+    boolean[] isClicked = {false};
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     CollectionReference collectionReference;
-    final String TAG = "Sample";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,17 +59,17 @@ public class TodaysHabitsActivity extends AppCompatActivity {
         habitList = findViewById(R.id.habit_list);
         navBar = findViewById(R.id.navigation);
         emptyMessage = findViewById(R.id.no_habit_message);
+        finishedHabits = new ArrayList<>();
+
         habitDataList = new ArrayList<>();
         habitAdapter = new CustomList(this, habitDataList);
         habitList.setAdapter(habitAdapter);
 
         FloatingActionButton addButton = findViewById(R.id.add_button);
 
-        addButton.setOnClickListener(new View.OnClickListener()
-        {
+        addButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 intent = new Intent(TodaysHabitsActivity.this, AddHabitActivity.class);
                 intent.putExtra("User", (Serializable) user);
                 startActivity(intent);
@@ -77,7 +80,7 @@ public class TodaysHabitsActivity extends AppCompatActivity {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
                 habitDataList.clear();
-                for(QueryDocumentSnapshot doc: queryDocumentSnapshots) {
+                for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
                     String ID = doc.getId();
                     String title = (String) doc.getData().get("title");
                     String reason = (String) doc.getData().get("reason");
@@ -87,13 +90,12 @@ public class TodaysHabitsActivity extends AppCompatActivity {
                     int flag = 0;
                     String day = LocalDate.now().getDayOfWeek().name();
                     String dayFirstLetter = String.valueOf(day.charAt(0));
-                    for (int i = 0; i < repeatDays.size(); i++){
+                    for (int i = 0; i < repeatDays.size(); i++) {
                         if (repeatDays.get(i).length() > 1) {
-                            if (day.substring(0,2).equals(repeatDays.get(i))) {
+                            if (day.substring(0, 2).equals(repeatDays.get(i))) {
                                 flag = 1;
                             }
-                        }
-                        else if (dayFirstLetter.equals(repeatDays.get(i))) {
+                        } else if (dayFirstLetter.equals(repeatDays.get(i))) {
                             flag = 1;
                         }
                     }
@@ -109,7 +111,7 @@ public class TodaysHabitsActivity extends AppCompatActivity {
                         habitDataList.add(newHabit);
                     }
                 }
-                if (habitDataList.size()==0) {
+                if (habitDataList.size() == 0) {
                     emptyMessage.setVisibility(View.VISIBLE);
                 }
                 habitAdapter.notifyDataSetChanged();
@@ -117,26 +119,18 @@ public class TodaysHabitsActivity extends AppCompatActivity {
         });
 
         //my edits to be removed before commit
-        habitList.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
+        habitList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> arg0, View view, int position, long arg3)
-            {
-                LinearLayout habitMenu = view.findViewById(R.id.habit_menu);
+            public void onItemClick(AdapterView<?> arg0, View view, int position, long arg3) {
+                habitMenu = view.findViewById(R.id.habit_menu);
 
-                final boolean[] isClicked = {false};
-                view.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (!isClicked[0]) {
-                            habitMenu.setVisibility(View.VISIBLE);
-                            isClicked[0] = true;
-                        } else {
-                            habitMenu.setVisibility(View.GONE);
-                            isClicked[0] = false;
-                        }
-                    }
-                });
+                if (!isClicked[0]) {
+                    habitMenu.setVisibility(View.VISIBLE);
+                    isClicked[0] = true;
+                } else {
+                    habitMenu.setVisibility(GONE);
+                    isClicked[0] = false;
+                }
                 habitList.setSelection(position);
                 habit = (Habit) habitList.getItemAtPosition(position);
             }
@@ -149,8 +143,7 @@ public class TodaysHabitsActivity extends AppCompatActivity {
                 if (selectedItem.equals("Search")) {
                     Intent intent = new Intent(TodaysHabitsActivity.this, UserSearchActivity.class);
                     startActivity(intent);
-                }
-                else if (selectedItem.equals("Profile")) {
+                } else if (selectedItem.equals("Profile")) {
                     Toast.makeText(TodaysHabitsActivity.this, "Item selected: " + selectedItem, Toast.LENGTH_SHORT).show();
 //                    Intent intent = new Intent(TodaysHabitsActivity.this, UserProfileActivity.class);
 //                    intent.putExtra("User", user);
@@ -168,16 +161,22 @@ public class TodaysHabitsActivity extends AppCompatActivity {
         intent.putExtra("HabitID", habit.getHabitID());
         intent.putExtra("Habit", habit);
         startActivity(intent);
+        habitMenu.setVisibility(GONE);
+        isClicked[0] = false;
     }
 
     public void habitDone(View view) {
         habit.updateNumDone();
         collectionReference.document(habit.getHabitID()).set(habit);
+        habitMenu.setVisibility(GONE);
+        isClicked[0] = false;
     }
 
     public void habitNotDone(View view) {
         habit.updateNumNotDone();
         collectionReference.document(habit.getHabitID()).set(habit);
+        habitMenu.setVisibility(GONE);
+        isClicked[0] = false;
     }
 
     public void logoutProfile(View view) {
