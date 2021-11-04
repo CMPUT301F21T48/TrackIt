@@ -131,7 +131,7 @@
                 android:id="@+id/button_select_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="?android:attr/textCheckMark"
+                android:src="@drawable/white_tick"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

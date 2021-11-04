@@ -5,4 +5,5 @@
     <color name="status_bar">#F8F8F8</color>
     <color name="background">#F5F5F5</color>
     <color name="red">#FF0000</color>
+    <color name="green">#03A603</color>
 </resources>

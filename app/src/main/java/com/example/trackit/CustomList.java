@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -40,7 +41,7 @@ public class CustomList extends ArrayAdapter<Habit> {
         TextView habitTitle = view.findViewById(R.id.habit_title_display);
         TextView habitRepeat = view.findViewById(R.id.habit_repeat_display);
         TextView habitReason = view.findViewById(R.id.habit_reason_display);
-        TextView habitProgress = view.findViewById(R.id.habit_progress);
+        ProgressBar habitProgress = view.findViewById(R.id.habit_progress);
 
         habitTitle.setText(habit.getTitle());
         String repeatDays = "";
@@ -49,7 +50,8 @@ public class CustomList extends ArrayAdapter<Habit> {
         }
         habitRepeat.setText("Repeat:" + repeatDays);
         habitReason.setText("Reason: " + habit.getReason());
-        habitProgress.setText("Progress: " + Math.round(habit.getProgress()) + "%");
+//        habitProgress.setText("Progress: " + Math.round(habit.getProgress() * 100) + "%");
+        habitProgress.setProgress((int) Math.round(habit.getProgress() * 100));
 
         return view;
     }

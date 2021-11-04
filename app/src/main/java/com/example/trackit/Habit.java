@@ -37,7 +37,7 @@ public class Habit implements Serializable {
     public void setProgress() {
         int sum = this.numDone + this.numNotDone;
         if (sum != 0) {
-            this.progress = (this.numDone/sum) * 100;
+            this.progress = ((double) this.numDone/sum);
         } else { this.progress = 0; }
     }
 
@@ -50,6 +50,12 @@ public class Habit implements Serializable {
     public int getNumDone() {return this.numDone;}
     public int getNumNotDone() {return this.numNotDone;}
 
-    public void updateNumDone() { this.numDone++; }
-    public void updateNumNotDone() { this.numNotDone++; }
+    public void updateNumDone() {
+        this.numDone++;
+        setProgress();
+    }
+    public void updateNumNotDone() {
+        this.numNotDone++;
+        setProgress();
+    }
 }

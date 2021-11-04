@@ -2,18 +2,20 @@ package com.example.trackit;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.format.DateUtils;
-import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
@@ -25,14 +27,15 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 public class TodaysHabitsActivity extends AppCompatActivity {
 
     Intent intent;
     ListView habitList;
+    BottomNavigationView navBar;
     ArrayAdapter<Habit> habitAdapter;
     ArrayList<Habit> habitDataList;
+    TextView emptyMessage;
 
     CustomList customList;
     User user;
@@ -41,6 +44,8 @@ public class TodaysHabitsActivity extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     CollectionReference collectionReference;
     final String TAG = "Sample";
+    LinearLayout habitMenu;
+    final boolean[] isClicked = {false};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +56,8 @@ public class TodaysHabitsActivity extends AppCompatActivity {
         collectionReference = db.collection("Users").document(user.getUsername()).collection("Habits");
 
         habitList = findViewById(R.id.habit_list);
+        navBar = findViewById(R.id.navigation);
+        emptyMessage = findViewById(R.id.no_habit_message);
         habitDataList = new ArrayList<>();
         habitAdapter = new CustomList(this, habitDataList);
         habitList.setAdapter(habitAdapter);
@@ -103,7 +110,9 @@ public class TodaysHabitsActivity extends AppCompatActivity {
                         newHabit.setProgress();
                         habitDataList.add(newHabit);
                     }
-
+                }
+                if (habitDataList.size()==0) {
+                    emptyMessage.setVisibility(View.VISIBLE);
                 }
                 habitAdapter.notifyDataSetChanged();
             }
@@ -115,9 +124,7 @@ public class TodaysHabitsActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> arg0, View view, int position, long arg3)
             {
-                LinearLayout habitMenu = view.findViewById(R.id.habit_menu);
-
-                final boolean[] isClicked = {false};
+                habitMenu = view.findViewById(R.id.habit_menu);
                 view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -128,19 +135,59 @@ public class TodaysHabitsActivity extends AppCompatActivity {
                             habitMenu.setVisibility(View.GONE);
                             isClicked[0] = false;
                         }
+                        habitList.setSelection(position);
+                        habit = (Habit) habitList.getItemAtPosition(position);
                     }
                 });
-                habitList.setSelection(position);
-                habit = (Habit) habitList.getItemAtPosition(position);
+
+            }
+        });
+
+        navBar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                String selectedItem = item.getTitle().toString();
+                if (selectedItem.equals("Search")) {
+                    Intent intent = new Intent(TodaysHabitsActivity.this, UserSearchActivity.class);
+                    startActivity(intent);
+                }
+                else if (selectedItem.equals("Profile")) {
+                    Toast.makeText(TodaysHabitsActivity.this, "Item selected: " + selectedItem, Toast.LENGTH_SHORT).show();
+//                    Intent intent = new Intent(TodaysHabitsActivity.this, UserProfileActivity.class);
+//                    intent.putExtra("User", user);
+//                    startActivity(intent);
+                }
+                return false;
             }
         });
 
     }
-    public void viewHabit(View view)
-    {
+
+    public void viewHabit(View view) {
+        habitMenu.setVisibility(View.GONE);
+        isClicked[0] = false;
         intent = new Intent(TodaysHabitsActivity.this, ViewHabitActivity.class);
         intent.putExtra("User", (Serializable) user);
-        intent.putExtra("Habit", (Serializable) habit);
+        intent.putExtra("HabitID", habit.getHabitID());
+        intent.putExtra("Habit", habit);
         startActivity(intent);
+    }
+
+    public void habitDone(View view) {
+        habitMenu.setVisibility(View.GONE);
+        isClicked[0] = false;
+        habit.updateNumDone();
+        collectionReference.document(habit.getHabitID()).set(habit);
+    }
+
+    public void habitNotDone(View view) {
+        habitMenu.setVisibility(View.GONE);
+        isClicked[0] = false;
+        habit.updateNumNotDone();
+        collectionReference.document(habit.getHabitID()).set(habit);
+    }
+
+    public void logoutProfile(View view) {
+        finish();
     }
 }
