@@ -131,16 +131,36 @@ public class UserProfileActivity extends AppCompatActivity {
                                         .delete();
                                 db.collection("Users").document(chosenUserName).collection("Followers").document(currentUserName)
                                         .delete();
-                                Boolean currentCheck = (Boolean) db.collection("Users").document(currentUserName).collection("Following").document(chosenUserName).get().getResult().get("Value");
-                                Boolean chosenCheck = (Boolean) db.collection("Users").document(chosenUserName).collection("Followers").document(currentUserName).get().getResult().get("Value");
-
-//                                if(currentCheck && chosenCheck){
-//                 YOU HAVE TO ADD THE CODE HERE UNDER THIS IF STATEMENT "BABUSHKA"
                                 Intent intent = getIntent();
                                 finish();
                                 startActivity(intent);
-                        };
-                    });
+                            };
+                        });
+
+                        collectionReference.document(chosenUserName).collection("Habits").addSnapshotListener(new EventListener<QuerySnapshot>() {
+                            @Override
+                            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
+                                habitDataList.clear();
+                                for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                                    String ID = doc.getId();
+                                    String title = (String) doc.getData().get("title");
+                                    String reason = (String) doc.getData().get("reason");
+                                    String startDate = (String) doc.getData().get("startDate");
+                                    ArrayList<String> repeatDays = (ArrayList<String>) doc.getData().get("repeatDays");
+
+                                    int numDone = (int) ((long) doc.getData().get("numDone"));
+                                    int numNotDone = (int) ((long) doc.getData().get("numNotDone"));
+                                    Habit newHabit = new Habit(title, reason, startDate, repeatDays);
+                                    newHabit.setHabitID(ID);
+                                    newHabit.setNumDone(numDone);
+                                    newHabit.setNumNotDone(numNotDone);
+                                    newHabit.setProgress();
+                                    habitDataList.add(newHabit);
+                                }
+                                habitAdapter.notifyDataSetChanged();
+                            };
+                        });
+
                     }
                     else{
                         followButton.setText("Follow");
@@ -159,31 +179,6 @@ public class UserProfileActivity extends AppCompatActivity {
                             }
                         });
                     }
-
-                    collectionReference.document(chosenUserName).collection("Habits").addSnapshotListener(new EventListener<QuerySnapshot>() {
-                        @Override
-                        public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
-                            habitDataList.clear();
-                            for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
-                                String ID = doc.getId();
-                                String title = (String) doc.getData().get("title");
-                                String reason = (String) doc.getData().get("reason");
-                                String startDate = (String) doc.getData().get("startDate");
-                                ArrayList<String> repeatDays = (ArrayList<String>) doc.getData().get("repeatDays");
-
-                                int numDone = (int) ((long) doc.getData().get("numDone"));
-                                int numNotDone = (int) ((long) doc.getData().get("numNotDone"));
-                                Habit newHabit = new Habit(title, reason, startDate, repeatDays);
-                                newHabit.setHabitID(ID);
-                                newHabit.setNumDone(numDone);
-                                newHabit.setNumNotDone(numNotDone);
-                                newHabit.setProgress();
-                                habitDataList.add(newHabit);
-                            }
-                            habitAdapter.notifyDataSetChanged();
-                        };
-                    });
-
                 }
             },"Followers" , chosenUserName, currentUserName);
 
