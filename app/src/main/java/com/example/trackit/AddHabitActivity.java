@@ -44,7 +44,7 @@ public class AddHabitActivity extends AppCompatActivity {
         user = (User) getIntent().getSerializableExtra("User");
 
         selectedDate = findViewById(R.id.add_start_date_text);
-        datePicker = findViewById(R.id.select_start_date);
+
         addHabitButton = findViewById(R.id.button_add_habit);
         cancelButton = findViewById(R.id.button_cancel);
         addHabitReason = findViewById(R.id.add_reason);
