@@ -27,7 +27,7 @@ public class UserTest {
     {
         User user = mockUser();
         assertEquals("Password", user.getPassword());
-        user.setUsername("password");
+        user.setPassword("password");
         assertEquals("password", user.getPassword());
     }
 }

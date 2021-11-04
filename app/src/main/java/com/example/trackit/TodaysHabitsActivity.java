@@ -40,7 +40,6 @@ public class TodaysHabitsActivity extends AppCompatActivity {
     ArrayList<Habit> habitDataList;
     TextView emptyMessage;
     ArrayList<String> finishedHabits;
-    CustomList customList;
     User user;
     Habit habit;
     LinearLayout habitMenu;
@@ -62,7 +61,7 @@ public class TodaysHabitsActivity extends AppCompatActivity {
         finishedHabits = new ArrayList<>();
 
         habitDataList = new ArrayList<>();
-        habitAdapter = new CustomList(this, habitDataList);
+        habitAdapter = new HabitCustomList(this, habitDataList);
         habitList.setAdapter(habitAdapter);
 
         FloatingActionButton addButton = findViewById(R.id.add_button);
