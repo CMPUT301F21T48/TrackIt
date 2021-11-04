@@ -27,8 +27,10 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class TodaysHabitsActivity extends AppCompatActivity {
 
@@ -46,6 +48,9 @@ public class TodaysHabitsActivity extends AppCompatActivity {
     boolean[] isClicked = {false};
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     CollectionReference collectionReference;
+    String todayDate;
+    Calendar calendar;
+    SimpleDateFormat dateFormat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +59,10 @@ public class TodaysHabitsActivity extends AppCompatActivity {
 
         user = (User) getIntent().getSerializableExtra("User");
         collectionReference = db.collection("Users").document(user.getUsername()).collection("Habits");
+
+        calendar = Calendar.getInstance();
+        dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        todayDate = dateFormat.format(calendar.getTime());
 
         habitList = findViewById(R.id.habit_list);
         navBar = findViewById(R.id.navigation);
@@ -85,6 +94,7 @@ public class TodaysHabitsActivity extends AppCompatActivity {
                     String reason = (String) doc.getData().get("reason");
                     String startDate = (String) doc.getData().get("startDate");
                     ArrayList<String> repeatDays = (ArrayList<String>) doc.getData().get("repeatDays");
+                    String habitLastDone = (String) doc.getData().get("lastDone");
 
                     int flag = 0;
                     String day = LocalDate.now().getDayOfWeek().name();
@@ -107,7 +117,9 @@ public class TodaysHabitsActivity extends AppCompatActivity {
                         newHabit.setNumDone(numDone);
                         newHabit.setNumNotDone(numNotDone);
                         newHabit.setProgress();
-                        habitDataList.add(newHabit);
+                        if (!(todayDate.equals(habitLastDone))) {
+                            habitDataList.add(newHabit);
+                        }
                     }
                 }
                 if (habitDataList.size() == 0) {
@@ -141,12 +153,16 @@ public class TodaysHabitsActivity extends AppCompatActivity {
                 String selectedItem = item.getTitle().toString();
                 if (selectedItem.equals("Search")) {
                     Intent intent = new Intent(TodaysHabitsActivity.this, UserSearchActivity.class);
+                    intent.putExtra("currentUser", user);
                     startActivity(intent);
                 } else if (selectedItem.equals("Profile")) {
-                    Toast.makeText(TodaysHabitsActivity.this, "Item selected: " + selectedItem, Toast.LENGTH_SHORT).show();
-//                    Intent intent = new Intent(TodaysHabitsActivity.this, UserProfileActivity.class);
-//                    intent.putExtra("User", user);
-//                    startActivity(intent);
+//                    Toast.makeText(TodaysHabitsActivity.this, "Item selected: " + selectedItem, Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(TodaysHabitsActivity.this, UserProfileActivity.class);
+                    intent.putExtra("currentUser", user.getUsername());
+                    intent.putExtra("chosenUser", user.getUsername());
+                    startActivity(intent);
+                } else if (selectedItem.equals("Notifications")) {
+                    Toast.makeText(TodaysHabitsActivity.this, "Coming soon.", Toast.LENGTH_SHORT).show();
                 }
                 return false;
             }
@@ -156,7 +172,7 @@ public class TodaysHabitsActivity extends AppCompatActivity {
 
     public void viewHabit(View view) {
         intent = new Intent(TodaysHabitsActivity.this, ViewHabitActivity.class);
-        intent.putExtra("User", (Serializable) user);
+        intent.putExtra("User", user);
         intent.putExtra("HabitID", habit.getHabitID());
         intent.putExtra("Habit", habit);
         startActivity(intent);
@@ -166,6 +182,7 @@ public class TodaysHabitsActivity extends AppCompatActivity {
 
     public void habitDone(View view) {
         habit.updateNumDone();
+        habit.setLastDone(todayDate);
         collectionReference.document(habit.getHabitID()).set(habit);
         habitMenu.setVisibility(GONE);
         isClicked[0] = false;
@@ -173,6 +190,7 @@ public class TodaysHabitsActivity extends AppCompatActivity {
 
     public void habitNotDone(View view) {
         habit.updateNumNotDone();
+        habit.setLastDone(todayDate);
         collectionReference.document(habit.getHabitID()).set(habit);
         habitMenu.setVisibility(GONE);
         isClicked[0] = false;
@@ -180,5 +198,10 @@ public class TodaysHabitsActivity extends AppCompatActivity {
 
     public void logoutProfile(View view) {
         finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+
     }
 }

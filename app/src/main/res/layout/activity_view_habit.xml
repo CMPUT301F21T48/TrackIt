@@ -18,7 +18,8 @@
         app:layout_constraintBottom_toTopOf="@+id/button_edit_habit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        style="?android:attr/borderlessButtonStyle"/>
+        style="?android:attr/borderlessButtonStyle"
+        android:onClick="viewEvents"/>
 
     <TextView
         android:id="@+id/title_bar"
