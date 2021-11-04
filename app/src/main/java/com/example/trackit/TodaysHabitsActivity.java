@@ -44,6 +44,8 @@ public class TodaysHabitsActivity extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     CollectionReference collectionReference;
     final String TAG = "Sample";
+    LinearLayout habitMenu;
+    final boolean[] isClicked = {false};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,9 +124,7 @@ public class TodaysHabitsActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> arg0, View view, int position, long arg3)
             {
-                LinearLayout habitMenu = view.findViewById(R.id.habit_menu);
-
-                final boolean[] isClicked = {false};
+                habitMenu = view.findViewById(R.id.habit_menu);
                 view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -135,10 +135,11 @@ public class TodaysHabitsActivity extends AppCompatActivity {
                             habitMenu.setVisibility(View.GONE);
                             isClicked[0] = false;
                         }
+                        habitList.setSelection(position);
+                        habit = (Habit) habitList.getItemAtPosition(position);
                     }
                 });
-                habitList.setSelection(position);
-                habit = (Habit) habitList.getItemAtPosition(position);
+
             }
         });
 
@@ -163,6 +164,8 @@ public class TodaysHabitsActivity extends AppCompatActivity {
     }
 
     public void viewHabit(View view) {
+        habitMenu.setVisibility(View.GONE);
+        isClicked[0] = false;
         intent = new Intent(TodaysHabitsActivity.this, ViewHabitActivity.class);
         intent.putExtra("User", (Serializable) user);
         intent.putExtra("HabitID", habit.getHabitID());
@@ -171,11 +174,15 @@ public class TodaysHabitsActivity extends AppCompatActivity {
     }
 
     public void habitDone(View view) {
+        habitMenu.setVisibility(View.GONE);
+        isClicked[0] = false;
         habit.updateNumDone();
         collectionReference.document(habit.getHabitID()).set(habit);
     }
 
     public void habitNotDone(View view) {
+        habitMenu.setVisibility(View.GONE);
+        isClicked[0] = false;
         habit.updateNumNotDone();
         collectionReference.document(habit.getHabitID()).set(habit);
     }
