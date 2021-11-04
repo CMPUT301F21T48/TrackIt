@@ -1,7 +1,11 @@
 package com.example.trackit;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import android.app.Activity;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
@@ -9,6 +13,7 @@ import androidx.test.runner.AndroidJUnit4;
 
 import com.robotium.solo.Solo;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.After;
 import org.junit.Test;
@@ -77,7 +82,7 @@ public class TodaysHabitsActivityTest {
     }
 
     /**
-     * Checks if clicking notification navigation bar icon starts search activity
+     * Checks if clicking notification navigation bar icon starts notifications activity
      */
     @Test
     public void clickMenuItemNotification()
@@ -89,7 +94,7 @@ public class TodaysHabitsActivityTest {
     }
 
     /**
-     * Checks if clicking user profile navigation bar icon starts search activity
+     * Checks if clicking user profile navigation bar icon starts user profile activity
      */
     @Test
     public void clickMenuItemProfile()
@@ -100,6 +105,9 @@ public class TodaysHabitsActivityTest {
         solo.assertCurrentActivity("Wrong Activity", UserProfileActivity.class);
     }
 
+    /**
+     * Checks if clicking add button starts add habit activity
+     */
     @Test
     public void clickAddButton()
     {
@@ -107,6 +115,60 @@ public class TodaysHabitsActivityTest {
         solo.assertCurrentActivity("Wrong Activity", TodaysHabitsActivity.class);
         solo.clickOnView(solo.getView(R.id.add_button));
         solo.assertCurrentActivity("Wrong Activity", AddHabitActivity.class);
+    }
+
+    /**
+     * Checks if clicking a habit opens the meny to view habit and clicking 'View detials' starts view habit activity
+     */
+    @Test
+    public void clickExistingHabit()
+    {
+        //testing logging in
+        solo.assertCurrentActivity("Wrong Activity", TodaysHabitsActivity.class);
+        solo.clickOnText("Existing habit title");
+        solo.waitForText("View habit details", 1, 2000);
+        solo.clickOnText("View habit details");
+        solo.assertCurrentActivity("Wrong Activity", ViewHabitActivity.class);
+    }
+
+    /**
+     * Checks if clicking the done button updates progress bar accordingly
+     */
+    @Test
+    public void updateProgressForDone() {
+        solo.assertCurrentActivity("Wrong Activity", TodaysHabitsActivity.class);
+        //testing for doing habit 5 out of 5 times
+        solo.clickOnText("Existing habit 1");
+        ProgressBar bar = (ProgressBar) solo.getView(R.id.habit_progress);
+        int prevProgress = bar.getProgress();
+        solo.clickOnView(solo.getView(R.id.button_done));
+        int newProgress = bar.getProgress();
+        try {
+            assertTrue(prevProgress <= newProgress);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        assertFalse(solo.searchText("Existing habit 1"));
+    }
+
+    /**
+     * Checks if clicking the not done button updates progress bar accordingly
+     */
+    @Test
+    public void updateProgressForNotDone() {
+        solo.assertCurrentActivity("Wrong Activity", TodaysHabitsActivity.class);
+        //testing for doing habit 4 out of 8 times
+        solo.clickOnText("Existing habit 2");
+        ProgressBar bar = (ProgressBar) solo.getView(R.id.habit_progress);
+        int prevProgress = bar.getProgress();
+        solo.clickOnView(solo.getView(R.id.button_not_done));
+        int newProgress = bar.getProgress();
+        try {
+            assertTrue(prevProgress >= newProgress);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        assertFalse(solo.searchText("Existing habit 2"));
     }
 
     /**
