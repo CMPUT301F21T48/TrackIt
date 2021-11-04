@@ -1,6 +1,8 @@
 package com.example.trackit;
 
 import android.app.Activity;
+import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
 
 import androidx.test.platform.app.InstrumentationRegistry;
@@ -61,6 +63,21 @@ public class AddHabitActivityTest {
     {
         //testing logging in
         solo.assertCurrentActivity("Wrong Activity", TodaysHabitsActivity.class);
+        solo.enterText((EditText) solo.getView(R.id.add_title), "Test habit title");
+        solo.waitForText("Test habit title");
+        solo.enterText((EditText) solo.getView(R.id.add_reason), "Test habit reason");
+        solo.waitForText("Test habit reason");
+        solo.setDatePicker((DatePicker) solo.getView(R.id.select_start_date), 2021, 11+1, 04);
+        solo.enterText((EditText) solo.getView(R.id.add_start_date_text), "04/11/2021");
+        solo.waitForText("04/11/2021");
+        solo.clickOnView(solo.getView(R.id.checkbox_monday));
+        solo.clickOnView(solo.getView(R.id.checkbox_tuesday));
+        solo.clickOnView(solo.getView(R.id.checkbox_wednesday));
+        solo.clickOnView(solo.getView(R.id.checkbox_thursday));
+        solo.clickOnView(solo.getView(R.id.checkbox_friday));
+        solo.clickOnView(solo.getView(R.id.checkbox_saturday));
+        solo.clickOnView(solo.getView(R.id.checkbox_sunday));
+        solo.clickOnButton("Save Changes");
     }
 
     /**
