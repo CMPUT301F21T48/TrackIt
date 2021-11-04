@@ -17,6 +17,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * This is the search adapter for the user search
+ */
+
 public class UserSearchAdapter extends RecyclerView.Adapter<UserSearchAdapter.ViewHolder> implements Filterable {
 
     List<String> userNames;

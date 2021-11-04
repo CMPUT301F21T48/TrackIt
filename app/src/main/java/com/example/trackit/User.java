@@ -1,6 +1,11 @@
 package com.example.trackit;
 
 import java.io.Serializable;
+/**
+ * User is the object representing a user
+ * Contains setters and getters for the username and password
+ * times it was not done.
+ */
 
 public class User implements Serializable {
     private String username;
@@ -33,6 +38,7 @@ public class User implements Serializable {
     /**
      * returns the password of the user
      * @return
+     *      password of user
      */
     public String getPassword() {
         return password;
