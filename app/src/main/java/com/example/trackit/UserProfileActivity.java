@@ -106,7 +106,7 @@ public class UserProfileActivity extends AppCompatActivity {
                             if (task.getResult().size() > 0) {
                                 for (DocumentSnapshot document : task.getResult().getDocuments()) {
                                     Log.d("look",document.getId());
-                                    if ( document.getId().toString().compareTo("Ira") == 0) {
+                                    if ( document.getId().toString().compareTo(checkingUserName2) == 0) {
 
                                         exists[0] = true; //this is where i left at for some reason the value doesnt increase outside of this
 
