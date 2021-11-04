@@ -29,6 +29,8 @@ public class UserSearchActivity extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     List<String> userNamesComplete;
     SearchView searchView;
+    User currentUser;
+    String currentUserName;
 
 
     @Override
@@ -36,6 +38,8 @@ public class UserSearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
+        currentUser = (User) getIntent().getSerializableExtra("currentUser");
+        currentUserName = currentUser.getUsername();
         userNames = new ArrayList<>();
         recyclerView = findViewById(R.id.userDisplay);
         usersearchAdapter = new UserSearchAdapter(userNames);
@@ -114,8 +118,8 @@ public class UserSearchActivity extends AppCompatActivity {
         usersearchAdapter.setOnEntryClickListener(new UserSearchAdapter.OnEntryClickListener() {
             @Override
             public void onEntryClick(View view, int position){
-                Intent intent = new Intent(getApplicationContext(), UserProfileActivity.class);
-                intent.putExtra("currentUser", "amir");
+                Intent intent = new Intent(UserSearchActivity.this, UserProfileActivity.class);
+                intent.putExtra("currentUser", currentUserName);
                 intent.putExtra("chosenUser", userNames.get(position));
                 startActivity(intent);
             }

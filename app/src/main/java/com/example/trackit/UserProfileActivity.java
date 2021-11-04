@@ -25,8 +25,8 @@ public class UserProfileActivity extends AppCompatActivity {
     CollectionReference collectionReference;
     Button followButton;
     TextView userNameView, userFollowers, userFollowing;
-    User currentUser = new User("","");
-    User chosenUser = new User("","");
+    String currentUserName;
+    String chosenUserName;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -41,15 +41,12 @@ public class UserProfileActivity extends AppCompatActivity {
         AtomicReference<String> Username = new AtomicReference<>("test");
         AtomicReference<String> Password = new AtomicReference<>("test");
 
-        String currentUserName = "amir";
-        String chosenUserName = getIntent().getStringExtra("chosenUser");
+        currentUserName = (String) getIntent().getStringExtra("currentUser");
+        chosenUserName = (String) getIntent().getStringExtra("chosenUser");
 
         Log.d("msg", "this is what you wanted " + Username + " => ");
-        Toast toast = Toast.makeText(this, chosenUser.getUsername(),Toast.LENGTH_SHORT);
-        toast.show();
 
-        userNameView.setText(currentUser.getPassword());
-
+        userNameView.setText(chosenUserName);
 
         if(chosenUserName.compareTo(currentUserName) == 0){
             followButton.setText("Your Profile");

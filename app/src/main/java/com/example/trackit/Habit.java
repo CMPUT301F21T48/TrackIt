@@ -13,6 +13,7 @@ public class Habit implements Serializable {
     private int numDone;
     private int numNotDone;
     private String ID;
+    private String lastDone;
 
     public Habit(String title, String reason, String startDate, ArrayList<String> repeatDays)
     {
@@ -20,6 +21,7 @@ public class Habit implements Serializable {
         this.reason = reason;
         this.startDate = startDate;
         this.repeatDays = repeatDays;
+        this.lastDone = null;
         this.ID = null;
         this.progress = 0;
         this.numDone = 0;
@@ -34,6 +36,9 @@ public class Habit implements Serializable {
     public void setHabitID(String id) { this.ID = id; }
     public void setNumDone(Integer numDone) {this.numDone = numDone;}
     public void setNumNotDone(Integer numNotDone) { this.numNotDone = numNotDone;}
+    public void setLastDone(String lastDone) {
+        this.lastDone = lastDone;
+    }
     public void setProgress() {
         int sum = this.numDone + this.numNotDone;
         if (sum != 0) {
@@ -49,6 +54,9 @@ public class Habit implements Serializable {
     public String getHabitID() { return this.ID; }
     public int getNumDone() {return this.numDone;}
     public int getNumNotDone() {return this.numNotDone;}
+    public String getLastDone() {
+        return this.lastDone;
+    }
 
     public void updateNumDone() {
         this.numDone++;
