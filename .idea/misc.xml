@@ -46,6 +46,9 @@
         <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/menu/menu_nav_bar.xml" value="0.1" />
         <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/menu/nav_bar_items.xml" value="0.15789473684210525" />
         <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/navigation/fragment_navigation.xml" value="0.15789473684210525" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_register.xml" value="0.1105072463768116" />
+        <entry key="app/src/main/res/layout/activity_todays_habits.xml" value="0.15070921985815602" />
       </map>
     </option>
   </component>
