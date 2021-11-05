@@ -129,10 +129,11 @@ public class NotificationActivityTest {
     }
 
     /**
-     * Checks if the user is able to see the activities of user followed
+     * Checks if the user is able to see the activities of user followed and if unfollowing them
+     * makes the habits disappear again
      */
     @Test
-    public void dCcheckHabitsUser() {
+    public void fCcheckHabitsUser() {
         solo.enterText((EditText) solo.getView(R.id.login_username), "testUser2");
         solo.waitForText("testUser2", 1, 2000);
         solo.enterText((EditText) solo.getView(R.id.login_password), "testPassword");
@@ -144,6 +145,10 @@ public class NotificationActivityTest {
         solo.clickOnText("testUser");
         assertTrue(solo.searchText("Existing habit 1"));
         assertTrue(solo.searchText("Existing habit 2"));
+        solo.clickOnView(solo.getView(R.id.followButton));
+        solo.searchText("Habit");
+        assertFalse(solo.searchText("Existing habit 1"));
+        assertFalse(solo.searchText("Existing habit 2"));
     }
 
 }
