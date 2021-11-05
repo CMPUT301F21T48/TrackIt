@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -16,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -46,18 +48,22 @@ public class UserProfileActivity extends AppCompatActivity {
     ListView habitList;
     ArrayAdapter<Habit> habitAdapter;
     ArrayList<Habit> habitDataList;
-
+    TextView emptyMessage;
+    FloatingActionButton addButton;
+    Habit habit;
     @SuppressLint("SetTextI18n")
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
 
+        emptyMessage = findViewById(R.id.no_habit_message);
         followButton = findViewById(R.id.followButton);
         userNameView = findViewById(R.id.userNameView);
         userFollowers = findViewById(R.id.followerCount);
         userFollowing = findViewById(R.id.followingCount);
 
+        addButton = findViewById(R.id.add_habit);
         habitList = findViewById(R.id.habitList);
         habitDataList = new ArrayList<>();
         habitAdapter = new HabitCustomList(this, habitDataList);
@@ -69,6 +75,16 @@ public class UserProfileActivity extends AppCompatActivity {
         Boolean exists = false;
 
         userNameView.setText(chosenUserName);
+        currentUser.setUsername(currentUserName);
+
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(UserProfileActivity.this, AddHabitActivity.class);
+                intent.putExtra("User", currentUser);
+                startActivity(intent);
+            }
+        });
 
         getDataFromFB(new AsyncCall() {
             @Override
@@ -113,8 +129,25 @@ public class UserProfileActivity extends AppCompatActivity {
                         newHabit.setProgress();
                         habitDataList.add(newHabit);
                     }
+                    if (habitDataList.size() == 0) {
+                        emptyMessage.setVisibility(View.VISIBLE);
+                        emptyMessage.setText("You have not added any habit(s).");
+                    }
                     habitAdapter.notifyDataSetChanged();
                 };
+            });
+
+            habitList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> arg0, View view, int position, long arg3) {
+                    habitList.setSelection(position);
+                    habit = (Habit) habitList.getItemAtPosition(position);
+                    Intent intent = new Intent(UserProfileActivity.this, ViewHabitActivity.class);
+                    intent.putExtra("User", currentUser);
+                    intent.putExtra("HabitID", habit.getHabitID());
+                    intent.putExtra("Habit", habit);
+                    startActivity(intent);
+                }
             });
         }
         else{
@@ -155,6 +188,10 @@ public class UserProfileActivity extends AppCompatActivity {
                                     newHabit.setNumNotDone(numNotDone);
                                     newHabit.setProgress();
                                     habitDataList.add(newHabit);
+                                }
+                                if (habitDataList.size() == 0) {
+                                    emptyMessage.setVisibility(View.VISIBLE);
+                                    emptyMessage.setText("This user does not have any added habit(s).");
                                 }
                                 habitAdapter.notifyDataSetChanged();
                             };

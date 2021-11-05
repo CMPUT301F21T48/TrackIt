@@ -17,7 +17,8 @@
     <string name="habit_reason_text">Reason:</string>
     <string name="habit_start_date_text">Date started:</string>
     <string name="habit_repeat_text">Repeat:</string>
-    <string name="no_habits">You do not have any habit(s) listed for today.</string>
+    <string name="no_habits_today">You do not have any pending habit(s) listed for today.</string>
+    <string name="no_habits">You have not added any habit(s).</string>
 
     <!-- Button labels -->
     <string name="button_sign_up" tools:ignore="ExtraTranslation">Sign Up</string>

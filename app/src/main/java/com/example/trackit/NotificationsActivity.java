@@ -8,7 +8,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -82,7 +81,6 @@ public class NotificationsActivity extends AppCompatActivity {
                 }
                 notificationList.setSelection(position);
                 selectedUser = (User) notificationList.getItemAtPosition(position);
-                Toast.makeText(NotificationsActivity.this, selectedUser.getUsername(), Toast.LENGTH_SHORT).show();
             }
         });
     }
