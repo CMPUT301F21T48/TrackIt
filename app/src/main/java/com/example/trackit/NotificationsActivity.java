@@ -89,7 +89,7 @@ public class NotificationsActivity extends AppCompatActivity {
         collectionReference.document(selectedUser.getUsername()).update("Value", "true");
         db.collection("Users").document(selectedUser.getUsername())
                 .collection("Following").document(user.getUsername())
-                .update("Value", true);
+                .update("Value", "true");
         notificationMenu.setVisibility(GONE);
         isClicked[0] = false;
     }

@@ -21,7 +21,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -52,6 +51,7 @@ public class UserProfileActivity extends AppCompatActivity {
     TextView emptyMessage;
     FloatingActionButton addButton;
     Habit habit;
+    String followStatus;
     @SuppressLint("SetTextI18n")
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -161,6 +161,34 @@ public class UserProfileActivity extends AppCompatActivity {
                             public void onCallBack(Boolean exists) {
                                 if(exists){
                                     followButton.setText("Unfollow");
+
+                                    collectionReference.document(chosenUserName).collection("Habits").addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
+                                            habitDataList.clear();
+                                            for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                                                String ID = doc.getId();
+                                                String title = (String) doc.getData().get("title");
+                                                String reason = (String) doc.getData().get("reason");
+                                                String startDate = (String) doc.getData().get("startDate");
+                                                ArrayList<String> repeatDays = (ArrayList<String>) doc.getData().get("repeatDays");
+
+                                                int numDone = (int) ((long) doc.getData().get("numDone"));
+                                                int numNotDone = (int) ((long) doc.getData().get("numNotDone"));
+                                                Habit newHabit = new Habit(title, reason, startDate, repeatDays);
+                                                newHabit.setHabitID(ID);
+                                                newHabit.setNumDone(numDone);
+                                                newHabit.setNumNotDone(numNotDone);
+                                                newHabit.setProgress();
+                                                habitDataList.add(newHabit);
+                                            }
+                                            if (habitDataList.size() == 0) {
+                                                emptyMessage.setVisibility(View.VISIBLE);
+                                                emptyMessage.setText("This user does not have any added habit(s).");
+                                            }
+                                            habitAdapter.notifyDataSetChanged();
+                                        }
+                                    });
                                 }
                                 else{
                                     followButton.setText("Requested");
@@ -180,35 +208,6 @@ public class UserProfileActivity extends AppCompatActivity {
                                 startActivity(intent);
                             };
                         });
-
-                        collectionReference.document(chosenUserName).collection("Habits").addSnapshotListener(new EventListener<QuerySnapshot>() {
-                            @Override
-                            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
-                                habitDataList.clear();
-                                for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
-                                    String ID = doc.getId();
-                                    String title = (String) doc.getData().get("title");
-                                    String reason = (String) doc.getData().get("reason");
-                                    String startDate = (String) doc.getData().get("startDate");
-                                    ArrayList<String> repeatDays = (ArrayList<String>) doc.getData().get("repeatDays");
-
-                                    int numDone = (int) ((long) doc.getData().get("numDone"));
-                                    int numNotDone = (int) ((long) doc.getData().get("numNotDone"));
-                                    Habit newHabit = new Habit(title, reason, startDate, repeatDays);
-                                    newHabit.setHabitID(ID);
-                                    newHabit.setNumDone(numDone);
-                                    newHabit.setNumNotDone(numNotDone);
-                                    newHabit.setProgress();
-                                    habitDataList.add(newHabit);
-                                }
-                                if (habitDataList.size() == 0) {
-                                    emptyMessage.setVisibility(View.VISIBLE);
-                                    emptyMessage.setText("This user does not have any added habit(s).");
-                                }
-                                habitAdapter.notifyDataSetChanged();
-                            };
-                        });
-
                     }
                     else{
                         followButton.setText("Follow");
@@ -318,6 +317,4 @@ public class UserProfileActivity extends AppCompatActivity {
                     }
                 });
     }
-
-//    public Boolean existsInFB(String )
 }
