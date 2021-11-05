@@ -17,7 +17,10 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.Serializable;
-
+/**
+ * This is the activity for viewing a habit.
+ * The user can also edit or delete a habit when viewing its details
+ */
 public class ViewHabitActivity extends AppCompatActivity {
 
 
@@ -80,6 +83,12 @@ public class ViewHabitActivity extends AppCompatActivity {
         repeatDays.setText(textRepeat);
     }
 
+    /**
+     *  User can edit Habit details when viewing it
+     *  Starts intent to call EditHabitActivity
+     * @param view
+     *      instance of object View
+     */
     public void editHabit(View view)
     {
         intent = new Intent(ViewHabitActivity.this, EditHabitActivity.class);
@@ -89,6 +98,11 @@ public class ViewHabitActivity extends AppCompatActivity {
         finish();
     }
 
+    /**
+     * User can delete a habit when viewing its details
+     * @param view
+     *      instance of object View
+     */
     public void deleteHabit(View view)
     {
         collectionReference.document(habit.getHabitID())
@@ -108,6 +122,7 @@ public class ViewHabitActivity extends AppCompatActivity {
         finish();
     }
 
+    // Habit events are left for part 4
     public void viewEvents(View view) {
         Toast.makeText(this, "Coming soon.", Toast.LENGTH_SHORT).show();
     }

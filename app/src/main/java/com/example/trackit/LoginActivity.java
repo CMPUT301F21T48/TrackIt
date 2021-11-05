@@ -16,6 +16,12 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Objects;
 
+/**
+ * This is the the start up launch activity where the user can login into the HabitUp
+ * application. If a username does not exist, the user cannot sign in.
+ * A username cannot be empty.
+ * Once the user logs in, they will be taken to their today's habits page.
+ */
 public class LoginActivity extends AppCompatActivity {
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();

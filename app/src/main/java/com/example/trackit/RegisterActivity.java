@@ -16,7 +16,12 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-
+/**
+ * This is the the start up launch activity where the user can register into the HabitUp
+ * application. If a username does not exist, the user cannot sign in.
+ * A username cannot be empty.
+ * Once the user logs in, they will be taken to their today's habits page.
+ */
 public class RegisterActivity extends AppCompatActivity {
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -26,7 +31,7 @@ public class RegisterActivity extends AppCompatActivity {
     Button registerButton;
     User user = new User("","");
     final String TAG = "Sample";
-
+    
     private void verifyInput(String registerUsername, String registerPassword, Set<String> names){
 
         if (registerUsername.length()>0 && registerPassword.length()>0) {

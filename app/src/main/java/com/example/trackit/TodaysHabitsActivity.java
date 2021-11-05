@@ -30,7 +30,14 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
-
+/**
+ * This is the activity to display today's habits for the user.
+ * It displays all the habits for today and their details
+ * User can click on the habit to view details and edit details
+ * User can also delete the habit from today's habit
+ * User can select checkbox when they finish today's habit and the visual progress bar will increase
+ * The user can also choose to add more habits here if they wish to
+ */
 public class TodaysHabitsActivity extends AppCompatActivity {
 
     final String TAG = "Sample";
@@ -173,6 +180,11 @@ public class TodaysHabitsActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * This calls the viewHabit Activity
+     * @param view
+     *
+     */
     public void viewHabit(View view) {
         intent = new Intent(TodaysHabitsActivity.this, ViewHabitActivity.class);
         intent.putExtra("User", user);
@@ -183,6 +195,10 @@ public class TodaysHabitsActivity extends AppCompatActivity {
         isClicked[0] = false;
     }
 
+    /**
+     *
+     * @param view
+     */
     public void habitDone(View view) {
         habit.updateNumDone();
         habit.setLastDone(todayDate);
@@ -191,6 +207,10 @@ public class TodaysHabitsActivity extends AppCompatActivity {
         isClicked[0] = false;
     }
 
+    /**
+     *
+     * @param view
+     */
     public void habitNotDone(View view) {
         habit.updateNumNotDone();
         habit.setLastDone(todayDate);

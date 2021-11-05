@@ -13,6 +13,11 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
+/**
+ * Custom list for creating the habit list, which displays the habit name, details and
+ * it's schedule.
+ */
+
 public class HabitCustomList extends ArrayAdapter<Habit> {
 
     private final ArrayList<Habit> habits;

@@ -16,6 +16,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
+/**
+ * This is the activity for editing a habit.
+ * The user can change the start date and the associated attribute.
+ * The user can add or remove more days for the habit's schedule, but must have at least 1 day selected.
+ * If the user leaves a field empty while editing a habit the user is informed to not leave any missing fields
+ */
 public class EditHabitActivity extends AppCompatActivity {
 
     EditText editHabitTitle;
@@ -90,6 +96,11 @@ public class EditHabitActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     *  Selects the date using datePicker and sets the textview to selected date
+     * @param view
+     *      instance of object View
+     */
     public void selectDate(View view) {
         // Retrieve and set selected start date
         String date = Integer.toString(datePicker.getDayOfMonth());
@@ -105,6 +116,11 @@ public class EditHabitActivity extends AppCompatActivity {
         selectedDate.setText(addStartDate);
     }
 
+
+    /**
+     *  Save the changes for the habit 
+     * @param view
+     */
     public void saveChanges(View view) {
         String habitTitle = editHabitTitle.getText().toString();
         String habitReason = editHabitReason.getText().toString();
@@ -133,9 +149,11 @@ public class EditHabitActivity extends AppCompatActivity {
             repeatDays.add("Su");
         }
 
+        // inform the user to not leave any field empty
         if (habitTitle.isEmpty() || habitReason.isEmpty() || habitStartDate.equals("MM/DD/YYYY") || repeatDays.isEmpty()) {
             Snackbar.make(this, view, "Do not leave any field(s) empty", Snackbar.LENGTH_LONG).show();
         }
+        // add the habit to firestore
         else {
             habit.setTitle(habitTitle);
             habit.setReason(habitReason);
@@ -146,5 +164,9 @@ public class EditHabitActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     *  Cancel the add habit
+     * @param view
+     */
     public void cancelAddHabit(View view) { finish(); }
 }

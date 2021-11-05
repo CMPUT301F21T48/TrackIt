@@ -3,6 +3,13 @@ package com.example.trackit;
 import java.io.Serializable;
 import java.lang.*;
 import java.util.*;
+/**
+ * Habit is the object representing a habit type, belonging to a specific user.
+ * It consists of a name, reason, schedule of days of the week it should be repeated, the date to start, and
+ * a progress bar which will increase each time the habit is done.
+ * The Habit performs some calculations for how many times it was done on schedule, and how many
+ * times it was not done.
+ */
 
 public class Habit implements Serializable {
     private String title;
