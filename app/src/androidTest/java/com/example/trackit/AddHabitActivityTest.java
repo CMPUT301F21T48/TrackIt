@@ -1,5 +1,7 @@
 package com.example.trackit;
 
+import static org.junit.Assert.assertTrue;
+
 import android.app.Activity;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
@@ -18,7 +20,7 @@ import org.junit.Rule;
 import org.junit.runner.RunWith;
 
 /**
- * Test class for WelcomeActivity. All the UI tests are written here. Robotium test framework is used
+ * Test class for AddHabitActivity. All the UI tests are written here. Robotium test framework is used
  */
 
 public class AddHabitActivityTest {
@@ -78,9 +80,9 @@ public class AddHabitActivityTest {
         solo.clickOnView(solo.getView(R.id.checkbox_sunday));
         solo.clickOnButton("Add Habit");
         solo.assertCurrentActivity("Wrong Activity", TodaysHabitsActivity.class);
-        solo.waitForText("Test habit reason", 1, 2000);
-        solo.waitForText("Repeat: M T W R F S Su", 1, 2000);
-        solo.waitForText("Reason: Test habit reason", 1, 2000);
+        assertTrue(solo.searchText("Test habit reason"));
+        assertTrue(solo.searchText("Repeat: M T W R F S Su"));
+        assertTrue(solo.searchText("Reason: Test habit reason"));
     }
 
     /**
@@ -89,7 +91,6 @@ public class AddHabitActivityTest {
     @Test
     public void emptyTitleField()
     {
-        //testing logging in
         solo.assertCurrentActivity("Wrong Activity", AddHabitActivity.class);
         solo.enterText((EditText) solo.getView(R.id.add_reason), "Test habit reason");
         solo.waitForText("Test habit reason", 1, 2000);
@@ -114,7 +115,6 @@ public class AddHabitActivityTest {
     @Test
     public void emptyReasonField()
     {
-        //testing logging in
         solo.assertCurrentActivity("Wrong Activity", AddHabitActivity.class);
         solo.enterText((EditText) solo.getView(R.id.add_title), "Test habit title");
         solo.waitForText("Test habit title", 1, 2000);
@@ -139,7 +139,6 @@ public class AddHabitActivityTest {
     @Test
     public void emptyDateField()
     {
-        //testing logging in
         solo.assertCurrentActivity("Wrong Activity", AddHabitActivity.class);
         solo.enterText((EditText) solo.getView(R.id.add_title), "Test habit title");
         solo.waitForText("Test habit title", 1, 2000);
@@ -159,7 +158,6 @@ public class AddHabitActivityTest {
     @Test
     public void emptyRepeatField()
     {
-        //testing logging in
         solo.assertCurrentActivity("Wrong Activity", AddHabitActivity.class);
         solo.enterText((EditText) solo.getView(R.id.add_title), "Test habit title");
         solo.waitForText("Test habit title", 1, 2000);

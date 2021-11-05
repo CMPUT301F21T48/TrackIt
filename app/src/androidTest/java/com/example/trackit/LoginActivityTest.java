@@ -1,5 +1,7 @@
 package com.example.trackit;
 
+import static org.junit.Assert.assertTrue;
+
 import android.app.Activity;
 import android.widget.EditText;
 
@@ -16,7 +18,7 @@ import org.junit.Rule;
 import org.junit.runner.RunWith;
 
 /**
- * Test class for WelcomeActivity. All the UI tests are written here. Robotium test framework is used
+ * Test class for LoginActivity. All the UI tests are written here. Robotium test framework is used
  */
 
 public class LoginActivityTest {
@@ -78,7 +80,7 @@ public class LoginActivityTest {
         solo.enterText((EditText) solo.getView(R.id.login_password), "testpassword");
         solo.waitForText("testpassword", 1, 2000);
         solo.clickOnText("Login");
-        solo.waitForText("Invalid Password", 1, 2000);
+        assertTrue(solo.searchText("Invalid Password"));
         solo.assertCurrentActivity("Wrong Activity", LoginActivity.class);
     }
 
@@ -94,7 +96,7 @@ public class LoginActivityTest {
         solo.enterText((EditText) solo.getView(R.id.login_password), "testPassword");
         solo.waitForText("testPassword", 1, 2000);
         solo.clickOnText("Login");
-        solo.waitForText("Username not registered", 1, 2000);
+        assertTrue(solo.searchText("Username not registered"));
         solo.assertCurrentActivity("Wrong Activity", LoginActivity.class);
     }
 
@@ -108,7 +110,7 @@ public class LoginActivityTest {
         solo.enterText((EditText) solo.getView(R.id.login_password), "testPassword");
         solo.waitForText("testPassword", 1, 2000);
         solo.clickOnText("Login");
-        solo.waitForText("Username field cannot be empty", 1, 2000);
+        assertTrue(solo.searchText("Username field cannot be empty"));
         solo.assertCurrentActivity("Wrong Activity", LoginActivity.class);
     }
 
@@ -122,7 +124,7 @@ public class LoginActivityTest {
         solo.enterText((EditText) solo.getView(R.id.login_username), "testUser");
         solo.waitForText("testUser", 1, 2000);
         solo.clickOnText("Login");
-        solo.waitForText("Password field cannot be empty", 1, 2000);
+        assertTrue(solo.searchText("Password field cannot be empty"));
         solo.assertCurrentActivity("Wrong Activity", LoginActivity.class);
     }
 

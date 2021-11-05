@@ -71,10 +71,6 @@ public class EditHabitActivity extends AppCompatActivity {
         editHabitTitle.setText(habit.getTitle());
         editHabitReason.setText(habit.getReason());
         selectedDate.setText(habit.getStartDate());
-        Integer year = Integer.parseInt(habit.getStartDate().substring(6,10));
-        Integer month = Integer.parseInt(habit.getStartDate().substring(3,5))-1;
-        Integer day = Integer.parseInt(habit.getStartDate().substring(0,2));
-        datePicker.updateDate(day,month,year);
 
         ArrayList<String> repeatDays = habit.getRepeatDays();
         for (int i = 0; i < repeatDays.size(); i++)
@@ -112,7 +108,7 @@ public class EditHabitActivity extends AppCompatActivity {
             month = "0" + month;
         }
         String year = Integer.toString(datePicker.getYear());
-        addStartDate = date + "/" + month + "/" + year;
+        addStartDate = month + "/" + date + "/" + year;
         selectedDate.setText(addStartDate);
     }
 
