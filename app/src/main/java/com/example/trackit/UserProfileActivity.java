@@ -51,6 +51,7 @@ public class UserProfileActivity extends AppCompatActivity {
     TextView emptyMessage;
     FloatingActionButton addButton;
     Habit habit;
+    String followStatus;
     @SuppressLint("SetTextI18n")
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -155,7 +156,48 @@ public class UserProfileActivity extends AppCompatActivity {
                 @Override
                 public void onCallBack(Boolean exists) {
                     if(exists) {
-                        followButton.setText("Unfollow");
+                        checkFollow(new FollowExistsAsyncCall() {
+                            @Override
+                            public void onCallBack(Boolean exists) {
+                                if(exists){
+                                    followButton.setText("Unfollow");
+
+                                    collectionReference.document(chosenUserName).collection("Habits").addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
+                                            habitDataList.clear();
+                                            for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                                                String ID = doc.getId();
+                                                String title = (String) doc.getData().get("title");
+                                                String reason = (String) doc.getData().get("reason");
+                                                String startDate = (String) doc.getData().get("startDate");
+                                                ArrayList<String> repeatDays = (ArrayList<String>) doc.getData().get("repeatDays");
+
+                                                int numDone = (int) ((long) doc.getData().get("numDone"));
+                                                int numNotDone = (int) ((long) doc.getData().get("numNotDone"));
+                                                Habit newHabit = new Habit(title, reason, startDate, repeatDays);
+                                                newHabit.setHabitID(ID);
+                                                newHabit.setNumDone(numDone);
+                                                newHabit.setNumNotDone(numNotDone);
+                                                newHabit.setProgress();
+                                                habitDataList.add(newHabit);
+                                            }
+                                            if (habitDataList.size() == 0) {
+                                                emptyMessage.setVisibility(View.VISIBLE);
+                                                emptyMessage.setText("This user does not have any added habit(s).");
+                                            }
+                                            habitAdapter.notifyDataSetChanged();
+                                        }
+                                    });
+                                }
+                                else{
+                                    followButton.setText("Requested");
+                                    emptyMessage.setVisibility(View.VISIBLE);
+                                    emptyMessage.setText("You do not have permission to view this user's habits.");
+                                }
+                            }
+                        }, "Followers", chosenUserName, currentUserName);
+
                         followButton.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -168,38 +210,11 @@ public class UserProfileActivity extends AppCompatActivity {
                                 startActivity(intent);
                             };
                         });
-
-                        collectionReference.document(chosenUserName).collection("Habits").addSnapshotListener(new EventListener<QuerySnapshot>() {
-                            @Override
-                            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
-                                habitDataList.clear();
-                                for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
-                                    String ID = doc.getId();
-                                    String title = (String) doc.getData().get("title");
-                                    String reason = (String) doc.getData().get("reason");
-                                    String startDate = (String) doc.getData().get("startDate");
-                                    ArrayList<String> repeatDays = (ArrayList<String>) doc.getData().get("repeatDays");
-
-                                    int numDone = (int) ((long) doc.getData().get("numDone"));
-                                    int numNotDone = (int) ((long) doc.getData().get("numNotDone"));
-                                    Habit newHabit = new Habit(title, reason, startDate, repeatDays);
-                                    newHabit.setHabitID(ID);
-                                    newHabit.setNumDone(numDone);
-                                    newHabit.setNumNotDone(numNotDone);
-                                    newHabit.setProgress();
-                                    habitDataList.add(newHabit);
-                                }
-                                if (habitDataList.size() == 0) {
-                                    emptyMessage.setVisibility(View.VISIBLE);
-                                    emptyMessage.setText("This user does not have any added habit(s).");
-                                }
-                                habitAdapter.notifyDataSetChanged();
-                            };
-                        });
-
                     }
                     else{
                         followButton.setText("Follow");
+                        emptyMessage.setVisibility(View.VISIBLE);
+                        emptyMessage.setText("You do not have permission to view this user's habits.");
                         followButton.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -220,6 +235,35 @@ public class UserProfileActivity extends AppCompatActivity {
 
 
         }
+    }
+
+    public interface FollowExistsAsyncCall{
+        void onCallBack(Boolean exists);
+    }
+
+    public void checkFollow(FollowExistsAsyncCall followExistsAsyncCall, String CollectionList,String checkingUserName1, String checkingUserName2){
+        final Boolean[] exists = {false};
+        db.collection("Users").document(checkingUserName1).collection(CollectionList)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            if (task.getResult().size() > 0) {
+                                for (DocumentSnapshot document : task.getResult().getDocuments()) {
+                                    Log.d("look",document.getId());
+                                    if ( document.getId().toString().compareTo(checkingUserName2) == 0) {
+                                        if( document.get("Value").toString().compareTo("true") == 0 ) {
+                                            exists[0] = true; //this is where i left at for some reason the value doesnt increase outside of this
+                                        }
+                                    }
+                                }
+                            }
+                            followExistsAsyncCall.onCallBack(exists[0]);
+                        }
+                    }
+                });
+
     }
 
     public interface ExistsAsyncCall{
@@ -277,6 +321,4 @@ public class UserProfileActivity extends AppCompatActivity {
                     }
                 });
     }
-
-//    public Boolean existsInFB(String )
 }
