@@ -65,12 +65,21 @@ public class SearchUserActivityTest {
      */
     @Test
     public void checkProfileItems() throws Exception{
-        solo.assertCurrentActivity("Wrong Activity", SearchUserActivityTest.class);
+        solo.assertCurrentActivity("Wrong Activity", UserSearchActivity.class);
         solo.enterText((EditText) solo.getView(R.id.squery), "testUser");
         solo.clickOnView(solo.getView(R.id.squerybutton));
         solo.clickOnText("testUser");
         solo.assertCurrentActivity("Wrong Activity", UserProfileActivity.class);
+        assertTrue(solo.searchText("testUser"));
     }
 
+    /**
+     * Closes the activity after each test
+     * @throws Exception
+     */
+    @After
+    public void tearDown() throws Exception {
+        solo.finishOpenedActivities();
+    }
 
 }

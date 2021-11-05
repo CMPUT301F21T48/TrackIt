@@ -96,6 +96,15 @@ public class UserProfileActivityTest {
         solo.clickOnText("Habit 1");
         solo.assertCurrentActivity("Wrong Activity", ViewHabitActivity.class);
     }
+
+    /**
+     * Closes the activity after each test
+     * @throws Exception
+     */
+    @After
+    public void tearDown() throws Exception {
+        solo.finishOpenedActivities();
+    }
 }
 
 
