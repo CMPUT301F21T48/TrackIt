@@ -45,6 +45,7 @@
         <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/menu/menu_nav_bar.xml" value="0.1" />
         <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/menu/nav_bar_items.xml" value="0.15789473684210525" />
         <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/navigation/fragment_navigation.xml" value="0.15789473684210525" />
+        <entry key="..\:/Users/rocke/OneDrive/Desktop/TrackIt/app/src/main/res/layout/activity_user_profile.xml" value="0.12395833333333334" />
         <entry key="app/src/main/res/layout/activity_add_habit.xml" value="0.11231884057971014" />
         <entry key="app/src/main/res/layout/activity_edit_habit.xml" value="1.2129171331849133" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.1" />
@@ -54,6 +55,11 @@
         <entry key="app/src/main/res/menu/menu_nav_bar.xml" value="0.3550423217259934" />
       </map>
     </option>
+  </component>
+  <component name="JavadocGenerationManager">
+    <option name="OUTPUT_DIRECTORY" value="$USER_HOME$/Documents" />
+    <option name="OTHER_OPTIONS" value="-encoding UTF-8" />
+    <option name="OPTION_INCLUDE_LIBS" value="true" />
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />

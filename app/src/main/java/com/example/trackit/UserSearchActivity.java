@@ -44,6 +44,9 @@ public class UserSearchActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.userDisplay);
         usersearchAdapter = new UserSearchAdapter(userNames);
         userNamesComplete = new ArrayList<>();
+
+        //we get a list of all the usernames to populate the recyclerview
+
         db.collection("Users").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -61,7 +64,7 @@ public class UserSearchActivity extends AppCompatActivity {
         TextView sQuery = findViewById(R.id.squery);
 
         Button queryClearer = findViewById(R.id.squerybutton);
-
+        //queryCleaner takes the query from the text in squery and then performs a simple filter in order to get only those usernames that match the query
         queryClearer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -86,6 +89,7 @@ public class UserSearchActivity extends AppCompatActivity {
 
         Button clearButton = findViewById(R.id.clearbutton);
 
+        //clearButton clears the text in squery and sets the recyclerview to display all the initial usernames again
         clearButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -115,6 +119,7 @@ public class UserSearchActivity extends AppCompatActivity {
 //        });
 
 
+        // setting a click listener to get the username that has been selected
         usersearchAdapter.setOnEntryClickListener(new UserSearchAdapter.OnEntryClickListener() {
             @Override
             public void onEntryClick(View view, int position){
