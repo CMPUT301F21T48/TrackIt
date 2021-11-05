@@ -46,6 +46,7 @@ public class UserProfileActivity extends AppCompatActivity {
     ListView habitList;
     ArrayAdapter<Habit> habitAdapter;
     ArrayList<Habit> habitDataList;
+    TextView emptyMessage;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -53,6 +54,7 @@ public class UserProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
 
+        emptyMessage = findViewById(R.id.no_habit_message);
         followButton = findViewById(R.id.followButton);
         userNameView = findViewById(R.id.userNameView);
         userFollowers = findViewById(R.id.followerCount);
@@ -113,6 +115,10 @@ public class UserProfileActivity extends AppCompatActivity {
                         newHabit.setProgress();
                         habitDataList.add(newHabit);
                     }
+                    if (habitDataList.size() == 0) {
+                        emptyMessage.setVisibility(View.VISIBLE);
+                        emptyMessage.setText("You have not added any habit(s).");
+                    }
                     habitAdapter.notifyDataSetChanged();
                 };
             });
@@ -155,6 +161,10 @@ public class UserProfileActivity extends AppCompatActivity {
                                     newHabit.setNumNotDone(numNotDone);
                                     newHabit.setProgress();
                                     habitDataList.add(newHabit);
+                                }
+                                if (habitDataList.size() == 0) {
+                                    emptyMessage.setVisibility(View.VISIBLE);
+                                    emptyMessage.setText("This user does not have any added habit(s).");
                                 }
                                 habitAdapter.notifyDataSetChanged();
                             };
