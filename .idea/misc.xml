@@ -50,6 +50,7 @@
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_notifications.xml" value="0.17083333333333334" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.1105072463768116" />
+        <entry key="app/src/main/res/layout/activity_search.xml" value="0.20516304347826086" />
         <entry key="app/src/main/res/layout/activity_todays_habits.xml" value="0.41273560085594146" />
         <entry key="app/src/main/res/layout/activity_user_profile.xml" value="0.1" />
         <entry key="app/src/main/res/layout/habit.xml" value="0.1" />
