@@ -11,7 +11,6 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,7 +18,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -32,7 +30,14 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
-
+/**
+ * This is the activity to display today's habits for the user. It displays all the habits for today
+ * and their details. User can click on the habit to view details and edit details. User can also
+ * remove the habit from the list. User can select the check mark when they finish today's habit and
+ * the progress value of the habit will be increased. The user can also choose to add more habits
+ * here if they wish to. Finally, users can use the navigation bar at the bottom to navigate to the
+ * different activities of the app such as Search, Notifications, and Profile.
+ */
 public class TodaysHabitsActivity extends AppCompatActivity {
 
     final String TAG = "Sample";
@@ -102,12 +107,18 @@ public class TodaysHabitsActivity extends AppCompatActivity {
                     String dayFirstLetter = String.valueOf(day.charAt(0));
 
                     for (int i = 0; i < repeatDays.size(); i++) {
-                        if (repeatDays.get(i).length() > 1) {
-                            if (day.substring(0, 2).equals(repeatDays.get(i))) {
+                        if (day.startsWith("TH")) {
+                            if (repeatDays.get(i).equals("R")) {
                                 flag = 1;
                             }
-                        } else if (dayFirstLetter.equals(repeatDays.get(i))) {
+                        } else {
+                            if (repeatDays.get(i).length() > 1) {
+                                if (day.substring(0, 2).equals(repeatDays.get(i))) {
+                                flag = 1;
+                                }
+                            } else if (dayFirstLetter.equals(repeatDays.get(i))) {
                             flag = 1;
+                            }
                         }
                     }
 
@@ -126,6 +137,8 @@ public class TodaysHabitsActivity extends AppCompatActivity {
                 }
                 if (habitDataList.size() == 0) {
                     emptyMessage.setVisibility(View.VISIBLE);
+                } else {
+                    emptyMessage.setVisibility(View.GONE);
                 }
                 habitAdapter.notifyDataSetChanged();
             }
@@ -164,7 +177,10 @@ public class TodaysHabitsActivity extends AppCompatActivity {
                     intent.putExtra("chosenUser", user.getUsername());
                     startActivity(intent);
                 } else if (selectedItem.equals("Notifications")) {
-                    Toast.makeText(TodaysHabitsActivity.this, "Coming soon.", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(TodaysHabitsActivity.this, "Coming soon.", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(TodaysHabitsActivity.this, NotificationsActivity.class);
+                    intent.putExtra("User", user);
+                    startActivity(intent);
                 }
                 return false;
             }
@@ -172,6 +188,11 @@ public class TodaysHabitsActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * This takes the user to the ViewHabitActivity where they can see the details of the selected
+     * habit
+     * @param view
+     */
     public void viewHabit(View view) {
         intent = new Intent(TodaysHabitsActivity.this, ViewHabitActivity.class);
         intent.putExtra("User", user);
@@ -182,6 +203,11 @@ public class TodaysHabitsActivity extends AppCompatActivity {
         isClicked[0] = false;
     }
 
+    /**
+     * Updates the number of times habit has been done. Also removes habit from today's habits list.
+     * Updates "lastDone" value of habit to current date.
+     * @param view
+     */
     public void habitDone(View view) {
         habit.updateNumDone();
         habit.setLastDone(todayDate);
@@ -190,6 +216,11 @@ public class TodaysHabitsActivity extends AppCompatActivity {
         isClicked[0] = false;
     }
 
+    /**
+     * Updates the number of times habit has not been done. Also removes habit from today's habits list.
+     * Updates "lastDone" value of habit to current date.
+     * @param view
+     */
     public void habitNotDone(View view) {
         habit.updateNumNotDone();
         habit.setLastDone(todayDate);
@@ -198,10 +229,18 @@ public class TodaysHabitsActivity extends AppCompatActivity {
         isClicked[0] = false;
     }
 
+    /**
+     * Logs out user from app.
+     * @param view
+     */
     public void logoutProfile(View view) {
         finish();
     }
 
+    /**
+     * Overrides onBackPressed method to disable signing out user on clicking back button from
+     * TodaysHabitsActivity
+     */
     @Override
     public void onBackPressed() {
 

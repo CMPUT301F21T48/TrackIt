@@ -1,5 +1,7 @@
 package com.example.trackit;
 
+import static org.junit.Assert.assertTrue;
+
 import android.app.Activity;
 import android.widget.EditText;
 
@@ -16,7 +18,7 @@ import org.junit.Rule;
 import org.junit.runner.RunWith;
 
 /**
- * Test class for WelcomeActivity. All the UI tests are written here. Robotium test framework is used
+ * Test class for RegisterActivity. All the UI tests are written here. Robotium test framework is used
  */
 
 public class RegisterActivityTest {
@@ -78,7 +80,7 @@ public class RegisterActivityTest {
         solo.enterText((EditText) solo.getView(R.id.register_password), "testPassword");
         solo.waitForText("testPassword", 1, 2000);
         solo.clickOnText("Sign Up");
-        solo.waitForText("Username is not unique");
+        assertTrue(solo.searchText("Username is not unique"));
         solo.assertCurrentActivity("Wrong Activity", RegisterActivity.class);
     }
 
@@ -92,7 +94,7 @@ public class RegisterActivityTest {
         solo.enterText((EditText) solo.getView(R.id.register_password), "testPassword");
         solo.waitForText("testPassword", 1, 2000);
         solo.clickOnText("Sign Up");
-        solo.waitForText("Username field cannot be empty", 1, 2000);
+        assertTrue(solo.searchText("Username field cannot be empty"));
         solo.assertCurrentActivity("Wrong Activity", RegisterActivity.class);
     }
 
@@ -106,7 +108,7 @@ public class RegisterActivityTest {
         solo.enterText((EditText) solo.getView(R.id.register_username), "testUser");
         solo.waitForText("testUser", 1, 2000);
         solo.clickOnText("Sign Up");
-        solo.waitForText("Password field cannot be empty", 1, 2000);
+        assertTrue(solo.searchText("Password field cannot be empty"));
         solo.assertCurrentActivity("Wrong Activity", RegisterActivity.class);
     }
 

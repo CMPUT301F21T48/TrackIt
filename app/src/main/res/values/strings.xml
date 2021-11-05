@@ -5,6 +5,8 @@
     <!-- UI strings -->
     <string name="register_username">Create a unique username:</string>
     <string name="register_password">Enter your preferred password:</string>
+    <string name="login_password">Enter your password:</string>
+    <string name="login_username">Enter your username:</string>
     <string name="add_title_text">Enter habit title:</string>
     <string name="add_reason_text">Enter reason:</string>
     <string name="add_start_date_text">Date started:</string>
@@ -15,7 +17,8 @@
     <string name="habit_reason_text">Reason:</string>
     <string name="habit_start_date_text">Date started:</string>
     <string name="habit_repeat_text">Repeat:</string>
-    <string name="no_habits">You do not have any habit(s) listed for today.</string>
+    <string name="no_habits_today">You do not have any pending habit(s) listed for today.</string>
+    <string name="no_habits">You have not added any habit(s).</string>
 
     <!-- Button labels -->
     <string name="button_sign_up" tools:ignore="ExtraTranslation">Sign Up</string>
@@ -48,8 +51,6 @@
     <string name="checkbox_saturday">S</string>
     <string name="checkbox_sunday">Su</string>
     <string name="error_username_empty">Username field cannot be empty</string>
-    <string name="password">Password:</string>
-    <string name="username">Username:</string>
 
     <!-- Nav bar labels -->
     <string name="nav_bar_today">Today</string>
