@@ -31,12 +31,12 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 /**
- * This is the activity to display today's habits for the user.
- * It displays all the habits for today and their details
- * User can click on the habit to view details and edit details
- * User can also delete the habit from today's habit
- * User can select checkbox when they finish today's habit and the visual progress bar will increase
- * The user can also choose to add more habits here if they wish to
+ * This is the activity to display today's habits for the user. It displays all the habits for today
+ * and their details. User can click on the habit to view details and edit details. User can also
+ * remove the habit from the list. User can select the check mark when they finish today's habit and
+ * the progress value of the habit will be increased. The user can also choose to add more habits
+ * here if they wish to. Finally, users can use the navigation bar at the bottom to navigate to the
+ * different activities of the app such as Search, Notifications, and Profile.
  */
 public class TodaysHabitsActivity extends AppCompatActivity {
 
@@ -189,9 +189,9 @@ public class TodaysHabitsActivity extends AppCompatActivity {
     }
 
     /**
-     * This calls the viewHabit Activity
+     * This takes the user to the ViewHabitActivity where they can see the details of the selected
+     * habit
      * @param view
-     *
      */
     public void viewHabit(View view) {
         intent = new Intent(TodaysHabitsActivity.this, ViewHabitActivity.class);
@@ -204,7 +204,8 @@ public class TodaysHabitsActivity extends AppCompatActivity {
     }
 
     /**
-     *
+     * Updates the number of times habit has been done. Also removes habit from today's habits list.
+     * Updates "lastDone" value of habit to current date.
      * @param view
      */
     public void habitDone(View view) {
@@ -216,7 +217,8 @@ public class TodaysHabitsActivity extends AppCompatActivity {
     }
 
     /**
-     *
+     * Updates the number of times habit has not been done. Also removes habit from today's habits list.
+     * Updates "lastDone" value of habit to current date.
      * @param view
      */
     public void habitNotDone(View view) {
@@ -227,10 +229,18 @@ public class TodaysHabitsActivity extends AppCompatActivity {
         isClicked[0] = false;
     }
 
+    /**
+     * Logs out user from app.
+     * @param view
+     */
     public void logoutProfile(View view) {
         finish();
     }
 
+    /**
+     * Overrides onBackPressed method to disable signing out user on clicking back button from
+     * TodaysHabitsActivity
+     */
     @Override
     public void onBackPressed() {
 
