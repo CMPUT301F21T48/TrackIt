@@ -192,6 +192,8 @@ public class UserProfileActivity extends AppCompatActivity {
                                 }
                                 else{
                                     followButton.setText("Requested");
+                                    emptyMessage.setVisibility(View.VISIBLE);
+                                    emptyMessage.setText("You do not have permission to view this user's habits.");
                                 }
                             }
                         }, "Followers", chosenUserName, currentUserName);
@@ -211,6 +213,8 @@ public class UserProfileActivity extends AppCompatActivity {
                     }
                     else{
                         followButton.setText("Follow");
+                        emptyMessage.setVisibility(View.VISIBLE);
+                        emptyMessage.setText("You do not have permission to view this user's habits.");
                         followButton.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
