@@ -11,7 +11,6 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,7 +18,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -164,7 +162,10 @@ public class TodaysHabitsActivity extends AppCompatActivity {
                     intent.putExtra("chosenUser", user.getUsername());
                     startActivity(intent);
                 } else if (selectedItem.equals("Notifications")) {
-                    Toast.makeText(TodaysHabitsActivity.this, "Coming soon.", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(TodaysHabitsActivity.this, "Coming soon.", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(TodaysHabitsActivity.this, NotificationsActivity.class);
+                    intent.putExtra("User", user);
+                    startActivity(intent);
                 }
                 return false;
             }

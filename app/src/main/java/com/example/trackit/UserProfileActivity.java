@@ -64,10 +64,9 @@ public class UserProfileActivity extends AppCompatActivity {
 
         Boolean exists = false;
 
-
         userNameView.setText(chosenUserName);
 
-        getDatafromFB(new AsyncCall() {
+        getDataFromFB(new AsyncCall() {
             @Override
             public void onCallBack(Integer finalCheckValue) {
                 followers = finalCheckValue;
@@ -76,7 +75,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
         }, chosenUserName, "Followers");
 
-        getDatafromFB(new AsyncCall() {
+        getDataFromFB(new AsyncCall() {
             @Override
             public void onCallBack(Integer finalCheckValue) {
                 following = finalCheckValue;
@@ -127,11 +126,7 @@ public class UserProfileActivity extends AppCompatActivity {
                                         .delete();
                                 db.collection("Users").document(chosenUserName).collection("Followers").document(currentUserName)
                                         .delete();
-                                Boolean currentCheck = (Boolean) db.collection("Users").document(currentUserName).collection("Following").document(chosenUserName).get().getResult().get("Value");
-                                Boolean chosenCheck = (Boolean) db.collection("Users").document(chosenUserName).collection("Followers").document(currentUserName).get().getResult().get("Value");
 
-//                                if(currentCheck && chosenCheck){
-//                 YOU HAVE TO ADD THE CODE HERE UNDER THIS IF STATEMENT "BABUSHKA"
                                 Intent intent = getIntent();
                                 finish();
                                 startActivity(intent);
@@ -220,7 +215,7 @@ public class UserProfileActivity extends AppCompatActivity {
         void onCallBack(Integer finalCheckValue);
     }
 
-    public void getDatafromFB(AsyncCall asyncCall, String Username, String CollectionList){
+    public void getDataFromFB(AsyncCall asyncCall, String Username, String CollectionList){
         final Integer[] Value = {0};
         db.collection("Users").document(Username).collection(CollectionList)
                 .get()
