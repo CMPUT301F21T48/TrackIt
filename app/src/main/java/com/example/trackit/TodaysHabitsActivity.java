@@ -107,17 +107,18 @@ public class TodaysHabitsActivity extends AppCompatActivity {
                     String dayFirstLetter = String.valueOf(day.charAt(0));
 
                     for (int i = 0; i < repeatDays.size(); i++) {
-                        if (repeatDays.get(i).equals("R")) {
-                            if (day.startsWith("TH")) {
+                        if (day.startsWith("TH")) {
+                            if (repeatDays.get(i).equals("R")) {
                                 flag = 1;
                             }
-                        }
-                        if (repeatDays.get(i).length() > 1) {
-                            if (day.substring(0, 2).equals(repeatDays.get(i))) {
+                        } else {
+                            if (repeatDays.get(i).length() > 1) {
+                                if (day.substring(0, 2).equals(repeatDays.get(i))) {
                                 flag = 1;
-                            }
-                        } else if (dayFirstLetter.equals(repeatDays.get(i))) {
+                                }
+                            } else if (dayFirstLetter.equals(repeatDays.get(i))) {
                             flag = 1;
+                            }
                         }
                     }
 
