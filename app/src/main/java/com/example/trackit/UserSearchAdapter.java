@@ -1,22 +1,18 @@
 package com.example.trackit;
 
-import static android.content.ContentValues.TAG;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
+/**
+ * This is the search adapter for user search.
+ */
 public class UserSearchAdapter extends RecyclerView.Adapter<UserSearchAdapter.ViewHolder>{
   
 /**
