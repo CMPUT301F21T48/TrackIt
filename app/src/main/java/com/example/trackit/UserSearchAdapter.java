@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+public class UserSearchAdapter extends RecyclerView.Adapter<UserSearchAdapter.ViewHolder>{
+  
 /**
  * This is the search adapter for the user search
  */
@@ -56,52 +58,58 @@ public class UserSearchAdapter extends RecyclerView.Adapter<UserSearchAdapter.Vi
         holder.userName.setText(userNames.get(position));
 
     }
-
-    public Filter getFilter(){
-        return filter;
-    }
-
-    Filter filter = new Filter() { // filter is a problem area because it doesnt seem to execute filter results
-        @Override
-        protected FilterResults performFiltering(CharSequence charSequence) {
-            Log.d(TAG, charSequence.toString());
-            List<String> filteredResults = new ArrayList<>();
-            Integer count = 0;
-            if(charSequence.toString().isEmpty()){
-                filteredResults.addAll(userNamesComplete);
-
-                Log.d(TAG, charSequence.toString());
-            }
-            else{
-                for(String check : userNamesComplete){
-                    if(check.toLowerCase().contains(charSequence.toString().toLowerCase())){
-                        filteredResults.add(check);
-                        Log.d(TAG, "performFiltering:  " + count++);
-                    }
-                    Log.d(TAG, "performFiltering:  " + count++);
-                }
-            }
-            for(String check: filteredResults){
-                Log.d(TAG, check);
-            }
-            FilterResults filtered = new FilterResults();
-            filtered.values = filteredResults;
-            return  filtered;
-        }
-
-        @Override
-        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-            userNames.clear();
-            Log.d(TAG, "publishResults: Cleared");
-            userNames.addAll((Collection<? extends String>) filterResults.values);
-            notifyDataSetChanged();
-        }
-    };
+ 
+////  For use in Part 4
+//    public Filter getFilter(){
+//        return filter;
+//    }
+//
+//    Filter filter = new Filter() { // filter is a problem area because it doesnt seem to execute filter results
+//        @Override
+//        protected FilterResults performFiltering(CharSequence charSequence) {
+//            Log.d(TAG, charSequence.toString());
+//            List<String> filteredResults = new ArrayList<>();
+//            Integer count = 0;
+//            if(charSequence.toString().isEmpty()){
+//                filteredResults.addAll(userNamesComplete);
+//
+//                Log.d(TAG, charSequence.toString());
+//            }
+//            else{
+//                for(String check : userNamesComplete){
+//                    if(check.toLowerCase().contains(charSequence.toString().toLowerCase())){
+//                        filteredResults.add(check);
+//                        Log.d(TAG, "performFiltering:  " + count++);
+//                    }
+//                    Log.d(TAG, "performFiltering:  " + count++);
+//                }
+//            }
+//            for(String check: filteredResults){
+//                Log.d(TAG, check);
+//            }
+//            FilterResults filtered = new FilterResults();
+//            filtered.values = filteredResults;
+//            return  filtered;
+//        }
+//
+//        @Override
+//        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+//            userNames.clear();
+//            Log.d(TAG, "publishResults: Cleared");
+//            userNames.addAll((Collection<? extends String>) filterResults.values);
+//            notifyDataSetChanged();
+//        }
+//    };
 
     @Override
     public int getItemCount() {
         return userNames.size();
     }
+
+    /**
+     * ViewHolder is custom class that is used to find what position item is clicked
+     * so that we can return it and find the actual item that has been clicked
+     **/
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
