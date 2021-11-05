@@ -1,6 +1,7 @@
 package com.example.trackit;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import android.app.Activity;
 import android.widget.CheckBox;
@@ -20,7 +21,7 @@ import org.junit.Rule;
 import org.junit.runner.RunWith;
 
 /**
- * Test class for WelcomeActivity. All the UI tests are written here. Robotium test framework is used
+ * Test class for ViewHabitActivity. All the UI tests are written here. Robotium test framework is used
  */
 
 public class ViewHabitActivityTest {
@@ -65,16 +66,16 @@ public class ViewHabitActivityTest {
     public void viewHabit()
     {
         solo.assertCurrentActivity("Wrong Activity", ViewHabitActivity.class);
-        solo.waitForText("Existing habit 3", 1, 2000);
-        solo.waitForText("Test 3 for view and delete", 1, 2000);
-        solo.waitForText("10/30/2021", 1, 2000);
-        solo.waitForText("Monday", 1, 2000);
-        solo.waitForText("Tuesday", 1, 2000);
-        solo.waitForText("Wednesday", 1, 2000);
-        solo.waitForText("Thursday", 1, 2000);
-        solo.waitForText("Friday", 1, 2000);
-        solo.waitForText("Saturday", 1, 2000);
-        solo.waitForText("Sunday", 1, 2000);
+        assertTrue(solo.searchText("Existing habit 3"));
+        assertTrue(solo.searchText("Test 3 for view and delete"));
+        assertTrue(solo.searchText("10/30/2021"));
+        assertTrue(solo.searchText("Monday"));
+        assertTrue(solo.searchText("Tuesday"));
+        assertTrue(solo.searchText("Wednesday"));
+        assertTrue(solo.searchText("Thursday"));
+        assertTrue(solo.searchText("Friday"));
+        assertTrue(solo.searchText("Saturday"));
+        assertTrue(solo.searchText("Sunday"));
     }
 
     /**
@@ -83,7 +84,6 @@ public class ViewHabitActivityTest {
     @Test
     public void clickEditHabit()
     {
-        //testing logging in
         solo.assertCurrentActivity("Wrong Activity", ViewHabitActivity.class);
         solo.clickOnText("Edit Habit");
         solo.assertCurrentActivity("Wrong Activity", EditHabitActivity.class);
@@ -95,7 +95,6 @@ public class ViewHabitActivityTest {
     @Test
     public void clickViewEvent()
     {
-        //testing logging in
         solo.assertCurrentActivity("Wrong Activity", ViewHabitActivity.class);
         solo.clickOnText("View Event");
         solo.waitForText("Coming soon");
@@ -108,7 +107,6 @@ public class ViewHabitActivityTest {
     @Test
     public void clickDeleteHabit()
     {
-        //testing logging in
         solo.assertCurrentActivity("Wrong Activity", ViewHabitActivity.class);
         solo.clickOnText("Delete Habit");
         solo.assertCurrentActivity("Wrong Activity", TodaysHabitsActivity.class);
