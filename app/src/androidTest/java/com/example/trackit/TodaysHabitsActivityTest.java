@@ -21,7 +21,7 @@ import org.junit.Rule;
 import org.junit.runner.RunWith;
 
 /**
- * Test class for WelcomeActivity. All the UI tests are written here. Robotium test framework is used
+ * Test class for TodaysHabitActivity. All the UI tests are written here. Robotium test framework is used
  */
 
 public class TodaysHabitsActivityTest {
@@ -63,7 +63,6 @@ public class TodaysHabitsActivityTest {
     @Test
     public void clickMenuItemToday()
     {
-        //testing logging in
         solo.assertCurrentActivity("Wrong Activity", TodaysHabitsActivity.class);
         solo.clickOnView(solo.getView(R.id.nav_bar_today));
         solo.assertCurrentActivity("Wrong Activity", TodaysHabitsActivity.class);
@@ -75,7 +74,6 @@ public class TodaysHabitsActivityTest {
     @Test
     public void clickMenuItemSearch()
     {
-        //testing logging in
         solo.assertCurrentActivity("Wrong Activity", TodaysHabitsActivity.class);
         solo.clickOnView(solo.getView(R.id.nav_bar_search));
         solo.assertCurrentActivity("Wrong Activity", UserSearchActivity.class);
@@ -87,7 +85,6 @@ public class TodaysHabitsActivityTest {
     @Test
     public void clickMenuItemNotification()
     {
-        //testing logging in
         solo.assertCurrentActivity("Wrong Activity", TodaysHabitsActivity.class);
         solo.clickOnView(solo.getView(R.id.nav_bar_notification));
         solo.waitForText("Coming soon", 1, 2000);
@@ -99,7 +96,6 @@ public class TodaysHabitsActivityTest {
     @Test
     public void clickMenuItemProfile()
     {
-        //testing logging in
         solo.assertCurrentActivity("Wrong Activity", TodaysHabitsActivity.class);
         solo.clickOnView(solo.getView(R.id.nav_bar_profile));
         solo.assertCurrentActivity("Wrong Activity", UserProfileActivity.class);
@@ -111,7 +107,6 @@ public class TodaysHabitsActivityTest {
     @Test
     public void clickAddButton()
     {
-        //testing logging in
         solo.assertCurrentActivity("Wrong Activity", TodaysHabitsActivity.class);
         solo.clickOnView(solo.getView(R.id.add_button));
         solo.assertCurrentActivity("Wrong Activity", AddHabitActivity.class);
@@ -123,10 +118,9 @@ public class TodaysHabitsActivityTest {
     @Test
     public void clickExistingHabit()
     {
-        //testing logging in
         solo.assertCurrentActivity("Wrong Activity", TodaysHabitsActivity.class);
         solo.clickOnText("Existing habit 1");
-        solo.waitForText("View habit details", 1, 2000);
+        assertTrue(solo.searchText("View habit details"));
         solo.clickOnText("View habit details");
         solo.assertCurrentActivity("Wrong Activity", ViewHabitActivity.class);
     }

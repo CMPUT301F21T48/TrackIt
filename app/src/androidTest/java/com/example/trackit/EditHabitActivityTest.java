@@ -1,5 +1,7 @@
 package com.example.trackit;
 
+import static org.junit.Assert.assertTrue;
+
 import android.app.Activity;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
@@ -20,7 +22,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 
 /**
- * Test class for WelcomeActivity. All the UI tests are written here. Robotium test framework is used
+ * Test class for EditHabitActivity. All the UI tests are written here. Robotium test framework is used
  */
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -67,16 +69,16 @@ public class EditHabitActivityTest {
     public void bEditHabitForToday()
     {
         solo.assertCurrentActivity("Wrong Activity", EditHabitActivity.class);
-        solo.waitForText("Existing habit 4", 1, 2000);
-        solo.waitForText("Test 4 for edit", 1, 2000);
-        solo.waitForText("10/30/2021", 1, 2000);
-        solo.isCheckBoxChecked("M");
-        solo.isCheckBoxChecked("T");
-        solo.isCheckBoxChecked("W");
-        solo.isCheckBoxChecked("R");
-        solo.isCheckBoxChecked("S");
-        solo.isCheckBoxChecked("Su");
-
+        assertTrue(solo.searchText("Existing habit 4"));
+        assertTrue(solo.searchText("Test 4 for edit"));
+        assertTrue(solo.searchText("10/30/2021"));
+        assertTrue(solo.isCheckBoxChecked("M"));
+        assertTrue(solo.isCheckBoxChecked("T"));
+        assertTrue(solo.isCheckBoxChecked("W"));
+        assertTrue(solo.isCheckBoxChecked("R"));
+        assertTrue(solo.isCheckBoxChecked("F"));
+        assertTrue(solo.isCheckBoxChecked("S"));
+        assertTrue(solo.isCheckBoxChecked("Su"));
     }
 
     /**
@@ -91,7 +93,7 @@ public class EditHabitActivityTest {
         solo.enterText((EditText) solo.getView(R.id.add_title), "Existing habit 4-1");
         solo.clickOnButton("Save Changes");
         solo.assertCurrentActivity("Wrong Activity", TodaysHabitsActivity.class);
-        solo.waitForText("Existing habit 4-1", 1, 2000);
+        assertTrue(solo.searchText("Existing habit 4-1"));
     }
 
     /**
@@ -106,7 +108,7 @@ public class EditHabitActivityTest {
         solo.enterText((EditText) solo.getView(R.id.add_reason), "Test 4-1 for edit");
         solo.clickOnButton("Save Changes");
         solo.assertCurrentActivity("Wrong Activity", TodaysHabitsActivity.class);
-        solo.waitForText("Test 4-1 for edit", 1, 2000);
+        assertTrue(solo.searchText("Test 4-1 for edit"));
     }
 
     /**
@@ -121,7 +123,10 @@ public class EditHabitActivityTest {
         solo.waitForText("11/10/2021", 1, 2000);
         solo.clickOnButton("Save Changes");
         solo.assertCurrentActivity("Wrong Activity", TodaysHabitsActivity.class);
-        solo.waitForText("11/10/2021",1 , 2000);
+        solo.clickOnText("Existing habit 4");
+        solo.clickOnText("View habit details");
+        solo.assertCurrentActivity("Wrong Activity", ViewHabitActivity.class);
+        assertTrue(solo.searchText("11/10/2021"));
     }
 
     /**
@@ -134,7 +139,7 @@ public class EditHabitActivityTest {
         solo.clickOnView(solo.getView(R.id.checkbox_monday));
         solo.clickOnButton("Save Changes");
         solo.assertCurrentActivity("Wrong Activity", TodaysHabitsActivity.class);
-        solo.waitForText("Repeat: T W R F S SU", 1, 2000);
+        assertTrue(solo.searchText("Repeat: T W R F S Su"));
     }
 
     /**
@@ -146,6 +151,3 @@ public class EditHabitActivityTest {
         solo.finishOpenedActivities();
     }
 }
-
-
-

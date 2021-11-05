@@ -27,7 +27,7 @@
         <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/layout/activity_search.xml" value="0.1" />
         <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/layout/activity_todays_habit.xml" value="0.1" />
         <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/layout/activity_todays_habits.xml" value="0.16" />
-        <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/layout/activity_user_profile.xml" value="0.2" />
+        <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/layout/activity_user_profile.xml" value="0.15789473684210525" />
         <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/layout/activity_view_habit.xml" value="0.2" />
         <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/layout/activity_welcome.xml" value="0.152" />
         <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/layout/content.xml" value="0.22894736842105262" />
@@ -45,13 +45,14 @@
         <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/menu/menu_nav_bar.xml" value="0.1" />
         <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/menu/nav_bar_items.xml" value="0.15789473684210525" />
         <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/navigation/fragment_navigation.xml" value="0.15789473684210525" />
-        <entry key="..\:/Users/rocke/OneDrive/Desktop/TrackIt/app/src/main/res/layout/activity_user_profile.xml" value="0.12395833333333334" />
-        <entry key="app/src/main/res/layout/activity_add_habit.xml" value="0.11231884057971014" />
-        <entry key="app/src/main/res/layout/activity_edit_habit.xml" value="1.2129171331849133" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_notifications.xml" value="0.17083333333333334" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.1105072463768116" />
-        <entry key="app/src/main/res/layout/activity_todays_habits.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_todays_habits.xml" value="0.41273560085594146" />
+        <entry key="app/src/main/res/layout/activity_user_profile.xml" value="0.1" />
         <entry key="app/src/main/res/layout/habit.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/notification.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/user_item.xml" value="0.6391047099203131" />
         <entry key="app/src/main/res/menu/menu_nav_bar.xml" value="0.3550423217259934" />
       </map>
     </option>

@@ -18,6 +18,12 @@ import java.util.Collection;
 import java.util.List;
 
 public class UserSearchAdapter extends RecyclerView.Adapter<UserSearchAdapter.ViewHolder>{
+  
+/**
+ * This is the search adapter for the user search
+ */
+
+public class UserSearchAdapter extends RecyclerView.Adapter<UserSearchAdapter.ViewHolder> implements Filterable {
 
     List<String> userNames;
     List<String> userNamesComplete;
@@ -52,7 +58,8 @@ public class UserSearchAdapter extends RecyclerView.Adapter<UserSearchAdapter.Vi
         holder.userName.setText(userNames.get(position));
 
     }
-
+ 
+////  For use in Part 4
 //    public Filter getFilter(){
 //        return filter;
 //    }

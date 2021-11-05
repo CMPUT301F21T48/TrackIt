@@ -21,6 +21,12 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * This activity will search for other users by username.
+ * A user can send a follow request to any of the users
+ */
+
 public class UserSearchActivity extends AppCompatActivity {
 
     List<String> userNames;
