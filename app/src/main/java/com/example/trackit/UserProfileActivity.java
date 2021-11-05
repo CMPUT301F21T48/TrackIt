@@ -29,6 +29,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
 /**
  * This is the activity to display user profile.
  * It displays the users habits, number of individuals they are following and
