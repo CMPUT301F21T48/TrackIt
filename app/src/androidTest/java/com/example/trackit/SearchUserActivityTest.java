@@ -25,9 +25,10 @@ import org.junit.Rule;
 import org.junit.runner.RunWith;
 
 /**
- * Test class for UserProfileActivity. All the UI tests are written here. Robotium test framework is used
+ * Test class for SearchUserActivity. All the UI tests are written here. Robotium test framework is used
  */
-public class UserProfileActivityTest {
+
+public class SearchUserActivityTest {
     private Solo solo;
 
     @Rule
@@ -36,7 +37,6 @@ public class UserProfileActivityTest {
 
     /**
      * Runs before all tests and creates solo instance.
-     *
      * @throws Exception
      */
     @Before
@@ -48,7 +48,7 @@ public class UserProfileActivityTest {
         solo.enterText((EditText) solo.getView(R.id.login_password), "testPassword");
         solo.waitForText("testPassword", 1, 2000);
         solo.clickOnText("Login");
-        solo.clickOnView(solo.getView(R.id.nav_bar_profile));
+        solo.clickOnView(solo.getView(R.id.nav_bar_search));
     }
 
     /**
@@ -61,40 +61,16 @@ public class UserProfileActivityTest {
     }
 
     /**
-     * Checks if the userName, followers and following is of the current logged in user is shown
+     * Checks if search for another user if successful
      */
     @Test
     public void checkProfileItems() throws Exception{
+        solo.assertCurrentActivity("Wrong Activity", UserSearchActivity.class);
+        solo.enterText((EditText) solo.getView(R.id.squery), "testUser");
+        solo.clickOnView(solo.getView(R.id.squerybutton));
+        solo.clickOnText("testUser");
         solo.assertCurrentActivity("Wrong Activity", UserProfileActivity.class);
-        TextView name = (TextView) solo.getView(R.id.userNameView);
-        assertEquals(name.getText().toString(), "testUser2");
-        solo.waitForText("Habit", 1, 2000);
-        TextView follower = (TextView) solo.getView(R.id.followerCount);
-        assertEquals(follower.getText().toString(), "Followers: 0");
-        TextView following = (TextView) solo.getView(R.id.followingCount);
-        assertEquals(following.getText().toString(), "Following: 0");
-    }
-
-    /**
-     * Checks if all the habits for the user are shown
-     */
-    @Test
-    public void checkHabits() {
-        solo.assertCurrentActivity("Wrong Activity", UserProfileActivity.class);
-        assertTrue(solo.searchText("Habit 1"));
-        assertTrue(solo.searchText("Habit 2"));
-        assertTrue(solo.searchText("Habit 3"));
-        assertTrue(solo.searchText("Habit 4"));
-    }
-
-    /**
-     * Checks if clicking on a habit take it to view habit activity
-     */
-    @Test
-    public void viewHabit() {
-        solo.assertCurrentActivity("Wrong Activity", UserProfileActivity.class);
-        solo.clickOnText("Habit 1");
-        solo.assertCurrentActivity("Wrong Activity", ViewHabitActivity.class);
+        assertTrue(solo.searchText("testUser"));
     }
 
     /**
@@ -105,6 +81,5 @@ public class UserProfileActivityTest {
     public void tearDown() throws Exception {
         solo.finishOpenedActivities();
     }
+
 }
-
-
