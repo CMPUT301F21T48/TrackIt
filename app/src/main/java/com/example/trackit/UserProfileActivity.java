@@ -68,10 +68,9 @@ public class UserProfileActivity extends AppCompatActivity {
 
         Boolean exists = false;
 
-
         userNameView.setText(chosenUserName);
 
-        getDatafromFB(new AsyncCall() {
+        getDataFromFB(new AsyncCall() {
             @Override
             public void onCallBack(Integer finalCheckValue) {
                 followers = finalCheckValue;
@@ -80,7 +79,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
         }, chosenUserName, "Followers");
 
-        getDatafromFB(new AsyncCall() {
+        getDataFromFB(new AsyncCall() {
             @Override
             public void onCallBack(Integer finalCheckValue) {
                 following = finalCheckValue;
@@ -219,7 +218,7 @@ public class UserProfileActivity extends AppCompatActivity {
         void onCallBack(Integer finalCheckValue);
     }
 
-    public void getDatafromFB(AsyncCall asyncCall, String Username, String CollectionList){
+    public void getDataFromFB(AsyncCall asyncCall, String Username, String CollectionList){
         final Integer[] Value = {0};
         db.collection("Users").document(Username).collection(CollectionList)
                 .get()
