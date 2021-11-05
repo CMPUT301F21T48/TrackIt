@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -17,7 +16,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -33,7 +31,7 @@ import java.util.Map;
 /**
  * This is the activity to display user profile.
  * It displays the users habits, number of individuals they are following and
- * the number of users that follow them
+ * the number of users that follow them.
  */
 public class UserProfileActivity extends AppCompatActivity {
 
@@ -49,23 +47,18 @@ public class UserProfileActivity extends AppCompatActivity {
     ListView habitList;
     ArrayAdapter<Habit> habitAdapter;
     ArrayList<Habit> habitDataList;
-    TextView emptyMessage;
-    FloatingActionButton addButton;
-    Habit habit;
-    String followStatus;
+
     @SuppressLint("SetTextI18n")
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
 
-        emptyMessage = findViewById(R.id.no_habit_message);
         followButton = findViewById(R.id.followButton);
         userNameView = findViewById(R.id.userNameView);
         userFollowers = findViewById(R.id.followerCount);
         userFollowing = findViewById(R.id.followingCount);
 
-        addButton = findViewById(R.id.add_habit);
         habitList = findViewById(R.id.habitList);
         habitDataList = new ArrayList<>();
         habitAdapter = new HabitCustomList(this, habitDataList);
@@ -76,19 +69,10 @@ public class UserProfileActivity extends AppCompatActivity {
 
         Boolean exists = false;
 
+
         userNameView.setText(chosenUserName);
-        currentUser.setUsername(currentUserName);
-
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(UserProfileActivity.this, AddHabitActivity.class);
-                intent.putExtra("User", currentUser);
-                startActivity(intent);
-            }
-        });
-
-        getDataFromFB(new AsyncCall() {
+        // using onCallBack in order to deal with Async Firebase calls
+        getDatafromFB(new AsyncCall() {
             @Override
             public void onCallBack(Integer finalCheckValue) {
                 followers = finalCheckValue;
@@ -97,7 +81,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
         }, chosenUserName, "Followers");
 
-        getDataFromFB(new AsyncCall() {
+        getDatafromFB(new AsyncCall() {
             @Override
             public void onCallBack(Integer finalCheckValue) {
                 following = finalCheckValue;
@@ -107,10 +91,10 @@ public class UserProfileActivity extends AppCompatActivity {
 
 
 
-        if(chosenUserName.compareTo(currentUserName) == 0){
+        if(chosenUserName.compareTo(currentUserName) == 0){ //workaround for if the user selects themselves from the user list or just for displaying their profile in general
             followButton.setText("Your Profile");
             followButton.setEnabled(false);
-
+            //displaying the habit of the user
             collectionReference.document(currentUserName).collection("Habits").addSnapshotListener(new EventListener<QuerySnapshot>() {
                 @Override
                 public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
@@ -131,28 +115,12 @@ public class UserProfileActivity extends AppCompatActivity {
                         newHabit.setProgress();
                         habitDataList.add(newHabit);
                     }
-                    if (habitDataList.size() == 0) {
-                        emptyMessage.setVisibility(View.VISIBLE);
-                        emptyMessage.setText("You have not added any habit(s).");
-                    }
                     habitAdapter.notifyDataSetChanged();
                 };
             });
-
-            habitList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> arg0, View view, int position, long arg3) {
-                    habitList.setSelection(position);
-                    habit = (Habit) habitList.getItemAtPosition(position);
-                    Intent intent = new Intent(UserProfileActivity.this, ViewHabitActivity.class);
-                    intent.putExtra("User", currentUser);
-                    intent.putExtra("HabitID", habit.getHabitID());
-                    intent.putExtra("Habit", habit);
-                    startActivity(intent);
-                }
-            });
         }
         else{
+            //Using a workaround with onCallBack in order to check if the user exists in the followers/following list
             checkExistence(new ExistsAsyncCall() {
                 @Override
                 public void onCallBack(Boolean exists) {
@@ -162,43 +130,13 @@ public class UserProfileActivity extends AppCompatActivity {
                             public void onCallBack(Boolean exists) {
                                 if(exists){
                                     followButton.setText("Unfollow");
-
-                                    collectionReference.document(chosenUserName).collection("Habits").addSnapshotListener(new EventListener<QuerySnapshot>() {
-                                        @Override
-                                        public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
-                                            habitDataList.clear();
-                                            for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
-                                                String ID = doc.getId();
-                                                String title = (String) doc.getData().get("title");
-                                                String reason = (String) doc.getData().get("reason");
-                                                String startDate = (String) doc.getData().get("startDate");
-                                                ArrayList<String> repeatDays = (ArrayList<String>) doc.getData().get("repeatDays");
-
-                                                int numDone = (int) ((long) doc.getData().get("numDone"));
-                                                int numNotDone = (int) ((long) doc.getData().get("numNotDone"));
-                                                Habit newHabit = new Habit(title, reason, startDate, repeatDays);
-                                                newHabit.setHabitID(ID);
-                                                newHabit.setNumDone(numDone);
-                                                newHabit.setNumNotDone(numNotDone);
-                                                newHabit.setProgress();
-                                                habitDataList.add(newHabit);
-                                            }
-                                            if (habitDataList.size() == 0) {
-                                                emptyMessage.setVisibility(View.VISIBLE);
-                                                emptyMessage.setText("This user does not have any added habit(s).");
-                                            }
-                                            habitAdapter.notifyDataSetChanged();
-                                        }
-                                    });
                                 }
                                 else{
                                     followButton.setText("Requested");
-                                    emptyMessage.setVisibility(View.VISIBLE);
-                                    emptyMessage.setText("You do not have permission to view this user's habits.");
                                 }
                             }
                         }, "Followers", chosenUserName, currentUserName);
-
+                        // in this case it gives the user the option to unfollow by clicking the button
                         followButton.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -211,11 +149,34 @@ public class UserProfileActivity extends AppCompatActivity {
                                 startActivity(intent);
                             };
                         });
+                        // displays the user's habits
+                        collectionReference.document(chosenUserName).collection("Habits").addSnapshotListener(new EventListener<QuerySnapshot>() {
+                            @Override
+                            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
+                                habitDataList.clear();
+                                for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                                    String ID = doc.getId();
+                                    String title = (String) doc.getData().get("title");
+                                    String reason = (String) doc.getData().get("reason");
+                                    String startDate = (String) doc.getData().get("startDate");
+                                    ArrayList<String> repeatDays = (ArrayList<String>) doc.getData().get("repeatDays");
+
+                                    int numDone = (int) ((long) doc.getData().get("numDone"));
+                                    int numNotDone = (int) ((long) doc.getData().get("numNotDone"));
+                                    Habit newHabit = new Habit(title, reason, startDate, repeatDays);
+                                    newHabit.setHabitID(ID);
+                                    newHabit.setNumDone(numDone);
+                                    newHabit.setNumNotDone(numNotDone);
+                                    newHabit.setProgress();
+                                    habitDataList.add(newHabit);
+                                }
+                                habitAdapter.notifyDataSetChanged();
+                            };
+                        });
+
                     }
                     else{
                         followButton.setText("Follow");
-                        emptyMessage.setVisibility(View.VISIBLE);
-                        emptyMessage.setText("You do not have permission to view this user's habits.");
                         followButton.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -237,11 +198,22 @@ public class UserProfileActivity extends AppCompatActivity {
 
         }
     }
-
+// interfaces to work with Firebase
     public interface FollowExistsAsyncCall{
         void onCallBack(Boolean exists);
     }
+/**
+ * Check follow works with the interface FollowExistsAsynCall in order to work around the fact that Firebase does asynchronous calls, so we
+ * can have the information to work with when we need to and doesnt return empty values;
+ * checkFollow:
+ *    arguments:
+ *        followExistsAsynCall : FollowExistsAsyncCall
+ *        CollectionList : String
+ *        checkingUserName1 : String
+ *        checkingUserName2 : String
+ * returns:
 
+ **/
     public void checkFollow(FollowExistsAsyncCall followExistsAsyncCall, String CollectionList,String checkingUserName1, String checkingUserName2){
         final Boolean[] exists = {false};
         db.collection("Users").document(checkingUserName1).collection(CollectionList)
@@ -266,10 +238,22 @@ public class UserProfileActivity extends AppCompatActivity {
                 });
 
     }
-
+    // interfaces to work with Firebase
     public interface ExistsAsyncCall{
         void onCallBack(Boolean exists);
     }
+
+    /**
+     * Check existence works with the interface ExistsAsynCall in order to work around the fact that Firebase does asynchronous calls, so we
+     * can have the information to work with when we need to and doesnt return empty values;
+     * checkExistence:
+     *    arguments:
+     *        existsAsynCall : ExistsAsyncCall
+     *         CollectionList : String
+     *         checkingUserName1 : String
+     *         checkingUserName2 : String
+     *     returns:
+     **/
 
     public void checkExistence(ExistsAsyncCall existsAsyncCall, String CollectionList,String checkingUserName1, String checkingUserName2){
         final Boolean[] exists = {false};
@@ -295,12 +279,21 @@ public class UserProfileActivity extends AppCompatActivity {
                 });
 
     }
-
+// interfaces to work with firebase
     public interface AsyncCall{
         void onCallBack(Integer finalCheckValue);
     }
-
-    public void getDataFromFB(AsyncCall asyncCall, String Username, String CollectionList){
+    /**
+     * getDatafromFB works with the interface AsynCall in order to work around the fact that Firebase does asynchronous calls, so we
+     * can have the information to work with when we need to and doesnt return empty values;
+     * getDatafromFB:
+     *    arguments:
+     *        asynCall : AsyncCall
+     *        CollectionList : String
+     *        Username : String
+     *    returns:
+     **/
+    public void getDatafromFB(AsyncCall asyncCall, String Username, String CollectionList){
         final Integer[] Value = {0};
         db.collection("Users").document(Username).collection(CollectionList)
                 .get()
@@ -312,8 +305,7 @@ public class UserProfileActivity extends AppCompatActivity {
                                 for (DocumentSnapshot document : task.getResult().getDocuments()) {
                                     Log.d("look", (String) document.get("Value"));
                                     if ( document.get("Value").toString().compareTo("true") == 0) {
-                                        Value[0]++; //this is where i left at for some reason the value doesnt increase outside of this
-
+                                        Value[0]++;
                                     }
                                 }
                             }
@@ -322,4 +314,5 @@ public class UserProfileActivity extends AppCompatActivity {
                     }
                 });
     }
+
 }
