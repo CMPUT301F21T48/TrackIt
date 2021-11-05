@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -49,7 +50,7 @@ public class UserProfileActivity extends AppCompatActivity {
     ArrayList<Habit> habitDataList;
     TextView emptyMessage;
     FloatingActionButton addButton;
-
+    Habit habit;
     @SuppressLint("SetTextI18n")
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -134,6 +135,19 @@ public class UserProfileActivity extends AppCompatActivity {
                     }
                     habitAdapter.notifyDataSetChanged();
                 };
+            });
+
+            habitList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> arg0, View view, int position, long arg3) {
+                    habitList.setSelection(position);
+                    habit = (Habit) habitList.getItemAtPosition(position);
+                    Intent intent = new Intent(UserProfileActivity.this, ViewHabitActivity.class);
+                    intent.putExtra("User", currentUser);
+                    intent.putExtra("HabitID", habit.getHabitID());
+                    intent.putExtra("Habit", habit);
+                    startActivity(intent);
+                }
             });
         }
         else{
