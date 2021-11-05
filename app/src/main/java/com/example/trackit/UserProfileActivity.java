@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -47,6 +48,7 @@ public class UserProfileActivity extends AppCompatActivity {
     ArrayAdapter<Habit> habitAdapter;
     ArrayList<Habit> habitDataList;
     TextView emptyMessage;
+    FloatingActionButton addButton;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -60,6 +62,7 @@ public class UserProfileActivity extends AppCompatActivity {
         userFollowers = findViewById(R.id.followerCount);
         userFollowing = findViewById(R.id.followingCount);
 
+        addButton = findViewById(R.id.add_habit);
         habitList = findViewById(R.id.habitList);
         habitDataList = new ArrayList<>();
         habitAdapter = new HabitCustomList(this, habitDataList);
@@ -71,6 +74,16 @@ public class UserProfileActivity extends AppCompatActivity {
         Boolean exists = false;
 
         userNameView.setText(chosenUserName);
+        currentUser.setUsername(currentUserName);
+
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(UserProfileActivity.this, AddHabitActivity.class);
+                intent.putExtra("User", currentUser);
+                startActivity(intent);
+            }
+        });
 
         getDataFromFB(new AsyncCall() {
             @Override
