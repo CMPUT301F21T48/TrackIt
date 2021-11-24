@@ -1,10 +1,6 @@
 package com.example.trackit;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -12,19 +8,27 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
+/**
+ * This is the activity for editing a habit.
+ * The user can change the start date and the associated attribute.
+ * The user can add or remove more days for the habit's schedule, but must have at least 1 day selected.
+ * If the user leaves a field empty while editing a habit the user is informed to not leave any missing fields
+ */
 public class EditHabitActivity extends AppCompatActivity {
 
     EditText editHabitTitle;
     EditText editHabitReason;
     Button editHabitButton;
     Button cancelButton;
+    String habitID;
     DatePicker datePicker;
     TextView selectedDate;
     String addStartDate;
@@ -47,6 +51,7 @@ public class EditHabitActivity extends AppCompatActivity {
 
         user = (User) getIntent().getSerializableExtra("User");
         habit = (Habit) getIntent().getSerializableExtra("Habit");
+        habitID = habit.getHabitID();
         setContentView(R.layout.activity_edit_habit);
         selectedDate = findViewById(R.id.add_start_date_text);
         datePicker = findViewById(R.id.select_start_date);
@@ -66,10 +71,6 @@ public class EditHabitActivity extends AppCompatActivity {
         editHabitTitle.setText(habit.getTitle());
         editHabitReason.setText(habit.getReason());
         selectedDate.setText(habit.getStartDate());
-        Integer year = Integer.parseInt(habit.getStartDate().substring(6,10));
-        Integer month = Integer.parseInt(habit.getStartDate().substring(3,5))-1;
-        Integer day = Integer.parseInt(habit.getStartDate().substring(0,2));
-        datePicker.updateDate(day,month,year);
 
         ArrayList<String> repeatDays = habit.getRepeatDays();
         for (int i = 0; i < repeatDays.size(); i++)
@@ -91,6 +92,11 @@ public class EditHabitActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     *  Selects the date using datePicker and sets the textview to selected date
+     * @param view
+     *      instance of object View
+     */
     public void selectDate(View view) {
         // Retrieve and set selected start date
         String date = Integer.toString(datePicker.getDayOfMonth());
@@ -102,10 +108,15 @@ public class EditHabitActivity extends AppCompatActivity {
             month = "0" + month;
         }
         String year = Integer.toString(datePicker.getYear());
-        addStartDate = date + "/" + month + "/" + year;
+        addStartDate = month + "/" + date + "/" + year;
         selectedDate.setText(addStartDate);
     }
 
+
+    /**
+     *  Save the changes for the habit 
+     * @param view
+     */
     public void saveChanges(View view) {
         String habitTitle = editHabitTitle.getText().toString();
         String habitReason = editHabitReason.getText().toString();
@@ -134,14 +145,24 @@ public class EditHabitActivity extends AppCompatActivity {
             repeatDays.add("Su");
         }
 
-        habit.setTitle(habitTitle);
-        habit.setReason(habitReason);
-        habit.setStartDate(habitStartDate);
-        habit.setRepeatDays(repeatDays);
-        String id = habit.getHabitID();
-        collectionReference.document(user.getUsername()).collection("Habits").document(id).set(habit);
-        finish();
+        // inform the user to not leave any field empty
+        if (habitTitle.isEmpty() || habitReason.isEmpty() || habitStartDate.equals("MM/DD/YYYY") || repeatDays.isEmpty()) {
+            Snackbar.make(this, view, "Do not leave any field(s) empty", Snackbar.LENGTH_LONG).show();
+        }
+        // add the habit to firestore
+        else {
+            habit.setTitle(habitTitle);
+            habit.setReason(habitReason);
+            habit.setStartDate(habitStartDate);
+            habit.setRepeatDays(repeatDays);
+            collectionReference.document(user.getUsername()).collection("Habits").document(habitID).set(habit);
+            finish();
+        }
     }
 
+    /**
+     *  Cancel the add habit
+     * @param view
+     */
     public void cancelAddHabit(View view) { finish(); }
 }

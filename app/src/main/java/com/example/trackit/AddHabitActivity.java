@@ -10,11 +10,21 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
+
+/**
+ * This is the activity to add a habit. The user must set a habit name and a descritption for the habit.
+ * By default, the start date of the habit is set to the current date.
+ * The user may change it to another date.
+ * The user must select at least 1 day for the habit schedule.
+ * If the user misses a field while adding habit the user is informed to not leave any missing fields
+ *
+ */
 public class AddHabitActivity extends AppCompatActivity {
 
     EditText addHabitTitle;
@@ -44,6 +54,7 @@ public class AddHabitActivity extends AppCompatActivity {
 
         selectedDate = findViewById(R.id.add_start_date_text);
         datePicker = findViewById(R.id.select_start_date);
+
         addHabitButton = findViewById(R.id.button_add_habit);
         cancelButton = findViewById(R.id.button_cancel);
         addHabitReason = findViewById(R.id.add_reason);
@@ -57,6 +68,11 @@ public class AddHabitActivity extends AppCompatActivity {
         repeatSunday = findViewById(R.id.checkbox_sunday);
     }
 
+    /**
+     * Uses datePicker to select date and sets that in the textview
+     * @param view
+     *      instance of object View
+     */
     public void selectDate(View view) {
         // Retrieve and set selected start date
         String date = Integer.toString(datePicker.getDayOfMonth());
@@ -72,12 +88,18 @@ public class AddHabitActivity extends AppCompatActivity {
         selectedDate.setText(addStartDate);
     }
 
+    /**
+     * Adds habit to Firestore and to listview
+     * @param view
+     *      instance of object View
+     */
     public void addHabit(View view) {
         String habitTitle = addHabitTitle.getText().toString();
         String habitReason = addHabitReason.getText().toString();
         String habitStartDate = selectedDate.getText().toString();
         ArrayList<String> repeatDays = new ArrayList<>();
 
+        // Add days of the Habit to the array
         if (repeatMonday.isChecked()){
             repeatDays.add("M");
         }
@@ -100,14 +122,21 @@ public class AddHabitActivity extends AppCompatActivity {
             repeatDays.add("Su");
         }
 
-        Habit habit = new Habit(habitTitle, habitReason, habitStartDate, repeatDays);
-        String id = collectionReference.document(user.getUsername()).collection("Habits").document().getId();
-        habit.setHabitID(id);
-        collectionReference.document(user.getUsername()).collection("Habits").document(id).set(habit);
-
-        finish();
+        // inform the user to not leave any field empty
+        if (habitTitle.isEmpty() || habitReason.isEmpty() || habitStartDate.equals("MM/DD/YYYY") || repeatDays.isEmpty()) {
+            Snackbar.make(this, view, "Do not leave any field(s) empty", Snackbar.LENGTH_LONG).show();
+        }
+        // add the habit to firestore
+        else {
+            Habit habit = new Habit(habitTitle, habitReason, habitStartDate, repeatDays);
+            String id = collectionReference.document(user.getUsername()).collection("Habits").document().getId();
+            habit.setHabitID(id);
+            collectionReference.document(user.getUsername()).collection("Habits").document(id).set(habit);
+            finish();
+        }
     }
 
+    // cancel option for AddHabit
     public void cancelAddHabit(View view) {
         finish();
     }

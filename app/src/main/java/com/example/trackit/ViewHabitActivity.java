@@ -1,15 +1,15 @@
 package com.example.trackit;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -17,7 +17,10 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.Serializable;
-
+/**
+ * This is the activity for viewing a habit.
+ * The user can also edit or delete a habit when viewing its details
+ */
 public class ViewHabitActivity extends AppCompatActivity {
 
 
@@ -25,6 +28,7 @@ public class ViewHabitActivity extends AppCompatActivity {
     CollectionReference collectionReference;
     User user;
     Habit habit;
+    String habitID;
     Intent intent;
     TextView habitTitle;
     TextView habitReason;
@@ -48,6 +52,7 @@ public class ViewHabitActivity extends AppCompatActivity {
 
         user = (User) getIntent().getSerializableExtra("User");
         habit = (Habit) getIntent().getSerializableExtra("Habit");
+        habitID = getIntent().getStringExtra("HabitID");
         collectionReference = db.collection("Users").document(user.getUsername()).collection("Habits");
 
         habitTitle.setText(habit.getTitle());
@@ -78,6 +83,12 @@ public class ViewHabitActivity extends AppCompatActivity {
         repeatDays.setText(textRepeat);
     }
 
+    /**
+     *  User can edit Habit details when viewing it
+     *  Starts intent to call EditHabitActivity
+     * @param view
+     *      instance of object View
+     */
     public void editHabit(View view)
     {
         intent = new Intent(ViewHabitActivity.this, EditHabitActivity.class);
@@ -87,6 +98,11 @@ public class ViewHabitActivity extends AppCompatActivity {
         finish();
     }
 
+    /**
+     * User can delete a habit when viewing its details
+     * @param view
+     *      instance of object View
+     */
     public void deleteHabit(View view)
     {
         collectionReference.document(habit.getHabitID())
@@ -104,5 +120,10 @@ public class ViewHabitActivity extends AppCompatActivity {
                     }
                 });
         finish();
+    }
+
+    // Habit events are left for part 4
+    public void viewEvents(View view) {
+        Toast.makeText(this, "Coming soon.", Toast.LENGTH_SHORT).show();
     }
 }

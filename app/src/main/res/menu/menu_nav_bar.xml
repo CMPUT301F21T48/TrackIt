@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_bar_today"
+        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:title="@string/nav_bar_today" />
+    <item
+        android:id="@+id/nav_bar_search"
+        android:icon="@android:drawable/ic_menu_search"
+        android:title="@string/nav_bar_search" />
+    <item
+        android:id="@+id/nav_bar_notification"
+        android:icon="@drawable/ic_notifications_black_24dp"
+        android:title="@string/nav_bar_notifications"/>
+    <item
+        android:id="@+id/nav_bar_profile"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="@string/nav_bar_profile"/>
+</menu>

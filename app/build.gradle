@@ -59,10 +59,9 @@ apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 29
-    buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.example.trackit"
-        minSdkVersion 29
+        minSdkVersion 28
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -79,11 +78,21 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    testOptions {
+        unitTests.all{
+            useJUnitPlatform()
+        }
+    }
     buildFeatures {
         viewBinding true
     }
     dataBinding{
         enabled=true
+    }
+    tasks.withType(Javadoc) {
+        options.addStringOption('Xdoclint:none', '-quiet')
+        options.addStringOption('encoding', 'UTF-8')
+        options.addStringOption('charSet', 'UTF-8')
     }
 }
 
@@ -104,4 +113,9 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'androidx.navigation:navigation-fragment:2.3.5'
     implementation 'androidx.navigation:navigation-ui:2.3.5'
+    androidTestImplementation 'androidx.test:rules:1.2.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    testImplementation'org.junit.jupiter:junit-jupiter-api:5.0.1'
+    testRuntimeOnly'org.junit.jupiter:junit-jupiter-engine:5.3.1'
+    androidTestImplementation 'com.jayway.android.robotium:robotium-solo:5.3.1'
 }

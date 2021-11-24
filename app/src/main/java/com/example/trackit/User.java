@@ -1,59 +1,57 @@
 package com.example.trackit;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Dictionary;
-import java.util.Hashtable;
-import java.util.List;
+/**
+ * User is the object representing a user
+ * Contains setters and getters for the username and password
+ * times it was not done.
+ */
 
 public class User implements Serializable {
     private String username;
     private String password;
-    List<Habit> userHabits;
-    static private Dictionary<String, Integer> userFollowers;
-    static private Dictionary<String, Integer> userFollowing;
 
     public User(String Username, String Password) {
-        this.userHabits = new ArrayList<Habit>();
         this.username = Username;
         this.password = Password;
-        this.userFollowers = new Hashtable<String, Integer>();
-        this.userFollowing = new Hashtable<String, Integer>();
     }
 
-    public static Dictionary<String, Integer> getFollower() {
-        return userFollowers;
-    }
+    public User() {}
 
-    public static void setFollower(Dictionary<String, Integer> follower) {
-        userFollowers = follower;
-    }
-
-    public static Dictionary<String, Integer> getFollowing() {
-        return userFollowing;
-    }
-
-    public static void setFollowing(Dictionary<String, Integer> following) {
-        userFollowing = following;
-    }
-
+    /**
+     * this returns the user name
+     * @return return the user name
+     */
     public String getUsername() {
         return username;
     }
 
+    /**
+     * sets the user name to the registered username
+     * @param registeredUsername
+     *          registered user name to set
+     */
     public void setUsername(String registeredUsername) {
         username = registeredUsername;
     }
 
+    /**
+     * returns the password of the user
+     * @return
+     *      password of user
+     */
     public String getPassword() {
         return password;
     }
 
+    /**
+     * sets the password of the user to the registered password
+     * @param registeredPassword
+     *      password the user registered with
+     */
     public void setPassword(String registeredPassword) {
         password = registeredPassword;
     }
 
-    public void addHabit(Habit habit) {
-        userHabits.add(habit);
-    }
+
 }
