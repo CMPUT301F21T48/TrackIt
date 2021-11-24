@@ -45,7 +45,8 @@
         <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/menu/menu_nav_bar.xml" value="0.1" />
         <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/menu/nav_bar_items.xml" value="0.15789473684210525" />
         <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/navigation/fragment_navigation.xml" value="0.15789473684210525" />
-        <entry key="app/src/main/res/layout/activity_add_habit.xml" value="0.11231884057971014" />
+        <entry key="app/src/main/res/layout/activity_add_event.xml" value="0.4264314460431755" />
+        <entry key="app/src/main/res/layout/activity_add_habit.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_edit_habit.xml" value="1.2129171331849133" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_notifications.xml" value="0.12447916666666667" />
@@ -53,6 +54,7 @@
         <entry key="app/src/main/res/layout/activity_search.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_todays_habits.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_user_profile.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_view_habit.xml" value="0.2453125" />
         <entry key="app/src/main/res/layout/habit.xml" value="0.1" />
         <entry key="app/src/main/res/layout/notification.xml" value="0.12447916666666667" />
         <entry key="app/src/main/res/menu/menu_nav_bar.xml" value="0.3550423217259934" />

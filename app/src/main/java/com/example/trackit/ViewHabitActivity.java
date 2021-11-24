@@ -124,6 +124,10 @@ public class ViewHabitActivity extends AppCompatActivity {
 
     // Habit events are left for part 4
     public void viewEvents(View view) {
-        Toast.makeText(this, "Coming soon.", Toast.LENGTH_SHORT).show();
+        intent = new Intent(ViewHabitActivity.this, AddEventActivity.class);
+        intent.putExtra("User", (Serializable) user);
+        intent.putExtra("Habit", (Serializable) habit);
+        startActivity(intent);
+        finish();
     }
 }
