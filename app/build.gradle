@@ -56,7 +56,6 @@
 // ---------- Modified app gradle ----------
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
-apply plugin: 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 
 android {
     compileSdkVersion 29
