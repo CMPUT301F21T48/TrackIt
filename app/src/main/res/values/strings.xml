@@ -67,4 +67,8 @@
     <string name="nav_bar_notifications">Notifications</string>
     <string name="nav_bar_profile">Profile</string>
 
+    <!-- Nav bar labels -->
+    <string name="map_kay">AIzaSyB4U1p27oBWodRYf4hl6FqVbHWlOE7hyE4</string>
+
+
 </resources>
