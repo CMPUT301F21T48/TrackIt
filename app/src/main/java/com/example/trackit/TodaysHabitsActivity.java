@@ -214,6 +214,10 @@ public class TodaysHabitsActivity extends AppCompatActivity {
         collectionReference.document(habit.getHabitID()).set(habit);
         habitMenu.setVisibility(GONE);
         isClicked[0] = false;
+        intent = new Intent(TodaysHabitsActivity.this, AddEventActivity.class);
+        intent.putExtra("User", (Serializable) user);
+        intent.putExtra("Habit", (Serializable) habit);
+        startActivity(intent);
     }
 
     /**

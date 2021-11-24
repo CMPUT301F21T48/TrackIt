@@ -13,12 +13,16 @@
     <string name="start_date_format">MM/DD/YYYY</string>
     <string name="add_repeat_text">Repeat:</string>
     <string name="view_details">View habit details</string>
+    <string name="habit_done">Habit Done!</string>
     <string name="habit_title_text">Habit:</string>
     <string name="habit_reason_text">Reason:</string>
     <string name="habit_start_date_text">Date started:</string>
     <string name="habit_repeat_text">Repeat:</string>
     <string name="no_habits_today">You do not have any pending habit(s) listed for today.</string>
     <string name="no_habits">You have not added any habit(s).</string>
+    <string name="add_comment">Add Comment (optional)</string>
+    <string name="add_photo">Add Photograph (optional)</string>
+    <string name="add_location">Record Location (optional)</string>
 
     <!-- Button labels -->
     <string name="button_sign_up" tools:ignore="ExtraTranslation">Sign Up</string>
@@ -30,6 +34,9 @@
     <string name="button_edit_habit">Edit Habit</string>
     <string name="button_delete_habit">Delete Habit</string>
     <string name="button_event_habit">View Events</string>
+    <string name="button_add_photo">Upload photograph</string>
+    <string name="button_add_location">Record location</string>
+    <string name="button_continue">Continue</string>
 
     <!-- Title bar strings -->
     <string name="title_register">Register</string>
@@ -37,6 +44,7 @@
     <string name="title_edit_habit">Edit Habit</string>
     <string name="title_todays_habits">Today\'s Habits</string>
     <string name="title_view_habit">View Habits</string>
+    <string name="add_event">Add Event</string>
 
     <!-- EditText hints -->
     <string name="add_title_hint">(max. 20 characters)</string>
@@ -58,5 +66,9 @@
     <string name="nav_bar_feed">Feed</string>
     <string name="nav_bar_notifications">Notifications</string>
     <string name="nav_bar_profile">Profile</string>
+
+    <!-- Nav bar labels -->
+    <string name="map_kay">AIzaSyB4U1p27oBWodRYf4hl6FqVbHWlOE7hyE4</string>
+
 
 </resources>
