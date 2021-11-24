@@ -2,13 +2,9 @@ package com.example.trackit;
 
 import android.graphics.Bitmap;
 
-import com.firebase.geofire.GeoFireUtils;
-import com.firebase.geofire.GeoLocation;
 import com.google.firebase.firestore.GeoPoint;
 
 import java.io.Serializable;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 
 /**
  * Habit is the object representing a habit type, belonging to a specific user.
@@ -23,7 +19,6 @@ public class Event implements Serializable {
     private GeoPoint location;
     private Bitmap image;
     private String ID;
-
 
     public Event()
     {
