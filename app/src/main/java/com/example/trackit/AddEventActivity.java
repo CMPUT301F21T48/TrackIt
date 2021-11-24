@@ -72,31 +72,12 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
         habit = (Habit) getIntent().getSerializableExtra("Habit");
         comment = findViewById(R.id.add_comment);
 
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-        fetchLastLocation();
-        Log.d(TAG, Integer.toString((int) curLocation.getLatitude()));
-        Log.d(TAG, Integer.toString((int) curLocation.getLongitude()));
+        //getting the map
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
 
-
-    private void fetchLastLocation() {
-        //Check permission
-        if (ActivityCompat.checkSelfPermission(AddEventActivity.this,Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
-        {
-            fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
-                @Override
-                public void onComplete(@NonNull Task<Location> task) {
-                    curLocation = task.getResult();
-                }
-            });
-        }
-        else {
-            ActivityCompat.requestPermissions(AddEventActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
-        }
-    }
 
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
@@ -114,7 +95,7 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
 
     public void done(View view) {
         Event event = new Event();
-        if (comment.getText() != null)
+        if (!comment.getText().equals(""))
         {
             event.setComment(comment.getText().toString());
         }
