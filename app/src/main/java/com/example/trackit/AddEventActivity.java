@@ -48,7 +48,8 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Locale;
 
-public class AddEventActivity extends AppCompatActivity implements OnMapReadyCallback{
+public class AddEventActivity extends AppCompatActivity implements OnMapReadyCallback,
+        GoogleMap.OnMarkerDragListener {
     private EditText comment;
     private Button done;
     private Bitmap image;
@@ -61,6 +62,7 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private final LatLng defaultLocation = new LatLng(-33.8523341, 151.2106085);
     private static final int DEFAULT_ZOOM = 15;
+    private Marker currentMarker;
 
 
     // The entry point to the Places API.
@@ -93,13 +95,30 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
 
 
     @Override
-    public void onMapReady(@NonNull GoogleMap googleMap) {
+    public void onMapReady(GoogleMap googleMap) {
         this.map = googleMap;
 
         // Prompt the user for permission.
         getLocationPermission();
         updateLocationUI();
         getDeviceLocation();
+        map.setOnMarkerDragListener(this);
+    }
+
+    @Override
+    public void onMarkerDrag(@NonNull Marker marker) {
+
+    }
+
+    @Override
+    public void onMarkerDragEnd(@NonNull Marker marker) {
+        LatLng position = currentMarker.getPosition();
+        location = new GeoPoint(position.latitude, position.longitude);
+    }
+
+    @Override
+    public void onMarkerDragStart(@NonNull Marker marker) {
+
     }
 
     private void getLocationPermission() {
@@ -156,6 +175,12 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
                                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(
                                         new LatLng(curLocation.getLatitude(),
                                                 curLocation.getLongitude()), DEFAULT_ZOOM));
+                                currentMarker = map.addMarker(new MarkerOptions()
+                                        .position(new LatLng(curLocation.getLatitude(),
+                                                curLocation.getLongitude()))
+                                        .draggable(true));
+                                location = new GeoPoint (curLocation.getLatitude(), curLocation.getLongitude());
+
                             }
                         } else {
                             Log.d(TAG, "Current location is null. Using defaults.");
@@ -173,7 +198,8 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
     }
 
     public void addLocation(View view) {
-
+        getLocationPermission();
+        updateLocationUI();
     }
 
     public void addPhoto(View view) {
@@ -186,19 +212,11 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
         {
             event.setComment(comment.getText().toString());
         }
-        if (location != null)
-        {
-            event.setLocation(location);
-        }
-        else
-        {
-            GeoPoint geopoint = new GeoPoint(curLocation.getLatitude(), curLocation.getLongitude());
-            event.setLocation(geopoint);
-        }
         if (image != null)
         {
             event.setImage(image);
         }
+        event.setLocation(location);
         String id = collectionReference.document(user.getUsername()).collection("Habits").document(habit.getHabitID()).collection("Events").document().getId();
         event.setEventID(id);
         collectionReference.document(user.getUsername()).collection("Habits").document(habit.getHabitID()).collection("Events").document(id).set(event);
