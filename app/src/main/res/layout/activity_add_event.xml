@@ -40,7 +40,7 @@
         android:id="@+id/comment"
         android:layout_width="205dp"
         android:layout_height="20dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="16dp"
         android:text="@string/add_comment"
         android:textColor="@color/black"
         android:textSize="16sp"
@@ -80,19 +80,6 @@
         app:layout_constraintHorizontal_bias="0.146"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/add_comment" />
-
-    <TextView
-        android:id="@+id/location"
-        android:layout_width="192dp"
-        android:layout_height="26dp"
-        android:layout_marginTop="36dp"
-        android:text="@string/add_location"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.146"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_photo" />
 
     <LinearLayout
         android:id="@+id/add_start_date_layout"
@@ -140,20 +127,19 @@
         android:backgroundTint="@android:color/tertiary_text_light"
         android:onClick="addLocation"
         android:text="@string/button_add_location"
-        app:layout_constraintBottom_toTopOf="@+id/button_add_habit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/location"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/map" />
 
     <fragment
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="175dp"
+        android:layout_marginTop="32dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_location"
-        tools:context=".AddEventActivity"/>
+        app:layout_constraintTop_toBottomOf="@+id/button_photo"
+        tools:context=".AddEventActivity" />
 </androidx.constraintlayout.widget.ConstraintLayout>
