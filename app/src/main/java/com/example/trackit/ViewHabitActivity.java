@@ -125,5 +125,10 @@ public class ViewHabitActivity extends AppCompatActivity {
     // Habit events are left for part 4
     public void viewEvents(View view) {
 
+        Intent newIntent = new Intent(this, ViewEventActivity.class);
+        newIntent.putExtra("User", (Serializable) user);
+        newIntent.putExtra("Habit", (Serializable) habit);
+        startActivity(newIntent);
+
     }
 }
