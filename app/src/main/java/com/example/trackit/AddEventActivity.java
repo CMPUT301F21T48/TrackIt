@@ -25,6 +25,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -56,7 +57,6 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
     private Button recordLocation;
     private TextView locationText;
     private LinearLayout locationLayout;
-    private Button done;
     private Bitmap image;
     private GeoPoint location;
     private Location curLocation;
@@ -65,8 +65,7 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
     private boolean locationPermissionGranted;
     private boolean cameraPermissionGranted;
     private static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 1;
-//    private static final int MY_CAMERA_REQUEST_CODE = 100;
-    private final LatLng defaultLocation = new LatLng(-33.8523341, 151.2106085);
+    private final LatLng defaultLocation = new LatLng(53.5461, 113.4938);
     private static final int DEFAULT_ZOOM = 15;
     private Marker currentMarker;
 
@@ -81,25 +80,29 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
         setContentView(R.layout.activity_add_event);
         user = (User) getIntent().getSerializableExtra("User");
         habit = (Habit) getIntent().getSerializableExtra("Habit");
-        checkAndRequestPermissions();
-        Log.d(TAG, String.valueOf(locationPermissionGranted));
         comment = findViewById(R.id.add_comment);
         recordLocation = findViewById(R.id.button_location);
         locationText = findViewById(R.id.location);
         locationLayout = findViewById(R.id.locationLayout);
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-        //        getCameraPermission();
+        checkAndRequestPermissions();
         //getting the map
         recordLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 checkAndRequestPermissions();
-                SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                        .findFragmentById(R.id.map);
-                mapFragment.getMapAsync(AddEventActivity.this);
-                locationLayout.setVisibility(View.VISIBLE);
-                recordLocation.setVisibility(View.INVISIBLE);
-                locationText.setText("Drag and drop the marker to set location");
+                if (locationPermissionGranted) {
+                    SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                            .findFragmentById(R.id.map);
+                    mapFragment.getMapAsync(AddEventActivity.this);
+                    locationLayout.setVisibility(View.VISIBLE);
+                    recordLocation.setVisibility(View.INVISIBLE);
+                    locationText.setText("Drag and drop the marker to set location");
+                }
+                else {
+                    Toast.makeText(AddEventActivity.this, "Please grant permission to access your current location.", Toast.LENGTH_SHORT).show();
+
+                }
             }
         });
     }
@@ -151,8 +154,10 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
 //        }
 //    }
     private void checkAndRequestPermissions() {
-        int permissionCamera = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
-        int locationPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
+        int permissionCamera = ContextCompat.checkSelfPermission(this,
+                Manifest.permission.CAMERA);
+        int locationPermission = ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION);
         List<String> listPermissionsNeeded = new ArrayList<>();
         if (locationPermission != PackageManager.PERMISSION_GRANTED) {
             listPermissionsNeeded.add(Manifest.permission.ACCESS_FINE_LOCATION);
@@ -169,7 +174,8 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
             cameraPermissionGranted = true;
         }
         if (!listPermissionsNeeded.isEmpty()) {
-            ActivityCompat.requestPermissions(this, listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]),REQUEST_ID_MULTIPLE_PERMISSIONS);
+            ActivityCompat.requestPermissions(this, listPermissionsNeeded.toArray(new
+                    String[listPermissionsNeeded.size()]),REQUEST_ID_MULTIPLE_PERMISSIONS);
         }
     }
 
@@ -200,7 +206,8 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
         try {
             if (locationPermissionGranted) {
                 Task<Location> locationResult = fusedLocationProviderClient.getLastLocation();
-                locationResult.addOnCompleteListener(this, new OnCompleteListener<Location>() {
+                locationResult.addOnCompleteListener(this,
+                        new OnCompleteListener<Location>() {
                     @Override
                     public void onComplete(@NonNull Task<Location> task) {
                         if (task.isSuccessful()) {
@@ -214,7 +221,8 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
                                         .position(new LatLng(curLocation.getLatitude(),
                                                 curLocation.getLongitude()))
                                         .draggable(true));
-                                location = new GeoPoint (curLocation.getLatitude(), curLocation.getLongitude());
+                                location = new GeoPoint (curLocation.getLatitude(),
+                                        curLocation.getLongitude());
 
                             }
                         } else {
@@ -233,7 +241,14 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
     }
 
     public void addPhoto(View view) {
-        Log.d(TAG, String.valueOf(cameraPermissionGranted));
+        checkAndRequestPermissions();
+        if (cameraPermissionGranted) {
+            //your code
+        }
+        else {
+            Toast.makeText(AddEventActivity.this, "Please grant permission to access your current location.", Toast.LENGTH_SHORT).show();
+
+        }
     }
 
     public void done(View view) {
@@ -246,10 +261,18 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
         {
             event.setImage(image);
         }
+        if (!locationPermissionGranted)
+        {
+            location = null;
+        }
         event.setLocation(location);
-        String id = collectionReference.document(user.getUsername()).collection("Habits").document(habit.getHabitID()).collection("Events").document().getId();
+        String id = collectionReference.document(user.getUsername())
+                .collection("Habits").document(habit.getHabitID())
+                .collection("Events").document().getId();
         event.setEventID(id);
-        collectionReference.document(user.getUsername()).collection("Habits").document(habit.getHabitID()).collection("Events").document(id).set(event);
+        collectionReference.document(user.getUsername()).collection("Habits")
+                .document(habit.getHabitID()).collection("Events")
+                .document(id).set(event);
         finish();
     }
 
