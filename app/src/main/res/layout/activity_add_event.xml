@@ -95,6 +95,21 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
+        android:id="@+id/button_skip"
+        android:layout_width="347dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="9dp"
+        android:onClick="skip"
+        android:text="@string/button_skip"
+        app:layout_constraintBottom_toTopOf="@+id/button_add_habit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_location"
+        app:layout_constraintVertical_bias="1.0"
+        style="?android:attr/borderlessButtonStyle"
+        android:textColor="@color/red"/>
+
+    <Button
         android:id="@+id/button_photo"
         android:layout_width="347dp"
         android:layout_height="wrap_content"
@@ -106,25 +121,53 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/photo" />
 
-    <fragment
-        android:id="@+id/map"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="32dp"
+    <Button
+        android:id="@+id/button_location"
+        android:layout_width="347dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@android:color/tertiary_text_light"
+        android:onClick="addPhoto"
+        android:text="@string/button_add_location"
         app:layout_constraintBottom_toTopOf="@+id/button_add_habit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/location"
-        tools:context=".AddEventActivity" />
+        app:layout_constraintVertical_bias="0.033" />
+
+    <LinearLayout
+        android:id="@+id/locationLayout"
+        android:layout_width="409dp"
+        android:layout_height="278dp"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/button_add_habit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_photo"
+        app:layout_constraintVertical_bias="0.615">
+
+        <fragment
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="32dp"
+            app:layout_constraintBottom_toTopOf="@+id/button_add_habit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/location"
+            app:layout_constraintVertical_bias="0.0"
+            tools:context=".AddEventActivity" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/location"
         android:layout_width="318dp"
         android:layout_height="25dp"
         android:layout_marginTop="28dp"
-        android:text="@string/add_location"
+        android:text="@string/add_location1"
         android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"

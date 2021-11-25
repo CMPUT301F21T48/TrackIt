@@ -3,6 +3,7 @@ package com.example.trackit;
 import static android.view.View.GONE;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,6 +16,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -62,7 +65,6 @@ public class TodaysHabitsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_todays_habits);
-
         user = (User) getIntent().getSerializableExtra("User");
         collectionReference = db.collection("Users").document(user.getUsername()).collection("Habits");
 
@@ -217,6 +219,7 @@ public class TodaysHabitsActivity extends AppCompatActivity {
         intent = new Intent(TodaysHabitsActivity.this, AddEventActivity.class);
         intent.putExtra("User", (Serializable) user);
         intent.putExtra("Habit", (Serializable) habit);
+//        intent.putExtra("LocationPermission", locationPermissionGranted);
         startActivity(intent);
     }
 
@@ -249,4 +252,7 @@ public class TodaysHabitsActivity extends AppCompatActivity {
     public void onBackPressed() {
 
     }
+
+
+
 }
