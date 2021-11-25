@@ -3,10 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/akars/Desktop/Studies/UNI/CMPUT_301/TrackIt/app/src/main/res/layout/activity_add_event.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/akars/Desktop/Studies/UNI/CMPUT_301/TrackIt/app/src/main/res/layout/activity_add_habit.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/akars/Desktop/Studies/UNI/CMPUT_301/TrackIt/app/src/main/res/layout/activity_edit_habit.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/akars/Desktop/Studies/UNI/CMPUT_301/TrackIt/app/src/main/res/layout/activity_search.xml" value="0.19895833333333332" />
         <entry key="..\:/Users/akars/Desktop/Studies/UNI/CMPUT_301/TrackIt/app/src/main/res/layout/activity_todays_habits.xml" value="0.144" />
+        <entry key="..\:/Users/akars/Desktop/Studies/UNI/CMPUT_301/TrackIt/app/src/main/res/layout/activity_user_profile.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/akars/Desktop/Studies/UNI/CMPUT_301/TrackIt/app/src/main/res/layout/activity_view_habit.xml" value="0.13020833333333334" />
         <entry key="..\:/Users/akars/Desktop/Studies/UNI/CMPUT_301/TrackIt/app/src/main/res/layout/activity_welcome.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/akars/Desktop/Studies/UNI/CMPUT_301/TrackIt/app/src/main/res/layout/camera.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/akars/Desktop/Studies/UNI/CMPUT_301/TrackIt/app/src/main/res/layout/habit.xml" value="0.264" />
+        <entry key="..\:/Users/akars/Desktop/Studies/UNI/CMPUT_301/TrackIt/app/src/main/res/layout/notification.xml" value="0.19895833333333332" />
+        <entry key="..\:/Users/akars/Desktop/Studies/UNI/CMPUT_301/TrackIt/app/src/main/res/layout/user_item.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/akars/Desktop/Studies/UNI/CMPUT_301/TrackIt/app/src/main/res/layout/user_profile.xml" value="0.264" />
         <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.14427083333333332" />
         <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.14427083333333332" />
@@ -45,7 +53,7 @@
         <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/menu/menu_nav_bar.xml" value="0.1" />
         <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/menu/nav_bar_items.xml" value="0.15789473684210525" />
         <entry key="..\:/Users/david/Desktop/University/CMPUT301/Project/TrackIt/app/src/main/res/navigation/fragment_navigation.xml" value="0.15789473684210525" />
-        <entry key="app/src/main/res/layout/activity_add_event.xml" value="0.2627603546598122" />
+        <entry key="app/src/main/res/layout/activity_add_event.xml" value="0.48365966732836496" />
         <entry key="app/src/main/res/layout/activity_add_habit.xml" value="0.11231884057971014" />
         <entry key="app/src/main/res/layout/activity_edit_habit.xml" value="1.2129171331849133" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.1" />
