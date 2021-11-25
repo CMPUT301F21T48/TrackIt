@@ -22,7 +22,8 @@
     <string name="no_habits">You have not added any habit(s).</string>
     <string name="add_comment">Add Comment (optional)</string>
     <string name="add_photo">Add Photograph (optional)</string>
-    <string name="add_location">Drag and drop the marker to set location</string>
+    <string name="add_location1">Add Location (optional)</string>
+    <string name="add_location2">Drag and drop the marker</string>
 
     <!-- Button labels -->
     <string name="button_sign_up" tools:ignore="ExtraTranslation">Sign Up</string>
@@ -36,7 +37,8 @@
     <string name="button_event_habit">View Events</string>
     <string name="button_add_photo">Upload photograph</string>
     <string name="button_add_location">Record location</string>
-    <string name="button_continue">Continue</string>
+    <string name="button_continue">Save Event</string>
+    <string name="button_skip">Skip Adding Event</string>
 
     <!-- Title bar strings -->
     <string name="title_register">Register</string>
