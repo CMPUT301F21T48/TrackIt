@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddEventActivity">
+
+    <TextView
+        android:id="@+id/title_bar"
+        android:layout_width="0dp"
+        android:layout_height="?actionBarSize"
+        android:background="@color/status_bar"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="@string/add_event"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/habit_done"
+        android:layout_width="158dp"
+        android:layout_height="23dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/habit_done"
+        android:textColor="@color/black"
+        android:textColorHighlight="@color/black"
+        android:textColorLink="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.128"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title_bar" />
+
+    <TextView
+        android:id="@+id/comment"
+        android:layout_width="205dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/add_comment"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.155"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/habit_done" />
+
+    <EditText
+        android:id="@+id/add_comment"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="11dp"
+        android:layout_marginEnd="32dp"
+        android:ems="10"
+        android:hint="@string/add_title_hint"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:maxLength="20"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/comment"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <ImageView
+        android:id="@+id/photo"
+        android:layout_width="399dp"
+        android:layout_height="87dp"
+        android:layout_marginTop="36dp"
+        android:text="@string/add_photo"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.146"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_comment" />
+
+    <Button
+        android:id="@+id/button_add_habit"
+        android:layout_width="347dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
+        android:onClick="done"
+        android:text="@string/button_continue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button_skip"
+        android:layout_width="347dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="9dp"
+        android:onClick="skip"
+        android:text="@string/button_skip"
+        app:layout_constraintBottom_toTopOf="@+id/button_add_habit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_location"
+        app:layout_constraintVertical_bias="1.0"
+        style="?android:attr/borderlessButtonStyle"
+        android:textColor="@color/red"/>
+
+    <Button
+        android:id="@+id/button_photo"
+        android:layout_width="347dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:backgroundTint="@android:color/tertiary_text_light"
+        android:onClick="addPhoto"
+        android:text="@string/button_add_photo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/photo" />
+
+    <Button
+        android:id="@+id/button_location"
+        android:layout_width="347dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@android:color/tertiary_text_light"
+        android:onClick="addPhoto"
+        android:text="@string/button_add_location"
+        app:layout_constraintBottom_toTopOf="@+id/button_add_habit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/location"
+        app:layout_constraintVertical_bias="0.033" />
+
+    <LinearLayout
+        android:id="@+id/locationLayout"
+        android:layout_width="409dp"
+        android:layout_height="278dp"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/button_add_habit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_photo"
+        app:layout_constraintVertical_bias="0.615">
+
+        <fragment
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="32dp"
+            app:layout_constraintBottom_toTopOf="@+id/button_add_habit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/location"
+            app:layout_constraintVertical_bias="0.0"
+            tools:context=".AddEventActivity" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/location"
+        android:layout_width="318dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="28dp"
+        android:text="@string/add_location1"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.344"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_photo" />
+</androidx.constraintlayout.widget.ConstraintLayout>

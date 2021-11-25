@@ -124,6 +124,6 @@ public class ViewHabitActivity extends AppCompatActivity {
 
     // Habit events are left for part 4
     public void viewEvents(View view) {
-        Toast.makeText(this, "Coming soon.", Toast.LENGTH_SHORT).show();
+
     }
 }

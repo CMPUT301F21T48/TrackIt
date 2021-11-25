@@ -22,6 +22,7 @@ public class Event implements Serializable {
     private String comment;
     private GeoPoint location;
     private String encodedImage;
+    private Bitmap image;
     private String ID;
 
 
@@ -29,6 +30,7 @@ public class Event implements Serializable {
     {
         this.comment = null;
         this.encodedImage = null;
+        this.image = null;
         this.location = null;
         this.ID = null;
     }
