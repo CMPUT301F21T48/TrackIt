@@ -68,10 +68,10 @@
         app:layout_constraintTop_toBottomOf="@+id/comment"
         tools:ignore="SpeakableTextPresentCheck" />
 
-    <TextView
+    <ImageView
         android:id="@+id/photo"
-        android:layout_width="192dp"
-        android:layout_height="26dp"
+        android:layout_width="399dp"
+        android:layout_height="87dp"
         android:layout_marginTop="36dp"
         android:text="@string/add_photo"
         android:textColor="@color/black"
@@ -113,7 +113,7 @@
         android:id="@+id/button_photo"
         android:layout_width="347dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="28dp"
         android:backgroundTint="@android:color/tertiary_text_light"
         android:onClick="addPhoto"
         android:text="@string/button_add_photo"
