@@ -21,6 +21,7 @@ public class Habit implements Serializable {
     private int numNotDone;
     private String ID;
     private String lastDone;
+    private String privacy;
 
     public Habit(String title, String reason, String startDate, ArrayList<String> repeatDays)
     {

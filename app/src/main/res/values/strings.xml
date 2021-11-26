@@ -23,6 +23,7 @@
     <string name="add_comment">Add Comment (optional)</string>
     <string name="add_photo">Add Photograph (optional)</string>
     <string name="add_location">Drag and drop the marker to set location</string>
+    <string name="habit_privacy_text">Set habit privacy: </string>
 
     <!-- Button labels -->
     <string name="button_sign_up" tools:ignore="ExtraTranslation">Sign Up</string>
