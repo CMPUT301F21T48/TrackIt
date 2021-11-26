@@ -23,7 +23,7 @@ public class Habit implements Serializable {
     private String lastDone;
     private String privacy;
 
-    public Habit(String title, String reason, String startDate, ArrayList<String> repeatDays)
+    public Habit(String title, String reason, String startDate, ArrayList<String> repeatDays, String privacy)
     {
         this.title = title;
         this.reason = reason;
@@ -34,6 +34,7 @@ public class Habit implements Serializable {
         this.progress = 0;
         this.numDone = 0;
         this.numNotDone = 0;
+        this.privacy = privacy;
     }
 
     //getters and setters for the variables
@@ -53,6 +54,9 @@ public class Habit implements Serializable {
             this.progress = ((double) this.numDone/sum);
         } else { this.progress = 0; }
     }
+    public void setPrivacy(String privacy) {
+        this.privacy = privacy;
+    }
 
     public String getTitle() { return this.title; }
     public String getReason() { return this.reason; }
@@ -64,6 +68,9 @@ public class Habit implements Serializable {
     public int getNumNotDone() {return this.numNotDone;}
     public String getLastDone() {
         return this.lastDone;
+    }
+    public String getPrivacy() {
+        return this.privacy;
     }
 
     public void updateNumDone() {

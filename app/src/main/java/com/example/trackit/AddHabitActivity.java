@@ -6,6 +6,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -41,6 +42,8 @@ public class AddHabitActivity extends AppCompatActivity {
     CheckBox repeatFriday;
     CheckBox repeatSaturday;
     CheckBox repeatSunday;
+    RadioButton publicPrivacy;
+    RadioButton privatePrivacy;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     final CollectionReference collectionReference = db.collection("Users");
@@ -66,6 +69,9 @@ public class AddHabitActivity extends AppCompatActivity {
         repeatFriday = findViewById(R.id.checkbox_friday);
         repeatSaturday = findViewById(R.id.checkbox_saturday);
         repeatSunday = findViewById(R.id.checkbox_sunday);
+
+        publicPrivacy = findViewById(R.id.privacy_button_public);
+        privatePrivacy = findViewById(R.id.privacy_button_private);
     }
 
     /**
@@ -98,6 +104,7 @@ public class AddHabitActivity extends AppCompatActivity {
         String habitReason = addHabitReason.getText().toString();
         String habitStartDate = selectedDate.getText().toString();
         ArrayList<String> repeatDays = new ArrayList<>();
+        String habitPrivacy = null;
 
         // Add days of the Habit to the array
         if (repeatMonday.isChecked()){
@@ -122,13 +129,21 @@ public class AddHabitActivity extends AppCompatActivity {
             repeatDays.add("Su");
         }
 
+        if (publicPrivacy.isChecked()){
+            habitPrivacy = "public";
+        } else if (privatePrivacy.isChecked()){
+            habitPrivacy = "private";
+        } else{
+            habitPrivacy = "";
+        }
+
         // inform the user to not leave any field empty
-        if (habitTitle.isEmpty() || habitReason.isEmpty() || habitStartDate.equals("MM/DD/YYYY") || repeatDays.isEmpty()) {
+        if (habitTitle.isEmpty() || habitReason.isEmpty() || habitStartDate.equals("MM/DD/YYYY") || repeatDays.isEmpty() || habitPrivacy.isEmpty()) {
             Snackbar.make(this, view, "Do not leave any field(s) empty", Snackbar.LENGTH_LONG).show();
         }
         // add the habit to firestore
         else {
-            Habit habit = new Habit(habitTitle, habitReason, habitStartDate, repeatDays);
+            Habit habit = new Habit(habitTitle, habitReason, habitStartDate, repeatDays, habitPrivacy);
             String id = collectionReference.document(user.getUsername()).collection("Habits").document().getId();
             habit.setHabitID(id);
             collectionReference.document(user.getUsername()).collection("Habits").document(id).set(habit);

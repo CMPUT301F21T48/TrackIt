@@ -107,6 +107,7 @@ public class TodaysHabitsActivity extends AppCompatActivity {
                     String startDate = (String) doc.getData().get("startDate");
                     ArrayList<String> repeatDays = (ArrayList<String>) doc.getData().get("repeatDays");
                     String habitLastDone = (String) doc.getData().get("lastDone");
+                    String habitPrivacy = (String) doc.getData().get("privacy");
 
                     int flag = 0;
                     String day = LocalDate.now().getDayOfWeek().name();
@@ -131,7 +132,7 @@ public class TodaysHabitsActivity extends AppCompatActivity {
                     if (flag == 1) {
                         int numDone = (int) ((long) doc.getData().get("numDone"));
                         int numNotDone = (int) ((long) doc.getData().get("numNotDone"));
-                        Habit newHabit = new Habit(title, reason, startDate, repeatDays);
+                        Habit newHabit = new Habit(title, reason, startDate, repeatDays, habitPrivacy);
                         newHabit.setHabitID(ID);
                         newHabit.setNumDone(numDone);
                         newHabit.setNumNotDone(numNotDone);
@@ -268,7 +269,7 @@ public class TodaysHabitsActivity extends AppCompatActivity {
             habitDataList.set(previousHabitIndex, habit);
             habitDataList.set(currentHabitIndex, tempHabit);
             habitAdapter.notifyDataSetChanged();
-            previousHabitMenu.setVisibility(View.VISIBLE);
+//            previousHabitMenu.setVisibility(View.VISIBLE);
             habitMenu.setVisibility(GONE);
             isClicked[0] = false;
 //            nextHabitMenu.setVisibility(View.VISIBLE);

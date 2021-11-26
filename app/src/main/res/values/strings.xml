@@ -14,7 +14,7 @@
     <string name="add_repeat_text">Repeat:</string>
     <string name="view_details">View habit details</string>
     <string name="habit_done">Habit Done!</string>
-    <string name="habit_title_text">Habit:</string>
+    <string name="habit_title_text">Habit name: </string>
     <string name="habit_reason_text">Reason:</string>
     <string name="habit_start_date_text">Date started:</string>
     <string name="habit_repeat_text">Repeat:</string>

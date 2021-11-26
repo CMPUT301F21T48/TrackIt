@@ -26,9 +26,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="Sample Title"
-                android:textColor="@color/black"
                 android:textSize="16sp"
-                android:padding="12dp"/>
+                android:padding="16dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"

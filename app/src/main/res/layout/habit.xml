@@ -35,7 +35,6 @@
                         android:layout_alignParentTop="true"
                         android:layout_height="wrap_content"
                         android:text="Sample Title"
-                        android:textColor="@color/black"
                         android:textSize="16sp"
                         android:paddingBottom="4dp"/>
 
