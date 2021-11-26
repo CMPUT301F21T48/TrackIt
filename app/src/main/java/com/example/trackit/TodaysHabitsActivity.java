@@ -268,7 +268,7 @@ public class TodaysHabitsActivity extends AppCompatActivity {
             habitDataList.set(previousHabitIndex, habit);
             habitDataList.set(currentHabitIndex, tempHabit);
             habitAdapter.notifyDataSetChanged();
-            previousHabitMenu.setVisibility(View.VISIBLE);
+//            previousHabitMenu.setVisibility(View.VISIBLE);
             habitMenu.setVisibility(GONE);
             isClicked[0] = false;
 //            nextHabitMenu.setVisibility(View.VISIBLE);

@@ -12,13 +12,13 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
+        android:textColor="@color/black"
         android:backgroundTint="@android:color/tertiary_text_light"
         android:text="@string/button_event_habit"
-        android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/button_edit_habit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        style="?android:attr/borderlessButtonStyle"
+        style = "@style/Widget.AppCompat.Button.Borderless"
         android:onClick="viewEvents"/>
 
     <TextView
@@ -28,7 +28,6 @@
         android:background="@color/status_bar"
         android:gravity="center_vertical|center_horizontal"
         android:text="@string/title_view_habit"
-        android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -42,7 +41,6 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:text="@string/habit_title_text"
-        android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title_bar" />
@@ -70,7 +68,6 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
         android:text="@string/habit_reason_text"
-        android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/add_title" />
@@ -125,7 +122,6 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/add_start_date_text"
-            android:textColor="@color/black"
             android:textSize="16sp" />
 
         <TextView
@@ -135,7 +131,6 @@
             android:layout_weight="1"
             android:gravity="end"
             android:text="@string/start_date_format"
-            android:textColor="@color/black"
             android:textSize="20sp" />
     </LinearLayout>
 
@@ -159,7 +154,6 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="24dp"
         android:text="@string/add_repeat_text"
-        android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/select_date_layout" />
@@ -170,8 +164,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
-
-        android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/habit_repeat_text" />
