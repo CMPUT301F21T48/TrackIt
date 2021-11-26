@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -14,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -23,6 +25,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class ViewEventsForHabitActivity extends AppCompatActivity {
@@ -35,6 +38,7 @@ public class ViewEventsForHabitActivity extends AppCompatActivity {
     ArrayList<Event> eventDataList;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     CollectionReference collectionReference;
+    BottomNavigationView navBar;
     final String TAG = "Sample";
 
 
@@ -45,6 +49,14 @@ public class ViewEventsForHabitActivity extends AppCompatActivity {
         user = (User) getIntent().getSerializableExtra("User");
         habit = (Habit) getIntent().getSerializableExtra("Habit");
         collectionReference = db.collection("Users").document(user.getUsername()).collection("Habits").document(habit.getHabitID()).collection("Events");
+
+        // Button and it's listener to return
+        Button continueButton = (Button) this.findViewById(R.id.continue_button);
+        continueButton.setOnClickListener(
+                this::viewHabit
+        );
+
+        navBar = findViewById(R.id.navigation);
 
         eventList = findViewById(R.id.event_list);
         emptyMessage = findViewById(R.id.no_event_message);
@@ -85,6 +97,19 @@ public class ViewEventsForHabitActivity extends AppCompatActivity {
         });
 
 
+
+
     }
+
+    public void viewHabit(View view) {
+
+        Intent newIntent = new Intent(this, ViewHabitActivity.class);
+        newIntent.putExtra("User", (Serializable) user);
+        newIntent.putExtra("Habit", (Serializable) habit);
+        startActivity(newIntent);
+
+    }
+
+
 
 }
