@@ -22,7 +22,7 @@
     <string name="no_habits">You have not added any habit(s).</string>
     <string name="add_comment">Add Comment (optional)</string>
     <string name="add_photo">Add Photograph (optional)</string>
-    <string name="add_location">Drag and drop the marker to set location</string>
+    <string name="add_location">Drag and drop the marker to set location: </string>
     <string name="habit_privacy_text">Set habit privacy: </string>
 
     <!-- Button labels -->
@@ -38,6 +38,7 @@
     <string name="button_add_photo">Upload photograph</string>
     <string name="button_add_location">Record location</string>
     <string name="button_continue">Continue</string>
+    <string name="button_skip">Skip</string>
 
     <!-- Title bar strings -->
     <string name="title_register">Register</string>
@@ -69,7 +70,7 @@
     <string name="nav_bar_profile">Profile</string>
 
     <!-- Nav bar labels -->
-    <string name="map_kay">AIzaSyB4U1p27oBWodRYf4hl6FqVbHWlOE7hyE4</string>
+    <string name="map_key">AIzaSyB4U1p27oBWodRYf4hl6FqVbHWlOE7hyE4</string>
 
 
 </resources>
