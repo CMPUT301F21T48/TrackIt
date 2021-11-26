@@ -73,6 +73,7 @@
     <string name="map_kay">AIzaSyB4U1p27oBWodRYf4hl6FqVbHWlOE7hyE4</string>
     <string name="title_events_list">Events</string>
     <string name="no_event">You do not have any event listed for this habit</string>
+    <string name="error_date">No Date recorded</string>
 
 
 </resources>
