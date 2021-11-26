@@ -70,6 +70,12 @@
     <string name="nav_bar_notifications">Notifications</string>
     <string name="nav_bar_profile">Profile</string>
 
+    <!-- Nav bar labels -->
+    <string name="title_events_list">Events</string>
+    <string name="no_event">You do not have any event listed for this habit</string>
+    <string name="error_date">No Date recorded</string>
+
+    
     <!-- Resource keys -->
     <string name="map_key">AIzaSyB4U1p27oBWodRYf4hl6FqVbHWlOE7hyE4</string>
 
