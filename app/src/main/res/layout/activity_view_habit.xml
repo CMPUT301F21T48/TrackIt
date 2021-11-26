@@ -13,7 +13,6 @@
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         android:textColor="@color/black"
-        android:backgroundTint="@android:color/tertiary_text_light"
         android:text="@string/button_event_habit"
         app:layout_constraintBottom_toTopOf="@+id/button_edit_habit"
         app:layout_constraintEnd_toEndOf="parent"
@@ -41,7 +40,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:text="@string/habit_title_text"
-        android:textSize="16sp"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title_bar" />
 
@@ -51,15 +50,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:ems="10"
         android:importantForAutofill="no"
-        android:maxLength="20"
-        android:minHeight="48dp"
-        android:textSize="20sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/habit_title_text"
-        tools:ignore="SpeakableTextPresentCheck" />
+        app:layout_constraintTop_toBottomOf="@+id/habit_title_text" />
 
     <TextView
         android:id="@+id/habit_reason_text"
@@ -68,7 +63,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
         android:text="@string/habit_reason_text"
-        android:textSize="16sp"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/add_title" />
 
@@ -78,27 +73,22 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:ems="10"
         android:importantForAutofill="no"
-        android:maxLength="30"
-        android:minHeight="48dp"
-        android:textSize="20sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/habit_reason_text"
-        tools:ignore="SpeakableTextPresentCheck" />
+        app:layout_constraintTop_toBottomOf="@+id/habit_reason_text" />
 
     <TextView
         android:id="@+id/add_repeat_days"
-        android:layout_width="349dp"
-        android:layout_height="190dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:ems="10"
         android:importantForAutofill="no"
-        android:minHeight="48dp"
-        android:textSize="14sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -122,7 +112,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/add_start_date_text"
-            android:textSize="16sp" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/add_start_date_text"
@@ -131,20 +121,7 @@
             android:layout_weight="1"
             android:gravity="end"
             android:text="@string/start_date_format"
-            android:textSize="20sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/select_date_layout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_start_date_layout">
-
+            android:textSize="16sp" />
     </LinearLayout>
 
     <TextView
@@ -152,21 +129,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="24dp"
-        android:text="@string/add_repeat_text"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/select_date_layout" />
-
-    <TextView
-        android:id="@+id/add_repeat_text"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
-        android:textSize="16sp"
+        android:text="@string/add_repeat_text"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/habit_repeat_text" />
+        app:layout_constraintTop_toBottomOf="@+id/add_start_date_layout" />
 
     <Button
         android:id="@+id/button_edit_habit"

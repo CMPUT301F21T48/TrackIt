@@ -120,10 +120,11 @@ public class UserProfileActivity extends AppCompatActivity {
                         String reason = (String) doc.getData().get("reason");
                         String startDate = (String) doc.getData().get("startDate");
                         ArrayList<String> repeatDays = (ArrayList<String>) doc.getData().get("repeatDays");
+                        String habitPrivacy = (String) doc.getData().get("privacy");
 
                         int numDone = (int) ((long) doc.getData().get("numDone"));
                         int numNotDone = (int) ((long) doc.getData().get("numNotDone"));
-                        Habit newHabit = new Habit(title, reason, startDate, repeatDays);
+                        Habit newHabit = new Habit(title, reason, startDate, repeatDays, habitPrivacy);
                         newHabit.setHabitID(ID);
                         newHabit.setNumDone(numDone);
                         newHabit.setNumNotDone(numNotDone);
@@ -172,15 +173,17 @@ public class UserProfileActivity extends AppCompatActivity {
                                                 String reason = (String) doc.getData().get("reason");
                                                 String startDate = (String) doc.getData().get("startDate");
                                                 ArrayList<String> repeatDays = (ArrayList<String>) doc.getData().get("repeatDays");
-
+                                                String habitPrivacy = (String) doc.getData().get("privacy");
                                                 int numDone = (int) ((long) doc.getData().get("numDone"));
                                                 int numNotDone = (int) ((long) doc.getData().get("numNotDone"));
-                                                Habit newHabit = new Habit(title, reason, startDate, repeatDays);
+                                                Habit newHabit = new Habit(title, reason, startDate, repeatDays, habitPrivacy);
                                                 newHabit.setHabitID(ID);
                                                 newHabit.setNumDone(numDone);
                                                 newHabit.setNumNotDone(numNotDone);
                                                 newHabit.setProgress();
-                                                habitDataList.add(newHabit);
+                                                if (newHabit.getPrivacy().equals("public")){
+                                                    habitDataList.add(newHabit);
+                                                }
                                             }
                                             if (habitDataList.size() == 0) {
                                                 emptyMessage.setVisibility(View.VISIBLE);
