@@ -20,10 +20,11 @@
     <string name="habit_repeat_text">Repeat:</string>
     <string name="no_habits_today">You do not have any pending habit(s) listed for today.</string>
     <string name="no_habits">You have not added any habit(s).</string>
-    <string name="add_comment">Add Comment (optional)</string>
-    <string name="add_photo">Add Photograph (optional)</string>
+    <string name="add_comment">Add Comment (optional): </string>
+    <string name="add_photo">Add Photograph (optional): </string>
     <string name="add_location">Drag and drop the marker to set location: </string>
     <string name="habit_privacy_text">Set habit privacy: </string>
+    <string name="record_location">Record location (optional): </string>
 
     <!-- Button labels -->
     <string name="button_sign_up" tools:ignore="ExtraTranslation">Sign Up</string>
@@ -69,7 +70,7 @@
     <string name="nav_bar_notifications">Notifications</string>
     <string name="nav_bar_profile">Profile</string>
 
-    <!-- Nav bar labels -->
+    <!-- Resource keys -->
     <string name="map_key">AIzaSyB4U1p27oBWodRYf4hl6FqVbHWlOE7hyE4</string>
 
 
