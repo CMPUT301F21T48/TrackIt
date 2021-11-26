@@ -38,7 +38,7 @@
             android:name=".ViewHabitActivity"
             android:exported="false" />
         <activity
-            android:name=".ViewEventActivity"
+            android:name=".ViewEventsForHabitActivity"
             android:exported="false" />
         <meta-data
             android:name="com.google.android.gms.version"

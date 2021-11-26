@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -122,10 +121,9 @@ public class ViewHabitActivity extends AppCompatActivity {
         finish();
     }
 
-    // Habit events are left for part 4
     public void viewEvents(View view) {
 
-        Intent newIntent = new Intent(this, ViewEventActivity.class);
+        Intent newIntent = new Intent(this, ViewEventsForHabitActivity.class);
         newIntent.putExtra("User", (Serializable) user);
         newIntent.putExtra("Habit", (Serializable) habit);
         startActivity(newIntent);
