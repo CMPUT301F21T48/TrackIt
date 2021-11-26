@@ -17,12 +17,14 @@ import java.io.Serializable;
 public class Event implements Serializable {
     private String comment;
     private GeoPoint location;
+    private String encodedImage;
     private Bitmap image;
     private String ID;
 
     public Event()
     {
         this.comment = null;
+        this.encodedImage = null;
         this.image = null;
         this.location = null;
         this.ID = null;
@@ -31,12 +33,12 @@ public class Event implements Serializable {
     //getters and setters for the variables
     public void setComment(String comment) {this.comment = comment;}
     public void setLocation(GeoPoint location) {this.location = location;}
-    public void setImage(Bitmap image) {this.image = image;}
+    public void setImage(String encodedImage) {this.encodedImage = encodedImage;}
     public void setEventID(String ID) {this.ID = ID;}
 
     public String getComment() {return this.comment;}
     public String getEventID() {return this.ID;}
-    public Bitmap getImage() {return this.image;}
+    public String getImage() {return this.encodedImage;}
     public GeoPoint getLocation() {return this.location;}
 
 }
