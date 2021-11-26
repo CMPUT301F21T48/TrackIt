@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
 
@@ -66,7 +67,7 @@ public class UserSearchActivity extends AppCompatActivity {
 //       searchView= (android.widget.SearchView) findViewById(R.id.searchView);
         TextView sQuery = findViewById(R.id.squery);
 
-        Button queryClearer = findViewById(R.id.squerybutton);
+        ImageView queryClearer = findViewById(R.id.squerybutton);
 
         queryClearer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,7 +91,7 @@ public class UserSearchActivity extends AppCompatActivity {
                 }
         });
 
-        Button clearButton = findViewById(R.id.clearbutton);
+        ImageView clearButton = findViewById(R.id.clearbutton);
 
         clearButton.setOnClickListener(new View.OnClickListener() {
             @Override

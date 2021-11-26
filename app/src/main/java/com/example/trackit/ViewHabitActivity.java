@@ -63,19 +63,19 @@ public class ViewHabitActivity extends AppCompatActivity {
         {
             day = habit.getRepeatDays().get(i);
             if (day.equals("M"))
-                day = "Monday\n";
+                day = "Monday\n\n";
             else if (day.equals("T"))
-                day = "Tuesday\n";
+                day = "Tuesday\n\n";
             else if (day.equals("W"))
-                day = "Wednesday\n";
+                day = "Wednesday\n\n";
             else if (day.equals("R"))
-                day = "Thursday\n";
+                day = "Thursday\n\n";
             else if (day.equals("F"))
-                day = "Friday\n";
+                day = "Friday\n\n";
             else if (day.equals("S"))
-                day = "Saturday\n";
+                day = "Saturday\n\n";
             else
-                day = "Sunday\n";
+                day = "Sunday\n\n";
 
             textRepeat += day;
         }

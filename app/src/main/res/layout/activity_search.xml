@@ -12,7 +12,6 @@
         android:background="@color/status_bar"
         android:gravity="center_vertical|center_horizontal"
         android:text="@string/nav_bar_search"
-        android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -44,25 +43,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title_bar" />
 
-    <Button
+    <ImageView
         android:id="@+id/squerybutton"
         android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:background="@android:drawable/ic_search_category_default"
+        android:layout_height="50dp"
+        android:src="@drawable/search"
         app:layout_constraintEnd_toStartOf="@+id/clearbutton"
         app:layout_constraintTop_toBottomOf="@+id/title_bar"
         tools:ignore="SpeakableTextPresentCheck"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="16dp"
+        android:padding="4dp"/>
 
-    <Button
+    <ImageView
         android:id="@+id/clearbutton"
         android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:background="@android:drawable/ic_delete"
+        android:layout_height="50dp"
+        android:src="@drawable/cancel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title_bar"
         tools:ignore="SpeakableTextPresentCheck"
         android:layout_marginTop="16dp"
-        android:layout_marginRight="16dp"/>
+        android:layout_marginRight="16dp"
+        android:padding="12dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
