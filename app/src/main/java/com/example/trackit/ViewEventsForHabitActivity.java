@@ -50,14 +50,6 @@ public class ViewEventsForHabitActivity extends AppCompatActivity {
         habit = (Habit) getIntent().getSerializableExtra("Habit");
         collectionReference = db.collection("Users").document(user.getUsername()).collection("Habits").document(habit.getHabitID()).collection("Events");
 
-        // Button and it's listener to return
-//        Button continueButton = (Button) this.findViewById(R.id.continue_button);
-//        continueButton.setOnClickListener(
-//                this::viewHabit
-//        );
-
-        navBar = findViewById(R.id.navigation);
-
         eventList = findViewById(R.id.event_list);
         emptyMessage = findViewById(R.id.no_event_message);
         habitTitle = findViewById(R.id.habit_title_text);

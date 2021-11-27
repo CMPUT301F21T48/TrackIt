@@ -72,6 +72,7 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
     private Context ImageContext;
     private String encodedPhoto;
     private Integer MAX_IMAGE_BYTE = 65536;
+    private boolean isRecord = false;
 
     //Request codes
     public static final int REQUEST_CODE = 100;
@@ -103,6 +104,7 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
         recordLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                isRecord = true;
                 checkAndRequestPermissions();
                 SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                         .findFragmentById(R.id.map);
@@ -215,6 +217,7 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
 
     @Override
     public void onMarkerDragStart(@NonNull Marker marker) { }
+
     private void checkAndRequestPermissions() {
         int permissionCamera = ContextCompat.checkSelfPermission(this,
                 Manifest.permission.CAMERA);
@@ -297,6 +300,13 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
                     }
                 });
             }
+            else
+            {
+                currentMarker = map.addMarker(new MarkerOptions()
+                        .position(defaultLocation)
+                        .draggable(true));
+                location = new GeoPoint (0,0);
+            }
         } catch (SecurityException e)  {
             Log.e("Exception: %s", e.getMessage(), e);
         }
@@ -312,12 +322,10 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
         {
             event.setImage(encodedPhoto);
         }
-        if (!locationPermissionGranted)
-        {
-            location = null;
+        if (isRecord) {
+            event.setLatitude(location.getLatitude());
+            event.setLongitude(location.getLongitude());
         }
-        event.setLatitude(location.getLatitude());
-        event.setLongitude(location.getLongitude());
         event.setEventDate(habit.getLastDone());
         String id = collectionReference.document(user.getUsername())
                 .collection("Habits").document(habit.getHabitID())
