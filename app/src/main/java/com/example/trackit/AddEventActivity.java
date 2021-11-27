@@ -135,7 +135,7 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        ImageContext = getApplicationContext();
+        //ImageContext = getApplicationContext();
         imageView.setImageBitmap(null);
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -170,7 +170,7 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
             this.image = bitmap;
 
             ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOS);
+            image.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOS);
             this.encodedPhoto = Base64.encodeToString(byteArrayOS.toByteArray(), Base64.DEFAULT);
 
         } else {
