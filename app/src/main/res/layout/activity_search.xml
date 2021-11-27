@@ -30,6 +30,7 @@
         android:padding="8dp"/>
 
     <EditText
+        android:imeOptions="actionSearch"
         android:id="@+id/squery"
         android:layout_width="0dp"
         android:layout_height="48dp"
