@@ -51,10 +51,10 @@ public class ViewEventsForHabitActivity extends AppCompatActivity {
         collectionReference = db.collection("Users").document(user.getUsername()).collection("Habits").document(habit.getHabitID()).collection("Events");
 
         // Button and it's listener to return
-        Button continueButton = (Button) this.findViewById(R.id.continue_button);
-        continueButton.setOnClickListener(
-                this::viewHabit
-        );
+//        Button continueButton = (Button) this.findViewById(R.id.continue_button);
+//        continueButton.setOnClickListener(
+//                this::viewHabit
+//        );
 
         navBar = findViewById(R.id.navigation);
 
@@ -78,7 +78,8 @@ public class ViewEventsForHabitActivity extends AppCompatActivity {
                     Event newEvent =new Event();
                     newEvent.setEventID(eventID);
                     newEvent.setComment(comment);
-                    newEvent.setLocation(null);
+                    newEvent.setLatitude(null);
+                    newEvent.setLongitude(null);
                     newEvent.setImage(null);
                     newEvent.setEventDate(date);
                     eventDataList.add(newEvent);
@@ -89,27 +90,7 @@ public class ViewEventsForHabitActivity extends AppCompatActivity {
                     emptyMessage.setVisibility(View.GONE);
                 }
                 eventAdapter.notifyDataSetChanged();
-
-
-
             }
-
         });
-
-
-
-
     }
-
-    public void viewHabit(View view) {
-
-        Intent newIntent = new Intent(this, ViewHabitActivity.class);
-        newIntent.putExtra("User", (Serializable) user);
-        newIntent.putExtra("Habit", (Serializable) habit);
-        startActivity(newIntent);
-
-    }
-
-
-
 }
