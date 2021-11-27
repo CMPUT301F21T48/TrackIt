@@ -32,6 +32,14 @@ public class Event implements Serializable {
         this.ID = null;
     }
 
+    public Event(String comment, String encodedImage, String date, double longitude, double latitude){
+        this.comment = comment;
+        this.encodedImage= encodedImage;
+        this.date = date;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.ID = null;
+    }
     //getters and setters for the variables
     public void setComment(String comment) {this.comment = comment;}
     public void setLatitude(Double latitude) {this.latitude = latitude;}
