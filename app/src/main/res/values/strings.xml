@@ -25,6 +25,7 @@
     <string name="add_location">Drag and drop the marker to set location: </string>
     <string name="habit_privacy_text">Set habit privacy: </string>
     <string name="record_location">Record location (optional): </string>
+    <string name="no_follow_requests">You have no new follow requests.</string>
 
     <!-- Button labels -->
     <string name="button_sign_up" tools:ignore="ExtraTranslation">Sign Up</string>

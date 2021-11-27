@@ -16,21 +16,19 @@ import java.io.Serializable;
 
 public class Event implements Serializable {
     private String comment;
-    private GeoPoint location;
+    private Double latitude;
+    private Double longitude;
     private String encodedImage;
-    private Bitmap image;
     private String date;
     private String ID;
-
-
 
     public Event()
     {
         this.comment = null;
         this.encodedImage = null;
-        this.image = null;
         this.date = null;
-        this.location = null;
+        this.longitude = null;
+        this.latitude = null;
         this.ID = null;
     }
 
@@ -44,7 +42,8 @@ public class Event implements Serializable {
     }
     //getters and setters for the variables
     public void setComment(String comment) {this.comment = comment;}
-    public void setLocation(GeoPoint location) {this.location = location;}
+    public void setLatitude(Double latitude) {this.latitude = latitude;}
+    public void setLongitude(Double longitude) {this.longitude = longitude;}
     public void setImage(String encodedImage) {this.encodedImage = encodedImage;}
     public void setEventID(String ID) {this.ID = ID;}
     public void setEventDate(String date){this.date=date;}
@@ -52,7 +51,8 @@ public class Event implements Serializable {
     public String getComment() {return this.comment;}
     public String getEventID() {return this.ID;}
     public String getImage() {return this.encodedImage;}
-    public GeoPoint getLocation() {return this.location;}
+    public Double getLongitude() {return this.longitude;}
+    public Double getLatitude() {return this.latitude;}
     public String getEventDate(){return this.date;}
 
 }

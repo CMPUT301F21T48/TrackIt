@@ -1,5 +1,7 @@
 package com.example.trackit;
 
+import static android.view.View.GONE;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -18,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -52,6 +56,12 @@ public class UserProfileActivity extends AppCompatActivity {
     FloatingActionButton addButton;
     Habit habit;
     String followStatus;
+    LinearLayout habitMenu;
+    boolean[] isClicked = {false};
+    Integer currentHabitIndex;
+    Integer previousHabitIndex;
+    Integer nextHabitIndex;
+
     @SuppressLint("SetTextI18n")
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -142,13 +152,28 @@ public class UserProfileActivity extends AppCompatActivity {
             habitList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> arg0, View view, int position, long arg3) {
+                    habitMenu = view.findViewById(R.id.habit_menu);
                     habitList.setSelection(position);
                     habit = (Habit) habitList.getItemAtPosition(position);
-                    Intent intent = new Intent(UserProfileActivity.this, ViewHabitActivity.class);
-                    intent.putExtra("User", currentUser);
-                    intent.putExtra("HabitID", habit.getHabitID());
-                    intent.putExtra("Habit", habit);
-                    startActivity(intent);
+
+                    if (!isClicked[0]) {
+                        habitMenu.setVisibility(View.VISIBLE);
+                        habitMenu.findViewById(R.id.progress_buttons).setVisibility(GONE);
+                        isClicked[0] = true;
+                        for (int i=0; i<habitList.getCount(); i++){
+                            if (i!=position) {
+                                arg0.getChildAt(i).findViewById(R.id.habit_menu).setVisibility(GONE);
+                            }
+                        }
+                    } else {
+                        habitMenu.setVisibility(GONE);
+                        isClicked[0] = false;
+                        for (int i=0; i<habitList.getCount(); i++){
+                            if (i!=position) {
+                                arg0.getChildAt(i).findViewById(R.id.habit_menu).setVisibility(GONE);
+                            }
+                        }
+                    }
                 }
             });
         }
@@ -323,5 +348,62 @@ public class UserProfileActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    /**
+     * This takes the user to the ViewHabitActivity where they can see the details of the selected
+     * habit
+     * @param view
+     */
+    public void viewHabit(View view) {
+        Intent i = new Intent(UserProfileActivity.this, ViewHabitActivity.class);
+        i.putExtra("User", currentUser);
+        i.putExtra("HabitID", habit.getHabitID());
+        i.putExtra("Habit", habit);
+        startActivity(i);
+        habitMenu.setVisibility(GONE);
+        isClicked[0] = false;
+    }
+
+    public void moveHabitUp(View view) {
+        currentHabitIndex = habitDataList.indexOf(habit);
+        if (currentHabitIndex != 0) {
+            previousHabitIndex = currentHabitIndex - 1;
+            Habit tempHabit = habitDataList.get(previousHabitIndex);
+            habitDataList.set(previousHabitIndex, habit);
+            habitDataList.set(currentHabitIndex, tempHabit);
+            habitAdapter.notifyDataSetChanged();
+//            previousHabitMenu.setVisibility(View.VISIBLE);
+            habitMenu.setVisibility(GONE);
+            isClicked[0] = false;
+//            nextHabitMenu.setVisibility(View.VISIBLE);
+//            isClicked[0] = true;
+        }
+        else {
+            Snackbar.make(this, view, "Habit cannot be moved up any further.", Snackbar.LENGTH_SHORT).show();
+            habitMenu.setVisibility(GONE);
+            isClicked[0] = false;
+        }
+    }
+
+    public void moveHabitDown(View view) {
+        currentHabitIndex = habitDataList.indexOf(habit);
+        if (currentHabitIndex != habitDataList.size()-1) {
+            nextHabitIndex = currentHabitIndex + 1;
+            Habit tempHabit = habitDataList.get(nextHabitIndex);
+            habitDataList.set(nextHabitIndex, habit);
+            habitDataList.set(currentHabitIndex, tempHabit);
+            habitAdapter.notifyDataSetChanged();
+            habitMenu.setVisibility(GONE);
+            isClicked[0] = false;
+//            nextHabitMenu.setVisibility(View.VISIBLE);
+//            isClicked[0] = true;
+        }
+
+        else {
+            Snackbar.make(this, view, "Habit cannot be moved down any further.", Snackbar.LENGTH_SHORT).show();
+            habitMenu.setVisibility(GONE);
+            isClicked[0] = false;
+        }
     }
 }

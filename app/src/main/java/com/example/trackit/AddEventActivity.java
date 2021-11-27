@@ -66,12 +66,13 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
     private boolean locationPermissionGranted;
     private boolean cameraPermissionGranted;
     private static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 1;
-    private final LatLng defaultLocation = new LatLng(53.5461, 113.4938);
+    private final LatLng defaultLocation = new LatLng(0, 0);
     private static final int DEFAULT_ZOOM = 15;
     private Marker currentMarker;
     private Context ImageContext;
     private String encodedPhoto;
     private Integer MAX_IMAGE_BYTE = 65536;
+    private boolean isRecord = false;
 
     //Request codes
     public static final int REQUEST_CODE = 100;
@@ -103,19 +104,14 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
         recordLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                isRecord = true;
                 checkAndRequestPermissions();
-                if (locationPermissionGranted) {
-                    SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                            .findFragmentById(R.id.map);
-                    mapFragment.getMapAsync(AddEventActivity.this);
-                    locationLayout.setVisibility(View.VISIBLE);
-                    recordLocation.setVisibility(View.INVISIBLE);
-                    locationText.setText(R.string.add_location);
-                }
-                else {
-                    Toast.makeText(AddEventActivity.this, "Please grant permission to access your current location.", Toast.LENGTH_SHORT).show();
-
-                }
+                SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                        .findFragmentById(R.id.map);
+                mapFragment.getMapAsync(AddEventActivity.this);
+                locationLayout.setVisibility(View.VISIBLE);
+                recordLocation.setVisibility(View.INVISIBLE);
+                locationText.setText(R.string.add_location);
             }
         });
         photo_button.setOnClickListener(new View.OnClickListener() {
@@ -132,17 +128,14 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
                 }
                 else {
                     Toast.makeText(AddEventActivity.this, "Please grant permission to access your camera.", Toast.LENGTH_SHORT).show();
-
                 }
             }
         });
     }
 
-
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        ImageContext = getApplicationContext();
+        //ImageContext = getApplicationContext();
         imageView.setImageBitmap(null);
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -158,15 +151,7 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
                 Bitmap pic = ((BitmapDrawable) ((ImageView) findViewById(R.id.photo)).getDrawable()).getBitmap();
                 encodeBitmapAndResize(pic);
             }
-
-
         }
-
-//        } else if (requestCode == RESULT_CANCELED) {
-//            // User cancelled the image capture
-//        } else {
-//            // Image capture failed, advise user
-//        }
     }
 
     public void encodeBitmapAndResize(Bitmap bitmap) {
@@ -185,22 +170,22 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
             this.image = bitmap;
 
             ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOS);
+            image.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOS);
             this.encodedPhoto = Base64.encodeToString(byteArrayOS.toByteArray(), Base64.DEFAULT);
 
         } else {
             throw new IllegalArgumentException("Image file must be less than or equal to " +
                     String.valueOf(MAX_IMAGE_BYTE) + " bytes.");
         }
-
-
     }
+
     private void decodePhoto() {
         if (this.encodedPhoto != null) {
             byte [] decodeBytesArray = Base64.decode(this.encodedPhoto, 0);
             this.image= BitmapFactory.decodeByteArray(decodeBytesArray, 0, decodeBytesArray.length);
         }
     }
+
     private Bitmap resizeImage(Bitmap bitmap) {
         double downScale = 0.95;
         return Bitmap.createScaledBitmap(bitmap, (int) (bitmap.getWidth() * downScale), (int) (bitmap.getHeight() * downScale), true);
@@ -222,9 +207,7 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
     }
 
     @Override
-    public void onMarkerDrag(@NonNull Marker marker) {
-
-    }
+    public void onMarkerDrag(@NonNull Marker marker) { }
 
     @Override
     public void onMarkerDragEnd(@NonNull Marker marker) {
@@ -233,31 +216,8 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
     }
 
     @Override
-    public void onMarkerDragStart(@NonNull Marker marker) {
+    public void onMarkerDragStart(@NonNull Marker marker) { }
 
-    }
-
-//    private void getLocationPermission() {
-        /*
-         * Request location permission, so that we can get the location of the
-         * device. The result of the permission request is handled by a callback,
-         * onRequestPermissionsResult.
-         */
-//        if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
-//                android.Manifest.permission.ACCESS_FINE_LOCATION)
-//                == PackageManager.PERMISSION_GRANTED) {
-//            locationPermissionGranted = true;
-//        }
-//        if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
-//                Manifest.permission.CAMERA)
-//                == PackageManager.PERMISSION_GRANTED) {
-//            cameraPermissionGranted = true;
-//        } else {
-//            ActivityCompat.requestPermissions(this,
-//                    new String[]{android.Manifest.permission.CAMERA},
-//                    MY_CAMERA_REQUEST_CODE);
-//        }
-//    }
     private void checkAndRequestPermissions() {
         int permissionCamera = ContextCompat.checkSelfPermission(this,
                 Manifest.permission.CAMERA);
@@ -340,11 +300,17 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
                     }
                 });
             }
+            else
+            {
+                currentMarker = map.addMarker(new MarkerOptions()
+                        .position(defaultLocation)
+                        .draggable(true));
+                location = new GeoPoint (0,0);
+            }
         } catch (SecurityException e)  {
             Log.e("Exception: %s", e.getMessage(), e);
         }
     }
-
 
     public void done(View view) {
         Event event = new Event();
@@ -356,11 +322,11 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
         {
             event.setImage(encodedPhoto);
         }
-        if (!locationPermissionGranted)
-        {
-            location = null;
+        if (isRecord) {
+            event.setLatitude(location.getLatitude());
+            event.setLongitude(location.getLongitude());
         }
-        event.setLocation(location);
+        event.setEventDate(habit.getLastDone());
         String id = collectionReference.document(user.getUsername())
                 .collection("Habits").document(habit.getHabitID())
                 .collection("Events").document().getId();

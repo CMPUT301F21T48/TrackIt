@@ -2,11 +2,14 @@ package com.example.trackit;
 
 import static android.content.ContentValues.TAG;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
-import android.widget.Button;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -69,6 +72,39 @@ public class UserSearchActivity extends AppCompatActivity {
 
         ImageView queryClearer = findViewById(R.id.squerybutton);
 
+        // Perform search when "Enter" is hit on keyboard
+        sQuery.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+
+                    sQuery.clearFocus();
+                    InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    in.hideSoftInputFromWindow(sQuery.getWindowToken(), 0);
+
+                    String searchQuery = sQuery.getText().toString();
+                    List<String> checkedList = new ArrayList<>();
+                    if(searchQuery==""){
+                        checkedList.addAll(userNamesComplete);
+                    }
+                    else {
+                        for (String check : userNamesComplete) {
+                            if (check.toLowerCase().contains(searchQuery.toLowerCase())) {
+                                checkedList.add(check);
+                            }
+                        }
+                    }
+                    userNames.clear();
+                    userNames.addAll(checkedList);
+                    usersearchAdapter.notifyDataSetChanged();
+
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        // Perform search when search button is clicked
         queryClearer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -93,6 +129,7 @@ public class UserSearchActivity extends AppCompatActivity {
 
         ImageView clearButton = findViewById(R.id.clearbutton);
 
+        // Clear search bar
         clearButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
