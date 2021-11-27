@@ -132,13 +132,10 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
                 }
                 else {
                     Toast.makeText(AddEventActivity.this, "Please grant permission to access your camera.", Toast.LENGTH_SHORT).show();
-
                 }
             }
         });
     }
-
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -158,15 +155,7 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
                 Bitmap pic = ((BitmapDrawable) ((ImageView) findViewById(R.id.photo)).getDrawable()).getBitmap();
                 encodeBitmapAndResize(pic);
             }
-
-
         }
-
-//        } else if (requestCode == RESULT_CANCELED) {
-//            // User cancelled the image capture
-//        } else {
-//            // Image capture failed, advise user
-//        }
     }
 
     public void encodeBitmapAndResize(Bitmap bitmap) {
@@ -192,15 +181,15 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
             throw new IllegalArgumentException("Image file must be less than or equal to " +
                     String.valueOf(MAX_IMAGE_BYTE) + " bytes.");
         }
-
-
     }
+
     private void decodePhoto() {
         if (this.encodedPhoto != null) {
             byte [] decodeBytesArray = Base64.decode(this.encodedPhoto, 0);
             this.image= BitmapFactory.decodeByteArray(decodeBytesArray, 0, decodeBytesArray.length);
         }
     }
+
     private Bitmap resizeImage(Bitmap bitmap) {
         double downScale = 0.95;
         return Bitmap.createScaledBitmap(bitmap, (int) (bitmap.getWidth() * downScale), (int) (bitmap.getHeight() * downScale), true);
@@ -222,9 +211,7 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
     }
 
     @Override
-    public void onMarkerDrag(@NonNull Marker marker) {
-
-    }
+    public void onMarkerDrag(@NonNull Marker marker) { }
 
     @Override
     public void onMarkerDragEnd(@NonNull Marker marker) {
@@ -233,31 +220,7 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
     }
 
     @Override
-    public void onMarkerDragStart(@NonNull Marker marker) {
-
-    }
-
-//    private void getLocationPermission() {
-        /*
-         * Request location permission, so that we can get the location of the
-         * device. The result of the permission request is handled by a callback,
-         * onRequestPermissionsResult.
-         */
-//        if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
-//                android.Manifest.permission.ACCESS_FINE_LOCATION)
-//                == PackageManager.PERMISSION_GRANTED) {
-//            locationPermissionGranted = true;
-//        }
-//        if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
-//                Manifest.permission.CAMERA)
-//                == PackageManager.PERMISSION_GRANTED) {
-//            cameraPermissionGranted = true;
-//        } else {
-//            ActivityCompat.requestPermissions(this,
-//                    new String[]{android.Manifest.permission.CAMERA},
-//                    MY_CAMERA_REQUEST_CODE);
-//        }
-//    }
+    public void onMarkerDragStart(@NonNull Marker marker) { }
     private void checkAndRequestPermissions() {
         int permissionCamera = ContextCompat.checkSelfPermission(this,
                 Manifest.permission.CAMERA);
@@ -344,7 +307,6 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
             Log.e("Exception: %s", e.getMessage(), e);
         }
     }
-
 
     public void done(View view) {
         Event event = new Event();
