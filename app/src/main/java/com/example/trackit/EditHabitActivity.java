@@ -6,6 +6,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,6 +41,9 @@ public class EditHabitActivity extends AppCompatActivity {
     CheckBox repeatFriday;
     CheckBox repeatSaturday;
     CheckBox repeatSunday;
+    RadioButton publicPrivacy;
+    RadioButton privatePrivacy;
+    RadioGroup privacyGroup;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     final CollectionReference collectionReference = db.collection("Users");
@@ -66,11 +71,19 @@ public class EditHabitActivity extends AppCompatActivity {
         repeatFriday = findViewById(R.id.checkbox_friday);
         repeatSaturday = findViewById(R.id.checkbox_saturday);
         repeatSunday = findViewById(R.id.checkbox_sunday);
+        publicPrivacy = findViewById(R.id.privacy_button_public);
+        privatePrivacy = findViewById(R.id.privacy_button_private);
+        privacyGroup = findViewById(R.id.habit_privacy_group);
 
         //adding the previous information for habit in the fields
         editHabitTitle.setText(habit.getTitle());
         editHabitReason.setText(habit.getReason());
         selectedDate.setText(habit.getStartDate());
+        if (habit.getPrivacy().equals("public")){
+            privacyGroup.check(R.id.privacy_button_public);
+        } else{
+            privacyGroup.check(R.id.privacy_button_private);
+        }
 
         ArrayList<String> repeatDays = habit.getRepeatDays();
         for (int i = 0; i < repeatDays.size(); i++)
@@ -122,6 +135,7 @@ public class EditHabitActivity extends AppCompatActivity {
         String habitReason = editHabitReason.getText().toString();
         String habitStartDate = selectedDate.getText().toString();
         ArrayList<String> repeatDays = new ArrayList<>();
+        String habitPrivacy = null;
 
         if (repeatMonday.isChecked()){
             repeatDays.add("M");
@@ -145,6 +159,14 @@ public class EditHabitActivity extends AppCompatActivity {
             repeatDays.add("Su");
         }
 
+        if (publicPrivacy.isChecked()){
+            habitPrivacy = "public";
+        } else if (privatePrivacy.isChecked()){
+            habitPrivacy = "private";
+        } else{
+            habitPrivacy = "";
+        }
+
         // inform the user to not leave any field empty
         if (habitTitle.isEmpty() || habitReason.isEmpty() || habitStartDate.equals("MM/DD/YYYY") || repeatDays.isEmpty()) {
             Snackbar.make(this, view, "Do not leave any field(s) empty", Snackbar.LENGTH_LONG).show();
@@ -155,6 +177,7 @@ public class EditHabitActivity extends AppCompatActivity {
             habit.setReason(habitReason);
             habit.setStartDate(habitStartDate);
             habit.setRepeatDays(repeatDays);
+            habit.setPrivacy(habitPrivacy);
             collectionReference.document(user.getUsername()).collection("Habits").document(habitID).set(habit);
             finish();
         }

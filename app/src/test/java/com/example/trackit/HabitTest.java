@@ -20,7 +20,8 @@ class HabitTest {
         String title = "Exercise everyday";
         String reason = "To stay healthy";
         String startDate = "02/11/2021";
-        habit = new Habit(title,reason, startDate, repeatedDays);
+        String privacy = "public";
+        habit = new Habit(title,reason, startDate, repeatedDays, privacy);
     }
 
     @Test
@@ -101,5 +102,17 @@ class HabitTest {
         habit.updateNumDone();
         habit.updateNumDone();
         assertEquals(0.75, habit.getProgress());
+    }
+
+    @Test
+    void TestHabitPrivacy(){
+        // Getter test
+        String expected = "public";
+        assertEquals(expected, habit.getPrivacy());
+
+        // Setter test
+        expected = "private";
+        habit.setPrivacy("private");
+        assertEquals(expected, habit.getPrivacy());
     }
 }
