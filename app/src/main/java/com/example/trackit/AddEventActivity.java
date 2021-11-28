@@ -2,12 +2,6 @@
 
 import static android.content.ContentValues.TAG;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
@@ -16,27 +10,23 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -44,26 +34,22 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.libraries.places.api.Places;
-import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
 
 import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 
 public class AddEventActivity extends AppCompatActivity implements OnMapReadyCallback,
         GoogleMap.OnMarkerDragListener {
@@ -80,19 +66,20 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
     private boolean locationPermissionGranted;
     private boolean cameraPermissionGranted;
     private static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 1;
-    private final LatLng defaultLocation = new LatLng(53.5461, 113.4938);
+    private final LatLng defaultLocation = new LatLng(0, 0);
     private static final int DEFAULT_ZOOM = 15;
     private Marker currentMarker;
     private Context ImageContext;
     private String encodedPhoto;
     private Integer MAX_IMAGE_BYTE = 65536;
+    private boolean isRecord = false;
 
     //Request codes
     public static final int REQUEST_CODE = 100;
     public static final int CAMERA_REQUEST = 9999;
     private static final int MY_CAMERA_PERMISSION_CODE = 100;
 
-    public static ImageView imageView;
+    private ImageView imageView;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     final CollectionReference collectionReference = db.collection("Users");
@@ -117,19 +104,14 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
         recordLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                isRecord = true;
                 checkAndRequestPermissions();
-                if (locationPermissionGranted) {
-                    SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                            .findFragmentById(R.id.map);
-                    mapFragment.getMapAsync(AddEventActivity.this);
-                    locationLayout.setVisibility(View.VISIBLE);
-                    recordLocation.setVisibility(View.INVISIBLE);
-                    locationText.setText("Drag and drop the marker to set location");
-                }
-                else {
-                    Toast.makeText(AddEventActivity.this, "Please grant permission to access your current location.", Toast.LENGTH_SHORT).show();
-
-                }
+                SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                        .findFragmentById(R.id.map);
+                mapFragment.getMapAsync(AddEventActivity.this);
+                locationLayout.setVisibility(View.VISIBLE);
+                recordLocation.setVisibility(View.INVISIBLE);
+                locationText.setText(R.string.add_location);
             }
         });
         photo_button.setOnClickListener(new View.OnClickListener() {
@@ -141,22 +123,21 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
 
                     Intent photoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     if (photoIntent.resolveActivity(getPackageManager()) != null) {
-                        photoIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                         startActivityForResult(photoIntent, CAMERA_REQUEST);
                     }
                 }
                 else {
                     Toast.makeText(AddEventActivity.this, "Please grant permission to access your camera.", Toast.LENGTH_SHORT).show();
-
                 }
             }
         });
     }
 
+    // References : https://stackoverflow.com/questions/8417034/how-to-make-bitmap-compress-without-change-the-bitmap-size
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        ImageContext = getApplicationContext();
+        //ImageContext = getApplicationContext();
         imageView.setImageBitmap(null);
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -165,47 +146,64 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
 
-            //Downscale the image so that it fits in Firestore
-            imageBitmap = downscaleBitmap(imageBitmap);
-            this.image = imageBitmap;
+            // Convert bitmap to byteArrayOutputStream and compress it
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            imageBitmap.compress(Bitmap.CompressFormat.WEBP,0,stream);//0=lowest, 100=highest quality
+            byte[] byteArray = stream.toByteArray();
 
 
-            imageView.setImageBitmap(imageBitmap);
+            //convert your byteArray into bitmap and set imageview
+            Bitmap yourCompressBitmap = BitmapFactory.decodeByteArray(byteArray,0,byteArray.length);
+            imageView.setImageBitmap(yourCompressBitmap);
+
+            // Or the second method:
+            //imageView.setImageBitmap(Bitmap.createScaledBitmap(imageBitmap, imageBitmap.getWidth()/10, imageBitmap.getHeight()/10, false));
 
             imageView.setVisibility(View.VISIBLE);
             if ( ((ImageView) findViewById(R.id.photo)).getDrawable() != null ) {
                 Bitmap pic = ((BitmapDrawable) ((ImageView) findViewById(R.id.photo)).getDrawable()).getBitmap();
                 encodeBitmapAndResize(pic);
             }
-
-
         }
-
-//        } else if (requestCode == RESULT_CANCELED) {
-//            // User cancelled the image capture
-//        } else {
-//            // Image capture failed, advise user
-//        }
     }
-    private Bitmap downscaleBitmap(Bitmap pic) {
-        double maxDimension = Math.max(pic.getHeight(), pic.getWidth());
-        double scale = 275 / maxDimension;
-        return Bitmap.createScaledBitmap(pic, (int) (pic.getWidth() * scale), (int) (pic.getHeight() * scale), false);
-    }
-
 
     public void encodeBitmapAndResize(Bitmap bitmap) {
-        ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 64, byteArrayOS);
-        this.encodedPhoto = Base64.encodeToString(byteArrayOS.toByteArray(), Base64.DEFAULT);
 
+        if (bitmap.getByteCount() > MAX_IMAGE_BYTE) {
+            for (int i = 0; i < 4; ++i) {
+                bitmap = resizeImage(bitmap);
+                if (bitmap.getByteCount() <= MAX_IMAGE_BYTE) {
+                    break;
+                }
+            }
+        }
+
+        if (bitmap.getByteCount() <= MAX_IMAGE_BYTE) {
+
+            this.image = bitmap;
+
+            ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();
+            image.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOS);
+            this.encodedPhoto = Base64.encodeToString(byteArrayOS.toByteArray(), Base64.DEFAULT);
+
+        } else {
+            throw new IllegalArgumentException("Image file must be less than or equal to " +
+                    String.valueOf(MAX_IMAGE_BYTE) + " bytes.");
+        }
     }
+
     private void decodePhoto() {
         if (this.encodedPhoto != null) {
             byte [] decodeBytesArray = Base64.decode(this.encodedPhoto, 0);
             this.image= BitmapFactory.decodeByteArray(decodeBytesArray, 0, decodeBytesArray.length);
         }
     }
+
+    private Bitmap resizeImage(Bitmap bitmap) {
+        double downScale = 0.95;
+        return Bitmap.createScaledBitmap(bitmap, (int) (bitmap.getWidth() * downScale), (int) (bitmap.getHeight() * downScale), true);
+    }
+
 
     public void deletePhoto() {
         this.image= null;
@@ -222,9 +220,7 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
     }
 
     @Override
-    public void onMarkerDrag(@NonNull Marker marker) {
-
-    }
+    public void onMarkerDrag(@NonNull Marker marker) { }
 
     @Override
     public void onMarkerDragEnd(@NonNull Marker marker) {
@@ -233,31 +229,8 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
     }
 
     @Override
-    public void onMarkerDragStart(@NonNull Marker marker) {
+    public void onMarkerDragStart(@NonNull Marker marker) { }
 
-    }
-
-//    private void getLocationPermission() {
-        /*
-         * Request location permission, so that we can get the location of the
-         * device. The result of the permission request is handled by a callback,
-         * onRequestPermissionsResult.
-         */
-//        if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
-//                android.Manifest.permission.ACCESS_FINE_LOCATION)
-//                == PackageManager.PERMISSION_GRANTED) {
-//            locationPermissionGranted = true;
-//        }
-//        if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
-//                Manifest.permission.CAMERA)
-//                == PackageManager.PERMISSION_GRANTED) {
-//            cameraPermissionGranted = true;
-//        } else {
-//            ActivityCompat.requestPermissions(this,
-//                    new String[]{android.Manifest.permission.CAMERA},
-//                    MY_CAMERA_REQUEST_CODE);
-//        }
-//    }
     private void checkAndRequestPermissions() {
         int permissionCamera = ContextCompat.checkSelfPermission(this,
                 Manifest.permission.CAMERA);
@@ -340,11 +313,17 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
                     }
                 });
             }
+            else
+            {
+                currentMarker = map.addMarker(new MarkerOptions()
+                        .position(defaultLocation)
+                        .draggable(true));
+                location = new GeoPoint (0,0);
+            }
         } catch (SecurityException e)  {
             Log.e("Exception: %s", e.getMessage(), e);
         }
     }
-
 
     public void done(View view) {
         Event event = new Event();
@@ -356,11 +335,11 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
         {
             event.setImage(encodedPhoto);
         }
-        if (!locationPermissionGranted)
-        {
-            location = null;
+        if (isRecord) {
+            event.setLatitude(location.getLatitude());
+            event.setLongitude(location.getLongitude());
         }
-        event.setLocation(location);
+        event.setEventDate(habit.getLastDone());
         String id = collectionReference.document(user.getUsername())
                 .collection("Habits").document(habit.getHabitID())
                 .collection("Events").document().getId();
@@ -368,6 +347,10 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
         collectionReference.document(user.getUsername()).collection("Habits")
                 .document(habit.getHabitID()).collection("Events")
                 .document(id).set(event);
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        String todayDate = dateFormat.format(calendar.getTime());
+        event.setEventDate(todayDate);
         finish();
     }
 

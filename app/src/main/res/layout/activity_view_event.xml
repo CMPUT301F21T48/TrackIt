@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".NotificationsActivity">
+    tools:context=".ViewEventsForHabitActivity">
 
     <TextView
         android:id="@+id/title_bar"
@@ -12,34 +12,54 @@
         android:layout_height="?actionBarSize"
         android:background="@color/status_bar"
         android:gravity="center_vertical|center_horizontal"
-        android:text="@string/nav_bar_notifications"
-       android:textSize="20sp"
+        android:text="@string/title_events_list"
+        android:textColor="@color/black"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
     <TextView
-        android:id="@+id/no_notification_message"
+        android:id="@+id/no_event_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/no_follow_requests"
+        android:text="@string/no_event"
         android:gravity="center"
         android:textSize="16sp"
         android:layout_margin="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title_bar"
+        app:layout_constraintTop_toBottomOf="@+id/habit_title_text"
         android:visibility="gone"/>
 
+    <TextView
+        android:id="@+id/habit_title_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:gravity="center"
+        android:text="Habit Name"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title_bar"
+        app:layout_constraintBottom_toTopOf="@id/event_list"/>
+
     <ListView
-        android:id="@+id/notification_list"
-        android:layout_width="match_parent"
+        android:id="@+id/event_list"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="8dp"
+        android:padding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title_bar" />
+        app:layout_constraintTop_toBottomOf="@+id/habit_title_text" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
