@@ -20,7 +20,7 @@ public class Event implements Serializable {
 
     public Event()
     {
-        this.comment = null;
+        this.comment = "";
         this.encodedImage = null;
         this.date = null;
         this.longitude = null;

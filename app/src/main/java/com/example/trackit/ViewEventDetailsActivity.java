@@ -6,12 +6,19 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class ViewEventDetailsActivity extends AppCompatActivity {
+public class ViewEventDetailsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     User user;
     Habit habit;
@@ -25,6 +32,7 @@ public class ViewEventDetailsActivity extends AppCompatActivity {
     String image;
     ImageView imageView;
     LinearLayout mapHolder;
+    GoogleMap map;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     CollectionReference collectionReference;
@@ -61,6 +69,12 @@ public class ViewEventDetailsActivity extends AppCompatActivity {
             noLocation.setText("This event has no recorded location.");
             mapHolder.setVisibility(View.GONE);
         }
+        else
+        {
+            SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                    .findFragmentById(R.id.map);
+            mapFragment.getMapAsync(ViewEventDetailsActivity.this);
+        }
 
         if (image==null){
             noPhoto.setVisibility(View.VISIBLE);
@@ -83,5 +97,14 @@ public class ViewEventDetailsActivity extends AppCompatActivity {
         collectionReference = db.collection("Users").document(user.getUsername()).collection("Habits").document(habit.getHabitID()).collection("Events");
         collectionReference.document(event.getEventID()).delete();
         finish();
+    }
+
+    @Override
+    public void onMapReady(@NonNull GoogleMap googleMap) {
+        this.map = googleMap;
+        // Prompt the user for permission.
+        Marker currentMarker = map.addMarker(new MarkerOptions()
+                .position(new LatLng(event.getLatitude(),
+                        event.getLongitude())));
     }
 }
