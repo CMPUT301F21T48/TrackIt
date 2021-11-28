@@ -46,7 +46,7 @@ public class EditEventActivity extends AppCompatActivity implements OnMapReadyCa
     Event event;
     Double longitude;
     Double latitude;
-    String image;
+    String encodedImage;
     ImageView imageView;
     LinearLayout mapHolder;
     GoogleMap map;
@@ -70,6 +70,8 @@ public class EditEventActivity extends AppCompatActivity implements OnMapReadyCa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_event);
+
+        collectionReference = db.collection("Users");
 
         user = (User) getIntent().getSerializableExtra("User");
         habit = (Habit) getIntent().getSerializableExtra("Habit");
@@ -95,7 +97,7 @@ public class EditEventActivity extends AppCompatActivity implements OnMapReadyCa
 
         latitude = event.getLatitude();
         longitude = event.getLongitude();
-        image = event.getImage();
+        encodedImage = event.getImage();
 
         if (latitude==null || longitude==null){
             removeLocation.setVisibility(View.GONE);
@@ -123,10 +125,26 @@ public class EditEventActivity extends AppCompatActivity implements OnMapReadyCa
             }
         });
 
-        if (image==null){
-            imageView.setVisibility(View.GONE);
+        if (encodedImage == null) {
             removePhoto.setVisibility(View.GONE);
         }
+
+        removePhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                event.setImage(null);
+                removePhoto.setVisibility(View.GONE);
+            }
+        });
+
+        changePhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                checkAndRequestPermissions();
+                removePhoto.setVisibility(View.GONE);
+                //TODO CODE FOR IMAGE HERE
+            }
+        });
     }
 
     @Override
@@ -262,9 +280,14 @@ public class EditEventActivity extends AppCompatActivity implements OnMapReadyCa
             event.setLatitude(location.getLatitude());
             event.setLongitude(location.getLongitude());
         }
+        if (encodedImage != null)
+        {
+            event.setImage(encodedImage);
+        }
+
         collectionReference.document(user.getUsername()).collection("Habits")
                 .document(habit.getHabitID()).collection("Events")
                 .document(event.getEventID()).set(event);
-//        finish();
+        finish();
     }
 }
