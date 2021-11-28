@@ -72,12 +72,12 @@ public class ViewEventDetailsActivity extends AppCompatActivity implements OnMap
             noLocation.setText("This event has no recorded location.");
             mapHolder.setVisibility(View.GONE);
         }
-//        else
-//        {
-//            SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-//                    .findFragmentById(R.id.map);
-//            mapFragment.getMapAsync(ViewEventDetailsActivity.this);
-//        }
+        else
+        {
+            SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                    .findFragmentById(R.id.map);
+            mapFragment.getMapAsync(ViewEventDetailsActivity.this);
+        }
 
         if (image==null){
             noPhoto.setVisibility(View.VISIBLE);
@@ -89,11 +89,12 @@ public class ViewEventDetailsActivity extends AppCompatActivity implements OnMap
     }
 
     public void editEvent (View view){
-//        Intent intent = new Intent(ViewEventDetailsActivity.this, EditEventActivity.class);
-//        intent.putExtra("User", user);
-//        intent.putExtra("Event", event);
-//        intent.putExtra("Habit", habit);
-//        startActivity(intent);
+        Intent intent = new Intent(ViewEventDetailsActivity.this, EditEventActivity.class);
+        intent.putExtra("User", user);
+        intent.putExtra("Event", event);
+        intent.putExtra("Habit", habit);
+        startActivity(intent);
+        finish();
     }
 
     public void deleteEvent (View view){
@@ -106,11 +107,11 @@ public class ViewEventDetailsActivity extends AppCompatActivity implements OnMap
     public void onMapReady(@NonNull GoogleMap googleMap) {
         this.map = googleMap;
         // Prompt the user for permission.
-//        map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(event.getLatitude(),
-//                event.getLongitude()), DEFAULT_ZOOM));
-//        Marker currentMarker = map.addMarker(new MarkerOptions()
-//                .position(new LatLng(event.getLatitude(),
-//                        event.getLongitude())));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(event.getLatitude(),
+                event.getLongitude()), DEFAULT_ZOOM));
+        Marker currentMarker = map.addMarker(new MarkerOptions()
+                .position(new LatLng(event.getLatitude(),
+                        event.getLongitude())));
 
     }
 }
