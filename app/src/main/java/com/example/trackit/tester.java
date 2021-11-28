@@ -15,13 +15,13 @@ public class tester extends AppCompatActivity {
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     DocumentReference collectionReference = db.collection("testpath").document("philza");
+    private List<String> Ax;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        List<String> Ax;
-        Ax = new ArrayList<>();
+        Ax = new ArrayList<String>();
         Ax.add("1");
         Ax.add("2");
 
