@@ -26,6 +26,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TrackIt">
         <activity
+            android:name=".EditEventActivity"
+            android:exported="false" />
+        <activity
             android:name=".ViewEventDetailsActivity"
             android:exported="false" />
         <activity
