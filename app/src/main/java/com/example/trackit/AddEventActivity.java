@@ -66,7 +66,7 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
     private boolean locationPermissionGranted;
     private boolean cameraPermissionGranted;
     private static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 1;
-    private final LatLng defaultLocation = new LatLng(0, 0);
+    private final LatLng defaultLocation = new LatLng(53.5461, -113.4938);
     private static final int DEFAULT_ZOOM = 15;
     private Marker currentMarker;
     private Context ImageContext;
@@ -98,14 +98,20 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
         locationLayout = findViewById(R.id.locationLayout);
         photo_button = findViewById(R.id.button_photo);
         imageView = findViewById(R.id.photo);
+
+        //initializing client to get current location later
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
+        //getting the permission to access camera and current location
         checkAndRequestPermissions();
-        //getting the map
+
+        //getting the map if record button is clicked
         recordLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 isRecord = true;
                 checkAndRequestPermissions();
+                //setting the map fragment
                 SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                         .findFragmentById(R.id.map);
                 mapFragment.getMapAsync(AddEventActivity.this);
@@ -176,8 +182,9 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
     @Override
     public void onMapReady(GoogleMap googleMap) {
         this.map = googleMap;
-        // Prompt the user for permission.
+        // update the map UI accordingly to the permissions granted
         updateLocationUI();
+        //gets the current location and sets a marker on it
         getDeviceLocation();
         map.setOnMarkerDragListener(this);
     }
@@ -187,6 +194,7 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
 
     @Override
     public void onMarkerDragEnd(@NonNull Marker marker) {
+        //gets the location on marker drag end
         LatLng position = currentMarker.getPosition();
         location = new GeoPoint(position.latitude, position.longitude);
     }
@@ -200,6 +208,7 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
         int locationPermission = ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION);
         List<String> listPermissionsNeeded = new ArrayList<>();
+        //checking for location permission
         if (locationPermission != PackageManager.PERMISSION_GRANTED) {
             listPermissionsNeeded.add(Manifest.permission.ACCESS_FINE_LOCATION);
         }
@@ -207,6 +216,7 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
         {
             locationPermissionGranted = true;
         }
+        //checking for camera permission
         if (permissionCamera != PackageManager.PERMISSION_GRANTED) {
             listPermissionsNeeded.add(Manifest.permission.CAMERA);
         }
@@ -214,6 +224,7 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
         {
             cameraPermissionGranted = true;
         }
+        //requesting permission if not granted
         if (!listPermissionsNeeded.isEmpty()) {
             ActivityCompat.requestPermissions(this, listPermissionsNeeded.toArray(new
                     String[listPermissionsNeeded.size()]),REQUEST_ID_MULTIPLE_PERMISSIONS);
@@ -226,6 +237,7 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
         }
         try {
             if (locationPermissionGranted) {
+                //setting the refocus to current location button to visible if permission granted
                 map.setMyLocationEnabled(true);
                 map.getUiSettings().setMyLocationButtonEnabled(true);
             } else {
@@ -278,10 +290,13 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
             }
             else
             {
+                //if no permission granted, sets the camera and marker to default location (edmonton)
                 currentMarker = map.addMarker(new MarkerOptions()
                         .position(defaultLocation)
                         .draggable(true));
-                location = new GeoPoint (0,0);
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                        defaultLocation, DEFAULT_ZOOM));
+                location = new GeoPoint (defaultLocation.latitude, defaultLocation.longitude);
             }
         } catch (SecurityException e)  {
             Log.e("Exception: %s", e.getMessage(), e);
@@ -289,12 +304,14 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
     }
 
     public void done(View view) {
+        //taost if noen of the fields are entered
         if (comment.getText().toString().isEmpty() && image == null && isRecord == false)
         {
             Toast.makeText(AddEventActivity.this, "Press Skip to continue without " +
                     "adding event.", Toast.LENGTH_SHORT).show();
         }
         else {
+            //creates new event and adds it to firebase
             Event event = new Event();
             if (!comment.getText().toString().isEmpty()) {
                 event.setComment(comment.getText().toString());

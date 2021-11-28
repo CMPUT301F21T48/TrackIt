@@ -65,11 +65,12 @@ public class EditEventActivity extends AppCompatActivity implements OnMapReadyCa
     private Location curLocation;
     private FusedLocationProviderClient fusedLocationProviderClient;
     private static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 1;
-    private final LatLng defaultLocation = new LatLng(0, 0);
+    private final LatLng defaultLocation = new LatLng(53.5461, -113.4938);
     private static final float DEFAULT_ZOOM = 15;
     public static final int CAMERA_REQUEST = 9999;
     private Bitmap newImage;
     private String newEncodedImage;
+    private Boolean photoChange = false;
 
     Button removeLocation, removePhoto, changeLocation, changePhoto;
 
@@ -87,6 +88,7 @@ public class EditEventActivity extends AppCompatActivity implements OnMapReadyCa
         habit = (Habit) getIntent().getSerializableExtra("Habit");
         event = (Event) getIntent().getSerializableExtra("Event");
 
+        //initializing all the buttons and EditViews
         imageView = findViewById(R.id.photo);
         mapHolder = findViewById(R.id.locationLayout);
 
@@ -97,7 +99,10 @@ public class EditEventActivity extends AppCompatActivity implements OnMapReadyCa
 
         commentText = findViewById(R.id.add_comment);
 
+        //initializing the client for getting current location
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
+        //getting camera and location permission
         checkAndRequestPermissions();
 
 
@@ -109,49 +114,53 @@ public class EditEventActivity extends AppCompatActivity implements OnMapReadyCa
         longitude = event.getLongitude();
         encodedImage = event.getImage();
 
+        //if no location is given in event, setting the remove button to invisible
         if (latitude==null || longitude==null){
-            removeLocation.setVisibility(View.GONE);
+            removeLocation.setVisibility(View.INVISIBLE);
         }
 
+        //remove location sets the latitude and longgitude to null
         removeLocation.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View view) {
                  event.setLongitude(null);
                  event.setLatitude(null);
-                 removeLocation.setVisibility(View.GONE);
+                 removeLocation.setVisibility(View.INVISIBLE);
              }
          });
 
+        //to change location map is loaded with previous location if any
         changeLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 checkAndRequestPermissions();
-                changeLocation.setVisibility(View.GONE);
-                removeLocation.setVisibility(View.GONE);
-                mapHolder.setVisibility(View.VISIBLE);
                 SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                         .findFragmentById(R.id.map);
                 mapFragment.getMapAsync(EditEventActivity.this);
+                changeLocation.setVisibility(View.INVISIBLE);
+                removeLocation.setVisibility(View.INVISIBLE);
+                mapHolder.setVisibility(View.VISIBLE);
             }
         });
 
         if (encodedImage == null) {
-            removePhoto.setVisibility(View.GONE);
+            removePhoto.setVisibility(View.INVISIBLE);
         }
 
         removePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 event.setImage(null);
-                removePhoto.setVisibility(View.GONE);
+                removePhoto.setVisibility(View.INVISIBLE);
             }
         });
 
         changePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                photoChange = true;
                 checkAndRequestPermissions();
-                removePhoto.setVisibility(View.GONE);
+                removePhoto.setVisibility(View.INVISIBLE);
                 Intent photoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 if (photoIntent.resolveActivity(getPackageManager()) != null) {
                     photoIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
@@ -204,10 +213,29 @@ public class EditEventActivity extends AppCompatActivity implements OnMapReadyCa
     @Override
     public void onMapReady(GoogleMap googleMap) {
         this.map = googleMap;
-        // Prompt the user for permission.
-        updateLocationUI();
-        getDeviceLocation();
-        map.setOnMarkerDragListener(this);
+        //initializes a marker and sets to a defualt location
+        currentMarker = map.addMarker(new MarkerOptions()
+                .position(defaultLocation)
+                .draggable(true));
+        //setting marker to previously provided location
+        if (event.getLatitude() != null && event.getLongitude() != null)
+        {
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                    new LatLng(event.getLatitude(),
+                            event.getLongitude()), DEFAULT_ZOOM));
+            currentMarker.setPosition(new LatLng(event.getLatitude(),
+                            event.getLongitude()));
+            location = new GeoPoint(event.getLatitude(),
+                    event.getLongitude());
+            updateLocationUI();
+        }
+        else{
+            //if no previous location provided, setting marker to current location
+            // (if permission is granted to access current location)
+            updateLocationUI();
+            getDeviceLocation();
+        }
+    map.setOnMarkerDragListener(this);
     }
 
     @Override
@@ -215,6 +243,7 @@ public class EditEventActivity extends AppCompatActivity implements OnMapReadyCa
 
     @Override
     public void onMarkerDragEnd(@NonNull Marker marker) {
+        //getting the position when marker is stopped dragging
         LatLng position = currentMarker.getPosition();
         location = new GeoPoint(position.latitude, position.longitude);
     }
@@ -223,6 +252,7 @@ public class EditEventActivity extends AppCompatActivity implements OnMapReadyCa
     public void onMarkerDragStart(@NonNull Marker marker) { }
 
     private void checkAndRequestPermissions() {
+        //getting camera and location permissions
         int permissionCamera = ContextCompat.checkSelfPermission(this,
                 Manifest.permission.CAMERA);
         int locationPermission = ContextCompat.checkSelfPermission(this,
@@ -230,6 +260,7 @@ public class EditEventActivity extends AppCompatActivity implements OnMapReadyCa
         List<String> listPermissionsNeeded = new ArrayList<>();
         if (locationPermission != PackageManager.PERMISSION_GRANTED) {
             listPermissionsNeeded.add(Manifest.permission.ACCESS_FINE_LOCATION);
+            locationPermissionGranted = false;
         }
         else
         {
@@ -237,6 +268,7 @@ public class EditEventActivity extends AppCompatActivity implements OnMapReadyCa
         }
         if (permissionCamera != PackageManager.PERMISSION_GRANTED) {
             listPermissionsNeeded.add(Manifest.permission.CAMERA);
+            cameraPermissionGranted = false;
         }
         else
         {
@@ -254,6 +286,7 @@ public class EditEventActivity extends AppCompatActivity implements OnMapReadyCa
         }
         try {
             if (locationPermissionGranted) {
+                //setting the focus on current location to true is permission granted
                 map.setMyLocationEnabled(true);
                 map.getUiSettings().setMyLocationButtonEnabled(true);
             } else {
@@ -273,6 +306,8 @@ public class EditEventActivity extends AppCompatActivity implements OnMapReadyCa
          */
 
         try {
+            //if permission granted, getting the current location, else setting
+            // marker to default location
             if (locationPermissionGranted) {
                 Task<Location> locationResult = fusedLocationProviderClient.getLastLocation();
                 locationResult.addOnCompleteListener(this,
@@ -283,28 +318,16 @@ public class EditEventActivity extends AppCompatActivity implements OnMapReadyCa
                                     // Set the map's camera position to the current location of the device.
                                     curLocation = task.getResult();
                                     if (curLocation != null) {
-                                        if (event.getLatitude() != null) {
-                                            map.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                                                    new LatLng(event.getLatitude(),
-                                                            event.getLongitude()), DEFAULT_ZOOM));
-                                            currentMarker = map.addMarker(new MarkerOptions()
-                                                    .position(new LatLng(event.getLatitude(),
-                                                            event.getLongitude()))
-                                                    .draggable(true));
-                                            location = new GeoPoint(event.getLatitude(),
-                                                    event.getLongitude());
-                                        }
-                                        else {
-                                            map.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                                                    new LatLng(curLocation.getLatitude(),
-                                                            curLocation.getLongitude()), DEFAULT_ZOOM));
-                                            currentMarker = map.addMarker(new MarkerOptions()
-                                                    .position(new LatLng(curLocation.getLatitude(),
-                                                            curLocation.getLongitude()))
-                                                    .draggable(true));
-                                            location = new GeoPoint(curLocation.getLatitude(),
-                                                    curLocation.getLongitude());
-                                        }
+                                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                                                new LatLng(curLocation.getLatitude(),
+                                                        curLocation.getLongitude()), DEFAULT_ZOOM));
+                                        currentMarker = map.addMarker(new MarkerOptions()
+                                                .position(new LatLng(curLocation.getLatitude(),
+                                                        curLocation.getLongitude()))
+                                                .draggable(true));
+                                        location = new GeoPoint (curLocation.getLatitude(),
+                                                curLocation.getLongitude());
+
                                     }
                                 } else {
                                     Log.d(TAG, "Current location is null. Using defaults.");
@@ -321,7 +344,9 @@ public class EditEventActivity extends AppCompatActivity implements OnMapReadyCa
                 currentMarker = map.addMarker(new MarkerOptions()
                         .position(defaultLocation)
                         .draggable(true));
-                location = new GeoPoint (0,0);
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                        defaultLocation, DEFAULT_ZOOM));
+                location = new GeoPoint (defaultLocation.latitude, defaultLocation.longitude);
             }
         } catch (SecurityException e)  {
             Log.e("Exception: %s", e.getMessage(), e);
@@ -329,12 +354,13 @@ public class EditEventActivity extends AppCompatActivity implements OnMapReadyCa
     }
 
     public void done(View view) {
+        //editing the required fields and updating the event in firebase
         event.setComment(commentText.getText().toString());
         if (location != null) {
             event.setLatitude(location.getLatitude());
             event.setLongitude(location.getLongitude());
         }
-        if (encodedImage != null)
+        if (photoChange)
         {
             event.setImage(encodedImage);
         }
@@ -344,4 +370,6 @@ public class EditEventActivity extends AppCompatActivity implements OnMapReadyCa
                 .document(event.getEventID()).set(event);
         finish();
     }
+
+    public void skip(View view) { finish(); }
 }

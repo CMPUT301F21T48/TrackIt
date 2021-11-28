@@ -52,6 +52,7 @@ public class ViewEventsForHabitActivity extends AppCompatActivity {
         eventDataList = new ArrayList<>();
         eventAdapter = new EventCustomList(this, eventDataList);
         eventList.setAdapter(eventAdapter);
+        //getting all the events from firebase
         collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
@@ -77,6 +78,7 @@ public class ViewEventsForHabitActivity extends AppCompatActivity {
             }
         });
 
+        //starting an intent when a event is clicked
         eventList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
