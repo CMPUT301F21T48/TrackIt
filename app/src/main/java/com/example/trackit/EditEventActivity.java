@@ -265,6 +265,6 @@ public class EditEventActivity extends AppCompatActivity implements OnMapReadyCa
         collectionReference.document(user.getUsername()).collection("Habits")
                 .document(habit.getHabitID()).collection("Events")
                 .document(event.getEventID()).set(event);
-//        finish();
+        finish();
     }
 }
