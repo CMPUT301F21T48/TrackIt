@@ -157,15 +157,7 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
                 Bitmap pic = ((BitmapDrawable) ((ImageView) findViewById(R.id.photo)).getDrawable()).getBitmap();
                 encodeBitmapAndResize(pic);
             }
-
-
         }
-
-//        } else if (requestCode == RESULT_CANCELED) {
-//            // User cancelled the image capture
-//        } else {
-//            // Image capture failed, advise user
-//        }
     }
     private Bitmap downscaleBitmap(Bitmap pic) {
         double maxDimension = Math.max(pic.getHeight(), pic.getWidth());
@@ -179,23 +171,6 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
         bitmap.compress(Bitmap.CompressFormat.JPEG, 64, byteArrayOS);
         this.encodedPhoto = Base64.encodeToString(byteArrayOS.toByteArray(), Base64.DEFAULT);
 
-    }
-    private void decodePhoto() {
-        if (this.encodedPhoto != null) {
-            byte [] decodeBytesArray = Base64.decode(this.encodedPhoto, 0);
-            this.image= BitmapFactory.decodeByteArray(decodeBytesArray, 0, decodeBytesArray.length);
-        }
-    }
-
-    private Bitmap resizeImage(Bitmap bitmap) {
-        double downScale = 0.95;
-        return Bitmap.createScaledBitmap(bitmap, (int) (bitmap.getWidth() * downScale), (int) (bitmap.getHeight() * downScale), true);
-    }
-
-
-    public void deletePhoto() {
-        this.image= null;
-        this.encodedPhoto = null;
     }
 
     @Override

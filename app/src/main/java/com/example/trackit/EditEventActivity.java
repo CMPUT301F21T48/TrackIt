@@ -8,9 +8,15 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -35,6 +41,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,6 +67,9 @@ public class EditEventActivity extends AppCompatActivity implements OnMapReadyCa
     private static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 1;
     private final LatLng defaultLocation = new LatLng(0, 0);
     private static final float DEFAULT_ZOOM = 15;
+    public static final int CAMERA_REQUEST = 9999;
+    private Bitmap newImage;
+    private String newEncodedImage;
 
     Button removeLocation, removePhoto, changeLocation, changePhoto;
 
@@ -142,9 +152,53 @@ public class EditEventActivity extends AppCompatActivity implements OnMapReadyCa
             public void onClick(View view) {
                 checkAndRequestPermissions();
                 removePhoto.setVisibility(View.GONE);
-                //TODO CODE FOR IMAGE HERE
+                Intent photoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                if (photoIntent.resolveActivity(getPackageManager()) != null) {
+                    photoIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    startActivityForResult(photoIntent, CAMERA_REQUEST);
+                }
             }
         });
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //ImageContext = getApplicationContext();
+        imageView.setImageBitmap(null);
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK && data != null)  {
+
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+
+            //Downscale the image so that it fits in Firestore
+            imageBitmap = downscaleBitmap(imageBitmap);
+            this.newImage = imageBitmap;
+
+
+            imageView.setImageBitmap(imageBitmap);
+
+            imageView.setVisibility(View.VISIBLE);
+            if ( ((ImageView) findViewById(R.id.photo)).getDrawable() != null ) {
+                Bitmap pic = ((BitmapDrawable) ((ImageView) findViewById(R.id.photo)).getDrawable()).getBitmap();
+                encodeBitmapAndResize(pic);
+            }
+        }
+    }
+    private Bitmap downscaleBitmap(Bitmap pic) {
+        double maxDimension = Math.max(pic.getHeight(), pic.getWidth());
+        double scale = 275 / maxDimension;
+        return Bitmap.createScaledBitmap(pic, (int) (pic.getWidth() * scale), (int) (pic.getHeight() * scale), false);
+    }
+
+
+    public void encodeBitmapAndResize(Bitmap bitmap) {
+        ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 64, byteArrayOS);
+        this.encodedImage = Base64.encodeToString(byteArrayOS.toByteArray(), Base64.DEFAULT);
+
     }
 
     @Override
