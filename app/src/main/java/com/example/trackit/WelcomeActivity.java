@@ -11,15 +11,15 @@ import android.widget.Button;
  * From this activity, the user can go to login or to register
  */
 public class WelcomeActivity extends AppCompatActivity {
+    private Button loginButton;
+    private Button registerButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
-//        Intent intent = new Intent(this, UserSearchActivity.class);
-//        startActivity(intent);
-        final Button loginButton = findViewById(R.id.login_button);
-        final Button registerButton = findViewById(R.id.register_button);
+        loginButton = findViewById(R.id.login_button);
+        registerButton = findViewById(R.id.register_button);
     }
 
     /**
