@@ -22,6 +22,7 @@ import android.graphics.Bitmap;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
@@ -56,7 +57,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -89,7 +92,7 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
     public static final int CAMERA_REQUEST = 9999;
     private static final int MY_CAMERA_PERMISSION_CODE = 100;
 
-    private ImageView imageView;
+    public static ImageView imageView;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     final CollectionReference collectionReference = db.collection("Users");
@@ -138,6 +141,7 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
 
                     Intent photoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     if (photoIntent.resolveActivity(getPackageManager()) != null) {
+                        photoIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                         startActivityForResult(photoIntent, CAMERA_REQUEST);
                     }
                 }
@@ -150,8 +154,6 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
     }
 
 
-
-    // References : https://stackoverflow.com/questions/8417034/how-to-make-bitmap-compress-without-change-the-bitmap-size
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         ImageContext = getApplicationContext();
@@ -163,18 +165,12 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
 
-            // Convert bitmap to byteArrayOutputStream and compress it
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            imageBitmap.compress(Bitmap.CompressFormat.WEBP,0,stream);//0=lowest, 100=highest quality
-            byte[] byteArray = stream.toByteArray();
+            //Downscale the image so that it fits in Firestore
+            imageBitmap = downscaleBitmap(imageBitmap);
+            this.image = imageBitmap;
 
 
-            //convert your byteArray into bitmap and set imageview
-            Bitmap yourCompressBitmap = BitmapFactory.decodeByteArray(byteArray,0,byteArray.length);
-            imageView.setImageBitmap(yourCompressBitmap);
-
-            // Or the second method:
-            //imageView.setImageBitmap(Bitmap.createScaledBitmap(imageBitmap, imageBitmap.getWidth()/10, imageBitmap.getHeight()/10, false));
+            imageView.setImageBitmap(imageBitmap);
 
             imageView.setVisibility(View.VISIBLE);
             if ( ((ImageView) findViewById(R.id.photo)).getDrawable() != null ) {
@@ -191,31 +187,17 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
 //            // Image capture failed, advise user
 //        }
     }
+    private Bitmap downscaleBitmap(Bitmap pic) {
+        double maxDimension = Math.max(pic.getHeight(), pic.getWidth());
+        double scale = 275 / maxDimension;
+        return Bitmap.createScaledBitmap(pic, (int) (pic.getWidth() * scale), (int) (pic.getHeight() * scale), false);
+    }
+
 
     public void encodeBitmapAndResize(Bitmap bitmap) {
-
-        if (bitmap.getByteCount() > MAX_IMAGE_BYTE) {
-            for (int i = 0; i < 4; ++i) {
-                bitmap = resizeImage(bitmap);
-                if (bitmap.getByteCount() <= MAX_IMAGE_BYTE) {
-                    break;
-                }
-            }
-        }
-
-        if (bitmap.getByteCount() <= MAX_IMAGE_BYTE) {
-
-            this.image = bitmap;
-
-            ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOS);
-            this.encodedPhoto = Base64.encodeToString(byteArrayOS.toByteArray(), Base64.DEFAULT);
-
-        } else {
-            throw new IllegalArgumentException("Image file must be less than or equal to " +
-                    String.valueOf(MAX_IMAGE_BYTE) + " bytes.");
-        }
-
+        ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 64, byteArrayOS);
+        this.encodedPhoto = Base64.encodeToString(byteArrayOS.toByteArray(), Base64.DEFAULT);
 
     }
     private void decodePhoto() {
@@ -224,11 +206,6 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
             this.image= BitmapFactory.decodeByteArray(decodeBytesArray, 0, decodeBytesArray.length);
         }
     }
-    private Bitmap resizeImage(Bitmap bitmap) {
-        double downScale = 0.95;
-        return Bitmap.createScaledBitmap(bitmap, (int) (bitmap.getWidth() * downScale), (int) (bitmap.getHeight() * downScale), true);
-    }
-
 
     public void deletePhoto() {
         this.image= null;
