@@ -5,16 +5,23 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 
-import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 /**
  * This is the the start up launch activity where the user can register into the HabitUp
@@ -29,50 +36,9 @@ public class RegisterActivity extends AppCompatActivity {
     EditText inputUsername;
     EditText inputPassword;
     Button registerButton;
-    User user = new User("","");
+
     final String TAG = "Sample";
-    
-    private void verifyInput(String registerUsername, String registerPassword, Set<String> names){
-
-        if (registerUsername.length()>0 && registerPassword.length()>0) {
-
-            // Ensure we have a unique name
-            if(names.contains(registerUsername)){
-                inputUsername.requestFocus();
-                inputUsername.setError("Username is not unique");
-            }
-
-            // Add data to file
-            else {
-                user.setPassword(registerPassword);
-                user.setUsername(registerUsername);
-
-                collectionReference
-                        .document(registerUsername)
-                        .set(user)
-                        .addOnSuccessListener(unused -> Log.d(TAG, "Data has been added successfully!"))
-                        .addOnFailureListener(e -> Log.d(TAG, "Data could not be added!" + e.toString()));
-
-                inputUsername.setText("");
-                inputPassword.setText("");
-                Intent intent = new Intent(this, TodaysHabitsActivity.class);
-                intent.putExtra("User", (Serializable) user);
-                startActivity(intent);
-            }
-        }
-
-        // Ensure name is not ""
-        else if (registerUsername.length()==0){
-            inputUsername.requestFocus();
-            inputUsername.setError(getString(R.string.error_username_empty));
-        }
-
-        // Ensure password is not ""
-        else{
-            inputPassword.requestFocus();
-            inputPassword.setError("Password field cannot be empty");
-        }
-    }
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,25 +49,67 @@ public class RegisterActivity extends AppCompatActivity {
         inputPassword = findViewById(R.id.register_password);
         registerButton = findViewById(R.id.register);
 
+        mAuth = FirebaseAuth.getInstance(); // started off by initializing authentication
+
         registerButton.setOnClickListener(view -> {
             final String registerUsername = inputUsername.getText().toString();
             final String registerPassword = inputPassword.getText().toString();
             Set<String> names = new HashSet<>();
+            if (registerUsername.length() == 0) {
+                inputUsername.requestFocus();
+                inputUsername.setError(getString(R.string.error_username_empty));
+            }
 
-            collectionReference
-                    .get()
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
-                                Log.d(TAG, document.getId() + " => " + document.getData());
-                                names.add(document.getId());
+            // Ensure password is not ""
+            else if (registerPassword.length() == 0) {
+                inputPassword.requestFocus();
+                inputPassword.setError("Password field cannot be empty");
+            } else {
+                String Username = registerUsername + "@example.com";
+                mAuth.createUserWithEmailAndPassword(Username , registerPassword)
+                        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    // Sign in success, update UI with the signed-in user's information
+                                    Log.d(TAG, "createUserWithEmail:success");
+                                    FirebaseUser user = mAuth.getCurrentUser();
+                                    User mUser = new User("", "");
+                                    mUser.setPassword(registerPassword);
+                                    mUser.setUsername(registerUsername);
+                                    //do update here
+                                    collectionReference
+                                            .document(registerUsername)
+                                            .set(mUser)
+                                            .addOnSuccessListener(unused -> Log.d(TAG, "Data has been added successfully!"))
+                                            .addOnFailureListener(e -> Log.d(TAG, "Data could not be added!" + e.toString()));
+                                    inputPassword.setText("");
+                                    inputUsername.setText("");
+                                    Intent intent = new Intent(RegisterActivity.this, TodaysHabitsActivity.class);
+                                    intent.putExtra("User", mUser);
+                                    startActivity(intent);
+                                } else {
+                                    // If sign in fails, display a message to the user.
+                                    Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                                    try {
+                                        throw task.getException();
+                                    } catch (FirebaseAuthWeakPasswordException e) {
+                                        String reason = ((FirebaseAuthWeakPasswordException) task.getException()).getReason();
+                                        Toast.makeText(RegisterActivity.this, reason,
+                                                Toast.LENGTH_SHORT).show();
+                                    } catch (FirebaseAuthInvalidCredentialsException e) {
+                                        Toast.makeText(RegisterActivity.this, "Invalid username",
+                                                Toast.LENGTH_SHORT).show();
+                                    } catch (FirebaseAuthUserCollisionException e){
+                                        Toast.makeText(RegisterActivity.this, "Username already Exists",
+                                                Toast.LENGTH_SHORT).show();
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                }
                             }
-                            verifyInput(registerUsername, registerPassword, names);
-
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
-                        }
-                    });
+                        });
+            }
         });
     }
 }
