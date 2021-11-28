@@ -1,7 +1,9 @@
 package com.example.trackit;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -31,6 +33,7 @@ public class ViewEventsForHabitActivity extends AppCompatActivity {
     CollectionReference collectionReference;
     BottomNavigationView navBar;
     final String TAG = "Sample";
+    Event selectedEvent;
 
 
     @Override
@@ -71,6 +74,18 @@ public class ViewEventsForHabitActivity extends AppCompatActivity {
                     emptyMessage.setVisibility(View.GONE);
                 }
                 eventAdapter.notifyDataSetChanged();
+            }
+        });
+
+        eventList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                selectedEvent = (Event) eventList.getItemAtPosition(position);
+                Intent intent = new Intent(ViewEventsForHabitActivity.this, ViewEventDetailsActivity.class);
+                intent.putExtra("Event", selectedEvent);
+                intent.putExtra("Habit", habit);
+                intent.putExtra("User", user);
+                startActivity(intent);
             }
         });
     }
