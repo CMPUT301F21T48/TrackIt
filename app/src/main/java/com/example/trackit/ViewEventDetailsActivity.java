@@ -71,12 +71,14 @@ public class ViewEventDetailsActivity extends AppCompatActivity implements OnMap
         image = event.getImage();
 
         if (latitude==null || longitude==null){
+            //no map is displayed if no previous location provided
             noLocation.setVisibility(View.VISIBLE);
             noLocation.setText("This event has no recorded location.");
             mapHolder.setVisibility(View.GONE);
         }
         else
         {
+            //initializing the map is location was previously provided
             SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                     .findFragmentById(R.id.map);
             mapFragment.getMapAsync(ViewEventDetailsActivity.this);
@@ -117,7 +119,7 @@ public class ViewEventDetailsActivity extends AppCompatActivity implements OnMap
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         this.map = googleMap;
-        // Prompt the user for permission.
+        // Setting the marker to previous location
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(event.getLatitude(),
                 event.getLongitude()), DEFAULT_ZOOM));
         Marker currentMarker = map.addMarker(new MarkerOptions()
