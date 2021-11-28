@@ -29,9 +29,9 @@
     <string name="no_event">You do not have any events listed for this habit</string>
     <string name="error_date">No Date recorded</string>
     <string name="view_privacy">Habit privacy: </string>
-    <string name="view_event_comment_text">Comment: </string>
-    <string name="view_photo_text">Uploaded photo: </string>
-    <string name="view_location_text">Recorded location:</string>
+    <string name="edit_comment">Edit Comment: </string>
+    <string name="edit_photo">Edit Photograph: </string>
+    <string name="edit_location">Edit location: </string>
 
     <!-- Button labels -->
     <string name="button_sign_up" tools:ignore="ExtraTranslation">Sign Up</string>
@@ -47,8 +47,12 @@
     <string name="button_add_location">Record location</string>
     <string name="button_continue">Continue</string>
     <string name="button_skip">Skip</string>
-    <string name="button_edit_event">Edit Event</string>
-    <string name="button_delete_event">Delete Event</string>
+    <string name="button_edit_location">Change location</string>
+    <string name="button_edit_image">Change photograph</string>
+    <string name="button_remove_location">Remove location</string>
+    <string name="button_remove_image">Remove photograph</string>
+    <string name="button_save_event">Save Changes</string>
+
 
     <!-- Title bar strings -->
     <string name="title_register">Register</string>
@@ -57,7 +61,6 @@
     <string name="title_todays_habits">Today\'s Habits</string>
     <string name="title_view_habit">View Habits</string>
     <string name="add_event">Add Event</string>
-    <string name="view_event">View Event</string>
 
     <!-- EditText hints -->
     <string name="add_title_hint">(max. 20 characters)</string>
