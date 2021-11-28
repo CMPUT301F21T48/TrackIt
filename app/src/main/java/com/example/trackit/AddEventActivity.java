@@ -123,6 +123,7 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
 
                     Intent photoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     if (photoIntent.resolveActivity(getPackageManager()) != null) {
+                        photoIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                         startActivityForResult(photoIntent, CAMERA_REQUEST);
                     }
                 }
@@ -133,11 +134,9 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
         });
     }
 
-    // References : https://stackoverflow.com/questions/8417034/how-to-make-bitmap-compress-without-change-the-bitmap-size
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //ImageContext = getApplicationContext();
+        ImageContext = getApplicationContext();
         imageView.setImageBitmap(null);
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -146,52 +145,41 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
 
-            // Convert bitmap to byteArrayOutputStream and compress it
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            imageBitmap.compress(Bitmap.CompressFormat.WEBP,0,stream);//0=lowest, 100=highest quality
-            byte[] byteArray = stream.toByteArray();
+            //Downscale the image so that it fits in Firestore
+            imageBitmap = downscaleBitmap(imageBitmap);
+            this.image = imageBitmap;
 
 
-            //convert your byteArray into bitmap and set imageview
-            Bitmap yourCompressBitmap = BitmapFactory.decodeByteArray(byteArray,0,byteArray.length);
-            imageView.setImageBitmap(yourCompressBitmap);
-
-            // Or the second method:
-            //imageView.setImageBitmap(Bitmap.createScaledBitmap(imageBitmap, imageBitmap.getWidth()/10, imageBitmap.getHeight()/10, false));
+            imageView.setImageBitmap(imageBitmap);
 
             imageView.setVisibility(View.VISIBLE);
             if ( ((ImageView) findViewById(R.id.photo)).getDrawable() != null ) {
                 Bitmap pic = ((BitmapDrawable) ((ImageView) findViewById(R.id.photo)).getDrawable()).getBitmap();
                 encodeBitmapAndResize(pic);
             }
+
+
         }
+
+//        } else if (requestCode == RESULT_CANCELED) {
+//            // User cancelled the image capture
+//        } else {
+//            // Image capture failed, advise user
+//        }
     }
+    private Bitmap downscaleBitmap(Bitmap pic) {
+        double maxDimension = Math.max(pic.getHeight(), pic.getWidth());
+        double scale = 275 / maxDimension;
+        return Bitmap.createScaledBitmap(pic, (int) (pic.getWidth() * scale), (int) (pic.getHeight() * scale), false);
+    }
+
 
     public void encodeBitmapAndResize(Bitmap bitmap) {
+        ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 64, byteArrayOS);
+        this.encodedPhoto = Base64.encodeToString(byteArrayOS.toByteArray(), Base64.DEFAULT);
 
-        if (bitmap.getByteCount() > MAX_IMAGE_BYTE) {
-            for (int i = 0; i < 4; ++i) {
-                bitmap = resizeImage(bitmap);
-                if (bitmap.getByteCount() <= MAX_IMAGE_BYTE) {
-                    break;
-                }
-            }
-        }
-
-        if (bitmap.getByteCount() <= MAX_IMAGE_BYTE) {
-
-            this.image = bitmap;
-
-            ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();
-            image.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOS);
-            this.encodedPhoto = Base64.encodeToString(byteArrayOS.toByteArray(), Base64.DEFAULT);
-
-        } else {
-            throw new IllegalArgumentException("Image file must be less than or equal to " +
-                    String.valueOf(MAX_IMAGE_BYTE) + " bytes.");
-        }
     }
-
     private void decodePhoto() {
         if (this.encodedPhoto != null) {
             byte [] decodeBytesArray = Base64.decode(this.encodedPhoto, 0);
