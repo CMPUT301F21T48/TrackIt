@@ -1,9 +1,5 @@
 package com.example.trackit;
 
-import android.graphics.Bitmap;
-
-import com.google.firebase.firestore.GeoPoint;
-
 import java.io.Serializable;
 
 /**
@@ -32,7 +28,7 @@ public class Event implements Serializable {
         this.ID = null;
     }
 
-    public Event(String comment, String encodedImage, String date, double longitude, double latitude){
+    public Event(String comment, String encodedImage, String date, Double longitude, Double latitude){
         this.comment = comment;
         this.encodedImage= encodedImage;
         this.date = date;

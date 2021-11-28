@@ -7,13 +7,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 public class EventCustomList extends ArrayAdapter<Event> {
     private final ArrayList<Event> events;
@@ -38,7 +35,7 @@ public class EventCustomList extends ArrayAdapter<Event> {
         event = events.get(position);
 
         TextView eventTitle = view.findViewById(R.id.event_details);
-        eventTitle.setText(event.getEventDate());
+        eventTitle.setText("Event created on: " + event.getEventDate());
 
         return view;
     }

@@ -33,6 +33,7 @@ public class ViewHabitActivity extends AppCompatActivity {
     TextView habitReason;
     TextView startedDate;
     TextView repeatDays;
+    TextView privacy;
     Button edit;
     Button delete;
     final String TAG = "Sample";
@@ -43,8 +44,8 @@ public class ViewHabitActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view_habit);
         edit = findViewById(R.id.button_edit_habit);
         delete = findViewById(R.id.button_delete_habit);
-
-        habitTitle = findViewById(R.id.add_title);
+        privacy = findViewById(R.id.privacy_text);
+        habitTitle = findViewById(R.id.habit_title_text);
         habitReason = findViewById(R.id.add_reason);
         startedDate = findViewById(R.id.add_start_date_text);
         repeatDays = findViewById(R.id.add_repeat_days);
@@ -62,24 +63,34 @@ public class ViewHabitActivity extends AppCompatActivity {
         for (int i = 0; i < habit.getRepeatDays().size(); i++)
         {
             day = habit.getRepeatDays().get(i);
-            if (day.equals("M"))
-                day = "Monday\n\n";
-            else if (day.equals("T"))
-                day = "Tuesday\n\n";
-            else if (day.equals("W"))
-                day = "Wednesday\n\n";
-            else if (day.equals("R"))
-                day = "Thursday\n\n";
-            else if (day.equals("F"))
-                day = "Friday\n\n";
-            else if (day.equals("S"))
-                day = "Saturday\n\n";
-            else
-                day = "Sunday\n\n";
+//            if (day.equals("M"))
+//                day = "Monday";
+//            else if (day.equals("T"))
+//                day = "Tuesday";
+//            else if (day.equals("W"))
+//                day = "Wednesday";
+//            else if (day.equals("R"))
+//                day = "Thursday";
+//            else if (day.equals("F"))
+//                day = "Friday";
+//            else if (day.equals("S"))
+//                day = "Saturday";
+//            else
+//                day = "Sunday";
+//
+            if (i == habit.getRepeatDays().size() - 1) {
+                textRepeat += day;
+            } else{
+                textRepeat += day + "  ";
+            }
 
-            textRepeat += day;
         }
         repeatDays.setText(textRepeat);
+        if (habit.getPrivacy().equals("private")){
+            privacy.setText("Private");
+        } else{
+            privacy.setText("Public");
+        }
     }
 
     /**
@@ -127,6 +138,5 @@ public class ViewHabitActivity extends AppCompatActivity {
         newIntent.putExtra("User", (Serializable) user);
         newIntent.putExtra("Habit", (Serializable) habit);
         startActivity(newIntent);
-
     }
 }

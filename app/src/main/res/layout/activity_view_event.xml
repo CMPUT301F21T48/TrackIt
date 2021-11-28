@@ -19,15 +19,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-
         />
-<!--&lt;!&ndash;        app:layout_constraintBottom_toTopOf="@+id/habit_title_text"&ndash;&gt;-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--&lt;!&ndash;        app:layout_constraintHorizontal_bias="0.0"&ndash;&gt;-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintVertical_bias="0.227" -->
-<!--    />-->
 
     <TextView
         android:id="@+id/no_event_message"
@@ -42,36 +34,13 @@
         app:layout_constraintTop_toBottomOf="@+id/habit_title_text"
         android:visibility="gone"/>
 
-    <Button
-        android:id="@+id/continue_button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="32dp"
-        android:text="Continue"
-        app:layout_constraintBottom_toBottomOf="parent"
-
-        app:layout_constraintEnd_toEndOf="@+id/event_list"
-        app:layout_constraintStart_toStartOf="parent" />
-<!--    app:layout_constraintBottom_toTopOf="@+id/navigation"-->
-    <ListView
-        android:id="@+id/event_list"
-        android:layout_width="415dp"
-        android:layout_height="0dp"
-        android:layout_margin="8dp"
-        android:layout_marginTop="10dp"
-
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/habit_title_text" />
-
-    <!--        app:layout_constraintBottom_toTopOf="@+id/navigation"-->
     <TextView
         android:id="@+id/habit_title_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:gravity="center"
         android:text="Habit Name"
         android:textColor="@color/black"
@@ -81,6 +50,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title_bar"
         app:layout_constraintBottom_toTopOf="@id/event_list"/>
-    
+
+    <ListView
+        android:id="@+id/event_list"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/habit_title_text" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

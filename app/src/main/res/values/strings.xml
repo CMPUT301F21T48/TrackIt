@@ -26,11 +26,14 @@
     <string name="habit_privacy_text">Set habit privacy: </string>
     <string name="record_location">Record location (optional): </string>
     <string name="no_follow_requests">You have no new follow requests.</string>
+    <string name="no_event">You do not have any events listed for this habit</string>
+    <string name="error_date">No Date recorded</string>
+    <string name="view_privacy">Habit privacy: </string>
 
     <!-- Button labels -->
     <string name="button_sign_up" tools:ignore="ExtraTranslation">Sign Up</string>
     <string name="button_login">Login</string>
-    <string name="button_register">Register</string>
+    <string name="button_register" tools:ignore="ExtraTranslation">Register</string>
     <string name="button_add_habit">Add Habit</string>
     <string name="button_cancel">Cancel</string>
     <string name="button_save_habit">Save Changes</string>
@@ -73,8 +76,6 @@
 
     <!-- Nav bar labels -->
     <string name="title_events_list">Events</string>
-    <string name="no_event">You do not have any event listed for this habit</string>
-    <string name="error_date">No Date recorded</string>
 
     
     <!-- Resource keys -->
