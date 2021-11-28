@@ -85,7 +85,7 @@
         app:layout_constraintTop_toBottomOf="@+id/photo_text"
         android:visibility="gone"/>
 
-<!--    TODO-->
+    <!--    TODO-->
     <ImageView
         android:id="@+id/photo"
         android:background="@color/status_bar"
