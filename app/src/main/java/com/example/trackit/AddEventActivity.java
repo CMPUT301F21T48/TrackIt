@@ -339,10 +339,6 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
             collectionReference.document(user.getUsername()).collection("Habits")
                     .document(habit.getHabitID()).collection("Events")
                     .document(id).set(event);
-            Calendar calendar = Calendar.getInstance();
-            SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-            String todayDate = dateFormat.format(calendar.getTime());
-            event.setEventDate(todayDate);
             finish();
         }
     }

@@ -94,6 +94,7 @@ public class ViewEventDetailsActivity extends AppCompatActivity implements OnMap
         intent.putExtra("Event", event);
         intent.putExtra("Habit", habit);
         startActivity(intent);
+        finish();
     }
 
     public void deleteEvent (View view){

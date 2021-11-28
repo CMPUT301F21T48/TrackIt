@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -43,10 +44,6 @@ public class EditEventActivity extends AppCompatActivity implements OnMapReadyCa
     User user;
     Habit habit;
     Event event;
-    TextView date;
-    TextView comment;
-    TextView noLocation;
-    TextView noPhoto;
     Double longitude;
     Double latitude;
     String image;
@@ -78,12 +75,8 @@ public class EditEventActivity extends AppCompatActivity implements OnMapReadyCa
         habit = (Habit) getIntent().getSerializableExtra("Habit");
         event = (Event) getIntent().getSerializableExtra("Event");
 
-        date = findViewById(R.id.event_date);
-        comment = findViewById(R.id.comment);
-        noLocation = findViewById(R.id.no_location_text);
-        noPhoto = findViewById(R.id.no_photo_text);
         imageView = findViewById(R.id.photo);
-        mapHolder = findViewById(R.id.map_layout);
+        mapHolder = findViewById(R.id.locationLayout);
 
         removeLocation = findViewById(R.id.button_remove_location);
         removePhoto = findViewById(R.id.button_remove_photo);
@@ -91,8 +84,6 @@ public class EditEventActivity extends AppCompatActivity implements OnMapReadyCa
         changePhoto = findViewById(R.id.button_photo);
 
         commentText = findViewById(R.id.add_comment);
-
-        date.setText("Created on: " + event.getEventDate());
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         checkAndRequestPermissions();
@@ -107,15 +98,25 @@ public class EditEventActivity extends AppCompatActivity implements OnMapReadyCa
         image = event.getImage();
 
         if (latitude==null || longitude==null){
-            noLocation.setVisibility(View.VISIBLE);
-            noLocation.setText("This event has no recorded location.");
-            mapHolder.setVisibility(View.GONE);
             removeLocation.setVisibility(View.GONE);
         }
+
+        removeLocation.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View view) {
+                 event.setLongitude(null);
+                 event.setLatitude(null);
+                 removeLocation.setVisibility(View.GONE);
+             }
+         });
+
         changeLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 checkAndRequestPermissions();
+                changeLocation.setVisibility(View.GONE);
+                removeLocation.setVisibility(View.GONE);
+                mapHolder.setVisibility(View.VISIBLE);
                 SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                         .findFragmentById(R.id.map);
                 mapFragment.getMapAsync(EditEventActivity.this);
@@ -123,12 +124,9 @@ public class EditEventActivity extends AppCompatActivity implements OnMapReadyCa
         });
 
         if (image==null){
-            noPhoto.setVisibility(View.VISIBLE);
-            noPhoto.setText("This event has no uploaded photo.");
             imageView.setVisibility(View.GONE);
-            removeLocation.setVisibility(View.GONE);
+            removePhoto.setVisibility(View.GONE);
         }
-
     }
 
     @Override
@@ -213,16 +211,28 @@ public class EditEventActivity extends AppCompatActivity implements OnMapReadyCa
                                     // Set the map's camera position to the current location of the device.
                                     curLocation = task.getResult();
                                     if (curLocation != null) {
-                                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                                                new LatLng(event.getLatitude(),
-                                                        event.getLongitude()), DEFAULT_ZOOM));
-                                        currentMarker = map.addMarker(new MarkerOptions()
-                                                .position(new LatLng(event.getLatitude(),
-                                                        event.getLongitude()))
-                                                .draggable(true));
-                                        location = new GeoPoint (event.getLatitude(),
-                                                event.getLongitude());
-
+                                        if (event.getLatitude() != null) {
+                                            map.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                                                    new LatLng(event.getLatitude(),
+                                                            event.getLongitude()), DEFAULT_ZOOM));
+                                            currentMarker = map.addMarker(new MarkerOptions()
+                                                    .position(new LatLng(event.getLatitude(),
+                                                            event.getLongitude()))
+                                                    .draggable(true));
+                                            location = new GeoPoint(event.getLatitude(),
+                                                    event.getLongitude());
+                                        }
+                                        else {
+                                            map.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                                                    new LatLng(curLocation.getLatitude(),
+                                                            curLocation.getLongitude()), DEFAULT_ZOOM));
+                                            currentMarker = map.addMarker(new MarkerOptions()
+                                                    .position(new LatLng(curLocation.getLatitude(),
+                                                            curLocation.getLongitude()))
+                                                    .draggable(true));
+                                            location = new GeoPoint(curLocation.getLatitude(),
+                                                    curLocation.getLongitude());
+                                        }
                                     }
                                 } else {
                                     Log.d(TAG, "Current location is null. Using defaults.");
@@ -246,4 +256,15 @@ public class EditEventActivity extends AppCompatActivity implements OnMapReadyCa
         }
     }
 
+    public void done(View view) {
+        event.setComment(commentText.getText().toString());
+        if (location != null) {
+            event.setLatitude(location.getLatitude());
+            event.setLongitude(location.getLongitude());
+        }
+        collectionReference.document(user.getUsername()).collection("Habits")
+                .document(habit.getHabitID()).collection("Events")
+                .document(event.getEventID()).set(event);
+//        finish();
+    }
 }
