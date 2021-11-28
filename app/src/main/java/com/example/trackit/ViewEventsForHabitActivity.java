@@ -1,31 +1,22 @@
 package com.example.trackit;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 public class ViewEventsForHabitActivity extends AppCompatActivity {
@@ -64,16 +55,14 @@ public class ViewEventsForHabitActivity extends AppCompatActivity {
                 eventDataList.clear();
                 for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
                     String eventID = doc.getId();
-                    String date = (String) doc.getData().get("date");
+                    String date = (String) doc.getData().get("eventDate");
                     String comment = (String) doc.getData().get("comment");
+                    String image = (String) doc.getData().get("image");
+                    Double longitude = (Double) doc.getData().get("longitude");
+                    Double latitude = (Double) doc.getData().get("latitude");
                     //System.out.println(comment);
-                    Event newEvent =new Event();
+                    Event newEvent =new Event(comment, image, date, longitude, latitude);
                     newEvent.setEventID(eventID);
-                    newEvent.setComment(comment);
-                    newEvent.setLatitude(null);
-                    newEvent.setLongitude(null);
-                    newEvent.setImage(null);
-                    newEvent.setEventDate(date);
                     eventDataList.add(newEvent);
                 }
                 if (eventDataList.size()==0){

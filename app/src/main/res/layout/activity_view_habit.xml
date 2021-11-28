@@ -33,28 +33,47 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+<!--    <TextView-->
+<!--        android:id="@+id/habit_title_text"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="32dp"-->
+<!--        android:layout_marginTop="32dp"-->
+<!--        android:text="@string/habit_title_text"-->
+<!--        android:textStyle="bold"-->
+<!--        android:textSize="18sp"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/title_bar" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/add_title"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="32dp"-->
+<!--        android:layout_marginEnd="32dp"-->
+<!--        android:layout_marginTop="8dp"-->
+<!--        android:importantForAutofill="no"-->
+<!--        android:textSize="18sp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/habit_title_text" />-->
+
     <TextView
         android:id="@+id/habit_title_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
-        android:text="@string/habit_title_text"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title_bar" />
-
-    <TextView
-        android:id="@+id/add_title"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:importantForAutofill="no"
-        android:textSize="16sp"
+        android:gravity="center"
+        android:text="Habit Name"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/habit_title_text" />
+        app:layout_constraintTop_toBottomOf="@+id/title_bar"
+        app:layout_constraintBottom_toTopOf="@id/habit_reason_text"/>
 
     <TextView
         android:id="@+id/habit_reason_text"
@@ -63,37 +82,23 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
         android:text="@string/habit_reason_text"
+        android:textStyle="bold"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_title" />
+        app:layout_constraintTop_toBottomOf="@+id/habit_title_text" />
 
     <TextView
+        android:layout_marginTop="8dp"
         android:id="@+id/add_reason"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         android:importantForAutofill="no"
-        android:textSize="16sp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/habit_reason_text" />
-
-    <TextView
-        android:id="@+id/add_repeat_days"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
-        android:ems="10"
-        android:importantForAutofill="no"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/habit_repeat_text"
-        tools:ignore="SpeakableTextPresentCheck" />
 
     <LinearLayout
         android:id="@+id/add_start_date_layout"
@@ -112,6 +117,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/add_start_date_text"
+            android:textStyle="bold"
             android:textSize="18sp" />
 
         <TextView
@@ -121,19 +127,47 @@
             android:layout_weight="1"
             android:gravity="end"
             android:text="@string/start_date_format"
-            android:textSize="16sp" />
+            android:textSize="18sp" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/habit_repeat_text"
+    <LinearLayout
+        android:id="@+id/repeat_layout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
-        android:text="@string/add_repeat_text"
-        android:textSize="18sp"
+        android:layout_marginEnd="32dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_start_date_layout" />
+        app:layout_constraintTop_toBottomOf="@+id/add_start_date_layout">
+
+        <TextView
+            android:id="@+id/habit_repeat_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/add_repeat_text"
+            android:textSize="18sp"
+            android:layout_weight="1"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_start_date_layout" />
+
+        <TextView
+            android:id="@+id/add_repeat_days"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:layout_weight="1"
+            android:importantForAutofill="no"
+            android:textSize="18sp"
+            android:gravity="end"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/habit_repeat_text"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/button_edit_habit"
@@ -163,5 +197,35 @@
         app:layout_constraintStart_toStartOf="parent"
         app:rippleColor="@color/white"
         style="?android:attr/borderlessButtonStyle" />
+
+    <LinearLayout
+        android:id="@+id/privacy_layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/repeat_layout">
+
+        <TextView
+            android:id="@+id/habit_privacy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/view_privacy"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/privacy_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:textSize="18sp" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
