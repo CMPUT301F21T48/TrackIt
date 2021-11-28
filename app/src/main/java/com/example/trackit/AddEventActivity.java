@@ -151,6 +151,7 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
 
 
 
+    // References : https://stackoverflow.com/questions/8417034/how-to-make-bitmap-compress-without-change-the-bitmap-size
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         ImageContext = getApplicationContext();
@@ -162,8 +163,19 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
 
-            imageView.setImageBitmap(imageBitmap);
-            //this.image = imageBitmap;
+            // Convert bitmap to byteArrayOutputStream and compress it
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            imageBitmap.compress(Bitmap.CompressFormat.WEBP,0,stream);//0=lowest, 100=highest quality
+            byte[] byteArray = stream.toByteArray();
+
+
+            //convert your byteArray into bitmap and set imageview
+            Bitmap yourCompressBitmap = BitmapFactory.decodeByteArray(byteArray,0,byteArray.length);
+            imageView.setImageBitmap(yourCompressBitmap);
+
+            // Or the second method:
+            //imageView.setImageBitmap(Bitmap.createScaledBitmap(imageBitmap, imageBitmap.getWidth()/10, imageBitmap.getHeight()/10, false));
+
             imageView.setVisibility(View.VISIBLE);
             if ( ((ImageView) findViewById(R.id.photo)).getDrawable() != null ) {
                 Bitmap pic = ((BitmapDrawable) ((ImageView) findViewById(R.id.photo)).getDrawable()).getBitmap();
