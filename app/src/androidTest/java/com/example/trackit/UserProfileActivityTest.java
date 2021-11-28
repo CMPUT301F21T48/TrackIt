@@ -87,6 +87,24 @@ public class UserProfileActivityTest {
         assertTrue(solo.searchText("Habit 4"));
     }
 
+    /**
+     * Checks if clicking on a habit take it to view habit activity
+     */
+    @Test
+    public void viewHabit() {
+        solo.assertCurrentActivity("Wrong Activity", UserProfileActivity.class);
+        solo.clickOnText("Habit 1");
+        solo.assertCurrentActivity("Wrong Activity", ViewHabitActivity.class);
+    }
+
+    /**
+     * Closes the activity after each test
+     * @throws Exception
+     */
+    @After
+    public void tearDown() throws Exception {
+        solo.finishOpenedActivities();
+    }
 }
 
 

@@ -2,11 +2,15 @@ package com.example.trackit;
 
 import static android.content.ContentValues.TAG;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
-import android.widget.Button;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
 
@@ -50,9 +54,6 @@ public class UserSearchActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.userDisplay);
         usersearchAdapter = new UserSearchAdapter(userNames);
         userNamesComplete = new ArrayList<>();
-
-        //we get a list of all the usernames to populate the recyclerview
-
         db.collection("Users").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -69,8 +70,41 @@ public class UserSearchActivity extends AppCompatActivity {
 //       searchView= (android.widget.SearchView) findViewById(R.id.searchView);
         TextView sQuery = findViewById(R.id.squery);
 
-        Button queryClearer = findViewById(R.id.squerybutton);
-        //queryCleaner takes the query from the text in squery and then performs a simple filter in order to get only those usernames that match the query
+        ImageView queryClearer = findViewById(R.id.squerybutton);
+
+        // Perform search when "Enter" is hit on keyboard
+        sQuery.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+
+                    sQuery.clearFocus();
+                    InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    in.hideSoftInputFromWindow(sQuery.getWindowToken(), 0);
+
+                    String searchQuery = sQuery.getText().toString();
+                    List<String> checkedList = new ArrayList<>();
+                    if(searchQuery==""){
+                        checkedList.addAll(userNamesComplete);
+                    }
+                    else {
+                        for (String check : userNamesComplete) {
+                            if (check.toLowerCase().contains(searchQuery.toLowerCase())) {
+                                checkedList.add(check);
+                            }
+                        }
+                    }
+                    userNames.clear();
+                    userNames.addAll(checkedList);
+                    usersearchAdapter.notifyDataSetChanged();
+
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        // Perform search when search button is clicked
         queryClearer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -93,9 +127,9 @@ public class UserSearchActivity extends AppCompatActivity {
                 }
         });
 
-        Button clearButton = findViewById(R.id.clearbutton);
+        ImageView clearButton = findViewById(R.id.clearbutton);
 
-        //clearButton clears the text in squery and sets the recyclerview to display all the initial usernames again
+        // Clear search bar
         clearButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -125,7 +159,6 @@ public class UserSearchActivity extends AppCompatActivity {
 //        });
 
 
-        // setting a click listener to get the username that has been selected
         usersearchAdapter.setOnEntryClickListener(new UserSearchAdapter.OnEntryClickListener() {
             @Override
             public void onEntryClick(View view, int position){

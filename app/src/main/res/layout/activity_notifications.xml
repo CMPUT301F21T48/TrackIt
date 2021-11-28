@@ -13,12 +13,24 @@
         android:background="@color/status_bar"
         android:gravity="center_vertical|center_horizontal"
         android:text="@string/nav_bar_notifications"
-        android:textColor="@color/black"
-        android:textSize="20sp"
+       android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/no_notification_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/no_follow_requests"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:layout_margin="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title_bar"
+        android:visibility="gone"/>
 
     <ListView
         android:id="@+id/notification_list"

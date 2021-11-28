@@ -13,7 +13,6 @@
         android:background="@color/status_bar"
         android:gravity="center_vertical|center_horizontal"
         android:text="@string/title_add_habit"
-        android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,7 +26,6 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:text="@string/add_title_text"
-        android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title_bar" />
@@ -56,7 +54,6 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
         android:text="@string/add_reason_text"
-        android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/add_title" />
@@ -93,7 +90,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="@string/add_start_date_text"
-            android:textColor="@color/black"
             android:layout_weight="1"
             android:textSize="16sp" />
         <TextView
@@ -101,7 +97,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/start_date_format"
-            android:textColor="@color/black"
             android:layout_weight="1"
             android:gravity="end"/>
     </LinearLayout>
@@ -147,7 +142,6 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
         android:text="@string/add_repeat_text"
-        android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/select_date_layout" />
@@ -158,8 +152,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/add_repeat_text"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
         android:orientation="horizontal">
         <CheckBox
             android:id="@+id/checkbox_monday"
@@ -205,17 +199,58 @@
             android:layout_weight="1"/>
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/habit_privacy_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/habit_privacy_text"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_repeat_layout" />
+
+    <RadioGroup
+        android:id="@+id/habit_privacy_layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/button_add_habit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/habit_privacy_text">
+
+        <RadioButton
+            android:id="@+id/privacy_button_public"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Public"
+            android:textSize="16sp" />
+
+        <RadioButton
+            android:id="@+id/privacy_button_private"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Private"
+            android:textSize="16sp" />
+    </RadioGroup>
+
     <Button
         android:id="@+id/button_add_habit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/button_cancel"
-        android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:onClick="addHabit"
         android:text="@string/button_add_habit"
-        android:onClick="addHabit"/>
+        app:layout_constraintBottom_toTopOf="@+id/button_cancel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/button_cancel"

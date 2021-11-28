@@ -6,15 +6,18 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.Serializable;
 /**
@@ -34,6 +37,7 @@ public class ViewHabitActivity extends AppCompatActivity {
     TextView habitReason;
     TextView startedDate;
     TextView repeatDays;
+    TextView privacy;
     Button edit;
     Button delete;
     final String TAG = "Sample";
@@ -44,8 +48,8 @@ public class ViewHabitActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view_habit);
         edit = findViewById(R.id.button_edit_habit);
         delete = findViewById(R.id.button_delete_habit);
-
-        habitTitle = findViewById(R.id.add_title);
+        privacy = findViewById(R.id.privacy_text);
+        habitTitle = findViewById(R.id.habit_title_text);
         habitReason = findViewById(R.id.add_reason);
         startedDate = findViewById(R.id.add_start_date_text);
         repeatDays = findViewById(R.id.add_repeat_days);
@@ -63,24 +67,34 @@ public class ViewHabitActivity extends AppCompatActivity {
         for (int i = 0; i < habit.getRepeatDays().size(); i++)
         {
             day = habit.getRepeatDays().get(i);
-            if (day.equals("M"))
-                day = "Monday\n";
-            else if (day.equals("T"))
-                day = "Tuesday\n";
-            else if (day.equals("W"))
-                day = "Wednesday\n";
-            else if (day.equals("R"))
-                day = "Thursday\n";
-            else if (day.equals("F"))
-                day = "Friday\n";
-            else if (day.equals("S"))
-                day = "Saturday\n";
-            else
-                day = "Sunday\n";
+//            if (day.equals("M"))
+//                day = "Monday";
+//            else if (day.equals("T"))
+//                day = "Tuesday";
+//            else if (day.equals("W"))
+//                day = "Wednesday";
+//            else if (day.equals("R"))
+//                day = "Thursday";
+//            else if (day.equals("F"))
+//                day = "Friday";
+//            else if (day.equals("S"))
+//                day = "Saturday";
+//            else
+//                day = "Sunday";
+//
+            if (i == habit.getRepeatDays().size() - 1) {
+                textRepeat += day;
+            } else{
+                textRepeat += day + "  ";
+            }
 
-            textRepeat += day;
         }
         repeatDays.setText(textRepeat);
+        if (habit.getPrivacy().equals("private")){
+            privacy.setText("Private");
+        } else{
+            privacy.setText("Public");
+        }
     }
 
     /**
@@ -105,6 +119,22 @@ public class ViewHabitActivity extends AppCompatActivity {
      */
     public void deleteHabit(View view)
     {
+        collectionReference.document(habit.getHabitID()).collection("Events")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot doc : task.getResult()) {
+                                collectionReference.document(habit.getHabitID()).
+                                        collection("Events").document(doc.getId())
+                                        .delete();
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
         collectionReference.document(habit.getHabitID())
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -122,8 +152,11 @@ public class ViewHabitActivity extends AppCompatActivity {
         finish();
     }
 
-    // Habit events are left for part 4
     public void viewEvents(View view) {
-        Toast.makeText(this, "Coming soon.", Toast.LENGTH_SHORT).show();
+
+        Intent newIntent = new Intent(this, ViewEventsForHabitActivity.class);
+        newIntent.putExtra("User", (Serializable) user);
+        newIntent.putExtra("Habit", (Serializable) habit);
+        startActivity(newIntent);
     }
 }

@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,6 +35,7 @@ public class NotificationsActivity extends AppCompatActivity {
     final String TAG = "Sample";
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     CollectionReference collectionReference;
+    TextView message;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,7 @@ public class NotificationsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_notifications);
 
         notificationList = findViewById(R.id.notification_list);
+        message = findViewById(R.id.no_notification_message);
         user = (User) getIntent().getSerializableExtra("User");
         collectionReference = db.collection("Users").document(user.getUsername()).collection("Followers");
 
@@ -83,6 +86,12 @@ public class NotificationsActivity extends AppCompatActivity {
                 selectedUser = (User) notificationList.getItemAtPosition(position);
             }
         });
+
+        if (notificationDataList.size() == 0){
+            message.setVisibility(View.VISIBLE);
+        } else{
+            message.setVisibility(GONE);
+        }
     }
 
     public void acceptRequest(View view) {
