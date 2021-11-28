@@ -10,10 +10,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.Serializable;
 /**
@@ -115,6 +119,22 @@ public class ViewHabitActivity extends AppCompatActivity {
      */
     public void deleteHabit(View view)
     {
+        collectionReference.document(habit.getHabitID()).collection("Events")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot doc : task.getResult()) {
+                                collectionReference.document(habit.getHabitID()).
+                                        collection("Events").document(doc.getId())
+                                        .delete();
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
         collectionReference.document(habit.getHabitID())
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {

@@ -326,32 +326,37 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
     }
 
     public void done(View view) {
-        Event event = new Event();
-        if (!comment.getText().equals(""))
+        if (comment.getText().toString().isEmpty() && image == null && isRecord == false)
         {
-            event.setComment(comment.getText().toString());
+            Toast.makeText(AddEventActivity.this, "Press Skip to continue without " +
+                    "adding event.", Toast.LENGTH_SHORT).show();
         }
-        if (image != null)
-        {
-            event.setImage(encodedPhoto);
+        else {
+            Event event = new Event();
+            if (!comment.getText().toString().isEmpty()) {
+                event.setComment(comment.getText().toString());
+            }
+            if (image != null) {
+                event.setImage(encodedPhoto);
+            }
+            if (isRecord) {
+                event.setLatitude(location.getLatitude());
+                event.setLongitude(location.getLongitude());
+            }
+            event.setEventDate(habit.getLastDone());
+            String id = collectionReference.document(user.getUsername())
+                    .collection("Habits").document(habit.getHabitID())
+                    .collection("Events").document().getId();
+            event.setEventID(id);
+            collectionReference.document(user.getUsername()).collection("Habits")
+                    .document(habit.getHabitID()).collection("Events")
+                    .document(id).set(event);
+            Calendar calendar = Calendar.getInstance();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+            String todayDate = dateFormat.format(calendar.getTime());
+            event.setEventDate(todayDate);
+            finish();
         }
-        if (isRecord) {
-            event.setLatitude(location.getLatitude());
-            event.setLongitude(location.getLongitude());
-        }
-        event.setEventDate(habit.getLastDone());
-        String id = collectionReference.document(user.getUsername())
-                .collection("Habits").document(habit.getHabitID())
-                .collection("Events").document().getId();
-        event.setEventID(id);
-        collectionReference.document(user.getUsername()).collection("Habits")
-                .document(habit.getHabitID()).collection("Events")
-                .document(id).set(event);
-        Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-        String todayDate = dateFormat.format(calendar.getTime());
-        event.setEventDate(todayDate);
-        finish();
     }
 
     public void skip(View view) {
