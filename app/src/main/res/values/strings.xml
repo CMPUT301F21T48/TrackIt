@@ -33,7 +33,7 @@
     <!-- Button labels -->
     <string name="button_sign_up" tools:ignore="ExtraTranslation">Sign Up</string>
     <string name="button_login">Login</string>
-    <string name="button_register">Register</string>
+    <string name="button_register" tools:ignore="ExtraTranslation">Register</string>
     <string name="button_add_habit">Add Habit</string>
     <string name="button_cancel">Cancel</string>
     <string name="button_save_habit">Save Changes</string>
