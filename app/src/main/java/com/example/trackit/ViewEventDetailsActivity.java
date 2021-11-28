@@ -1,7 +1,10 @@
 package com.example.trackit;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -84,8 +87,16 @@ public class ViewEventDetailsActivity extends AppCompatActivity implements OnMap
             noPhoto.setText("This event has no uploaded photo.");
             imageView.setVisibility(View.GONE);
         }
+        else {
+            Bitmap picture = decodePhoto(image);
+            imageView.setImageBitmap(picture);
+            imageView.setVisibility(View.VISIBLE);
+        }
+    }
 
-//        TODO: Display saved location and uploaded image
+    private Bitmap decodePhoto(String encodedPhoto) {
+        byte [] decodeBytesArray = Base64.decode(encodedPhoto, 0);
+        return BitmapFactory.decodeByteArray(decodeBytesArray, 0, decodeBytesArray.length);
     }
 
     public void editEvent (View view){

@@ -136,7 +136,7 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        ImageContext = getApplicationContext();
+        //ImageContext = getApplicationContext();
         imageView.setImageBitmap(null);
         super.onActivityResult(requestCode, resultCode, data);
 
