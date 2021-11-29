@@ -35,7 +35,7 @@ public class FeedHabitCustomList extends ArrayAdapter<FeedHabit> {
         View view = convertView;
 
         if (view == null) {
-            view = LayoutInflater.from(context).inflate(R.layout.habit, parent, false);
+            view = LayoutInflater.from(context).inflate(R.layout.feed_habit, parent, false);
         }
 
         habit = habits.get(position);

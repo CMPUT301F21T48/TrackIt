@@ -5,7 +5,6 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -48,7 +47,6 @@ public class FeedActivity extends AppCompatActivity {
         feedList.setAdapter(feedAdapter);
 
         createFeed(user);
-        Toast.makeText(FeedActivity.this, "feedDataList: " + String.valueOf(feedDataList.size()), Toast.LENGTH_SHORT).show();
     }
 
     public void createFeed(User user) {
@@ -68,7 +66,6 @@ public class FeedActivity extends AppCompatActivity {
                     emptyMessage.setVisibility(View.VISIBLE);
                     emptyMessage.setText("You are currently not following anyone. Follow users to see their habits here.");
                 } else {
-                    Toast.makeText(FeedActivity.this, String.valueOf(returnList.size()), Toast.LENGTH_SHORT).show();
                     emptyMessage.setVisibility(View.GONE);
                 }
                 for (int i=0; i<returnList.size(); i++) {
