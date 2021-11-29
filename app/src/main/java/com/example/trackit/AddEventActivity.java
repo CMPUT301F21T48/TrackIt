@@ -236,7 +236,8 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
     public void onMarkerDragStart(@NonNull Marker marker) { }
 
     /**
-     * This method checks if the permissions are granted and requests them if they are not
+     * This method checks if the permissions are granted and requests the permission if they
+     * are haven't been asked before
      */
     private void checkAndRequestPermissions() {
         int permissionCamera = ContextCompat.checkSelfPermission(this,
@@ -267,6 +268,9 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
         }
     }
 
+    /**
+     * This method updates the map UI accordingly to the given location permission
+     */
     private void updateLocationUI() {
         if (map == null) {
             return;
@@ -286,6 +290,9 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
         }
     }
 
+    /**
+     * This method gets the user current location and sets a marker at their current location
+     */
     private void getDeviceLocation() {
         /*
          * Get the best and most recent location of the device, which may be null in rare

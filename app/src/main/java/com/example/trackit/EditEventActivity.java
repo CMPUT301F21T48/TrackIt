@@ -233,6 +233,11 @@ public class EditEventActivity extends AppCompatActivity implements OnMapReadyCa
 
     }
 
+    /***
+     * This method updates the map UI accordingly to the permissions given and calls functin
+     * which gets the device's current location if permission is granted
+     * @param googleMap The map to be displayed
+     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         this.map = googleMap;
@@ -264,6 +269,10 @@ public class EditEventActivity extends AppCompatActivity implements OnMapReadyCa
     @Override
     public void onMarkerDrag(@NonNull Marker marker) { }
 
+    /***
+     * This method gets the position of the marker when it is done dragging
+     * @param marker this is the marker being dragged
+     */
     @Override
     public void onMarkerDragEnd(@NonNull Marker marker) {
         //getting the position when marker is stopped dragging
@@ -275,7 +284,8 @@ public class EditEventActivity extends AppCompatActivity implements OnMapReadyCa
     public void onMarkerDragStart(@NonNull Marker marker) { }
 
     /**
-     * This method checks if the permissions are granted and requests them if they are not
+     * This method checks if the permissions are granted and requests the permission if they
+     * are haven't been asked before
      */
     private void checkAndRequestPermissions() {
         //getting camera and location permissions
@@ -306,6 +316,9 @@ public class EditEventActivity extends AppCompatActivity implements OnMapReadyCa
         }
     }
 
+    /**
+     * This method updates the map UI accordingly to the given location permission
+     */
     private void updateLocationUI() {
         if (map == null) {
             return;
@@ -325,6 +338,9 @@ public class EditEventActivity extends AppCompatActivity implements OnMapReadyCa
         }
     }
 
+    /**
+     * This method gets the user current location and sets a marker at their current location
+     */
     private void getDeviceLocation() {
         /*
          * Get the best and most recent location of the device, which may be null in rare

@@ -89,6 +89,7 @@ public class EditEventActivityTest {
         editText.getText().clear();
         solo.enterText((EditText) solo.getView(R.id.add_comment), "Test event 1");
         solo.waitForText("Test event 1", 1, 2000);
+        solo.clickOnView(solo.getView(R.id.button_edit_event));
 
     }
 
