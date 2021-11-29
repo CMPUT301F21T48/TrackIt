@@ -1,6 +1,7 @@
 package com.example.trackit;
 
 import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -22,6 +23,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -117,8 +119,16 @@ public class UserProfileActivity extends AppCompatActivity {
 
 
         if(chosenUserName.compareTo(currentUserName) == 0){
-            followButton.setText("Your Profile");
-            followButton.setEnabled(false);
+            followButton.setText("Logout");
+            followButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    FirebaseAuth.getInstance().signOut();
+                    Intent intent = new Intent(UserProfileActivity.this, WelcomeActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            });
 
             collectionReference.document(currentUserName).collection("Habits").addSnapshotListener(new EventListener<QuerySnapshot>() {
                 @Override
@@ -142,7 +152,7 @@ public class UserProfileActivity extends AppCompatActivity {
                         habitDataList.add(newHabit);
                     }
                     if (habitDataList.size() == 0) {
-                        emptyMessage.setVisibility(View.VISIBLE);
+                        emptyMessage.setVisibility(VISIBLE);
                         emptyMessage.setText("You have not added any habit(s).");
                     }
                     habitAdapter.notifyDataSetChanged();
@@ -167,6 +177,7 @@ public class UserProfileActivity extends AppCompatActivity {
                         }
                     } else {
                         habitMenu.setVisibility(GONE);
+                        habitMenu.findViewById(R.id.progress_buttons).setVisibility(GONE);
                         isClicked[0] = false;
                         for (int i=0; i<habitList.getCount(); i++){
                             if (i!=position) {
@@ -211,7 +222,7 @@ public class UserProfileActivity extends AppCompatActivity {
                                                 }
                                             }
                                             if (habitDataList.size() == 0) {
-                                                emptyMessage.setVisibility(View.VISIBLE);
+                                                emptyMessage.setVisibility(VISIBLE);
                                                 emptyMessage.setText("This user does not have any added habit(s).");
                                             }
                                             habitAdapter.notifyDataSetChanged();
@@ -220,7 +231,7 @@ public class UserProfileActivity extends AppCompatActivity {
                                 }
                                 else{
                                     followButton.setText("Requested");
-                                    emptyMessage.setVisibility(View.VISIBLE);
+                                    emptyMessage.setVisibility(VISIBLE);
                                     emptyMessage.setText("You do not have permission to view this user's habits.");
                                 }
                             }
@@ -241,7 +252,7 @@ public class UserProfileActivity extends AppCompatActivity {
                     }
                     else{
                         followButton.setText("Follow");
-                        emptyMessage.setVisibility(View.VISIBLE);
+                        emptyMessage.setVisibility(VISIBLE);
                         emptyMessage.setText("You do not have permission to view this user's habits.");
                         followButton.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -373,11 +384,8 @@ public class UserProfileActivity extends AppCompatActivity {
             habitDataList.set(previousHabitIndex, habit);
             habitDataList.set(currentHabitIndex, tempHabit);
             habitAdapter.notifyDataSetChanged();
-//            previousHabitMenu.setVisibility(View.VISIBLE);
             habitMenu.setVisibility(GONE);
             isClicked[0] = false;
-//            nextHabitMenu.setVisibility(View.VISIBLE);
-//            isClicked[0] = true;
         }
         else {
             Snackbar.make(this, view, "Habit cannot be moved up any further.", Snackbar.LENGTH_SHORT).show();
@@ -396,8 +404,6 @@ public class UserProfileActivity extends AppCompatActivity {
             habitAdapter.notifyDataSetChanged();
             habitMenu.setVisibility(GONE);
             isClicked[0] = false;
-//            nextHabitMenu.setVisibility(View.VISIBLE);
-//            isClicked[0] = true;
         }
 
         else {

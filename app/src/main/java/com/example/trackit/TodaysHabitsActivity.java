@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -174,17 +175,6 @@ public class TodaysHabitsActivity extends AppCompatActivity {
                         }
                     }
                 }
-//
-//                if (position==0) {
-//                    previousHabitMenu = null;
-//                    nextHabitMenu = arg0.getChildAt(position+1).findViewById(R.id.habit_menu);
-//                } else if (position==habitList.getCount()-1) {
-//                    previousHabitMenu = arg0.getChildAt(position-1).findViewById(R.id.habit_menu);
-//                    nextHabitMenu = null;
-//                } else {
-//                    previousHabitMenu = arg0.getChildAt(position-1).findViewById(R.id.habit_menu);
-//                    nextHabitMenu = arg0.getChildAt(position+1).findViewById(R.id.habit_menu);
-//                }
             }
         });
 
@@ -310,6 +300,9 @@ public class TodaysHabitsActivity extends AppCompatActivity {
      * @param view
      */
     public void logoutProfile(View view) {
+        FirebaseAuth.getInstance().signOut();
+        Intent intent = new Intent(TodaysHabitsActivity.this, WelcomeActivity.class);
+        startActivity(intent);
         finish();
     }
 
