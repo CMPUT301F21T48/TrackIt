@@ -35,6 +35,7 @@
     <string name="edit_comment">Edit Comment: </string>
     <string name="edit_photo">Edit Photograph: </string>
     <string name="edit_location">Edit location: </string>
+    <string name="error_username_empty">Username field cannot be empty.</string>
 
     <!-- Button labels -->
     <string name="button_sign_up" tools:ignore="ExtraTranslation">Sign Up</string>
@@ -82,7 +83,6 @@
     <string name="checkbox_friday">F</string>
     <string name="checkbox_saturday">S</string>
     <string name="checkbox_sunday">Su</string>
-    <string name="error_username_empty">Username field cannot be empty</string>
 
     <!-- Nav bar labels -->
     <string name="nav_bar_today">Today</string>
@@ -94,9 +94,7 @@
     <!-- Nav bar labels -->
     <string name="title_events_list">Events</string>
 
-
     <!-- Resource keys -->
     <string name="map_key">AIzaSyB4U1p27oBWodRYf4hl6FqVbHWlOE7hyE4</string>
-
 
 </resources>

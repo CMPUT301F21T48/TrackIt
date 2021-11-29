@@ -80,7 +80,7 @@ public class ViewHabitActivityTest {
     }
 
     /**
-     * Checks if clisking opens edit habit button opens Edit habit activity
+     * Checks if clicking opens edit habit button opens Edit habit activity
      */
     @Test
     public void clickEditHabit()
@@ -102,7 +102,7 @@ public class ViewHabitActivityTest {
     }
 
     /**
-     * Checks if clisking delete habit deletes the habit from today's habit list
+     * Checks if clicking delete habit deletes the habit from today's habit list
      */
     @Test
     public void clickDeleteHabit()

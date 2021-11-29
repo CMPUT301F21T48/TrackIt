@@ -75,7 +75,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     Log.d(TAG, "createUserWithEmail:success");
                                     FirebaseUser user = mAuth.getCurrentUser();
                                     User mUser = new User("", "");
-                                    mUser.setPassword(registerPassword);
+                                    mUser.setPassword("Authenticated using Firebase");
                                     mUser.setUsername(registerUsername);
                                     //do update here
                                     collectionReference
@@ -98,10 +98,10 @@ public class RegisterActivity extends AppCompatActivity {
                                         Toast.makeText(RegisterActivity.this, reason,
                                                 Toast.LENGTH_SHORT).show();
                                     } catch (FirebaseAuthInvalidCredentialsException e) {
-                                        Toast.makeText(RegisterActivity.this, "Invalid username",
+                                        Toast.makeText(RegisterActivity.this, "Invalid username.",
                                                 Toast.LENGTH_SHORT).show();
                                     } catch (FirebaseAuthUserCollisionException e){
-                                        Toast.makeText(RegisterActivity.this, "Username already Exists",
+                                        Toast.makeText(RegisterActivity.this, "Username already exists.",
                                                 Toast.LENGTH_SHORT).show();
                                     } catch (Exception e) {
                                         e.printStackTrace();
