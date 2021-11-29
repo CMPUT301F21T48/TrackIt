@@ -5,24 +5,19 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import android.app.Activity;
-import android.widget.CheckBox;
-import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
-import androidx.test.runner.AndroidJUnit4;
 
-import com.example.trackit.R;
-import com.example.trackit.WelcomeActivity;
+import com.example.trackit.Search.UserSearchActivity;
+import com.example.trackit.User.UserProfileActivity;
 import com.robotium.solo.Solo;
 
 import org.junit.Before;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.Rule;
-import org.junit.runner.RunWith;
 
 /**
  * Test class for SearchUserActivity. All the UI tests are written here. Robotium test framework is used

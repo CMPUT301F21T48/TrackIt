@@ -1,4 +1,4 @@
-package com.example.trackit;
+package com.example.trackit.Notification;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,8 +10,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.trackit.R;
+import com.example.trackit.User.User;
+
 import java.util.ArrayList;
 
+/**
+ * This is a notification custom list to display specific text for when other users request to
+ * follow or if they accpet the follwo request.
+ */
 public class NotificationCustomList extends ArrayAdapter<User> {
 
     private final ArrayList<User> users;

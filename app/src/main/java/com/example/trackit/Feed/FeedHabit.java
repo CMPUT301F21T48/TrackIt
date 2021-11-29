@@ -1,8 +1,13 @@
-package com.example.trackit;
+package com.example.trackit.Feed;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * This is a feed object to show the habits of other users in feed. This object includes the
+ * user name and the corresponding habit title, reason and other relavant details.
+ * The only functions it includes are getters and setters.
+ */
 public class FeedHabit implements Serializable {
     private String title;
     private String reason;

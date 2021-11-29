@@ -1,4 +1,4 @@
-package com.example.trackit;
+package com.example.trackit.Notification;
 
 import static android.view.View.GONE;
 
@@ -13,6 +13,8 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.trackit.R;
+import com.example.trackit.User.User;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -22,6 +24,10 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
+/**
+ * This is a notification displaying activity, this activity displays specific notification when
+ * a request is received or accepted.
+ */
 public class NotificationsActivity extends AppCompatActivity {
 
     ListView notificationList;

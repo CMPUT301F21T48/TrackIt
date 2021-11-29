@@ -11,6 +11,8 @@ import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
 import com.example.trackit.Events.ViewEventsForHabitActivity;
+import com.example.trackit.Habits.EditHabitActivity;
+import com.example.trackit.Habits.ViewHabitActivity;
 import com.robotium.solo.Solo;
 
 import org.junit.Before;
