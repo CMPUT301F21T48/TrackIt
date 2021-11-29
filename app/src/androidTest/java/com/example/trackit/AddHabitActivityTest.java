@@ -43,7 +43,7 @@ public class AddHabitActivityTest {
         solo.waitForText("testUser", 1, 2000);
         solo.enterText((EditText) solo.getView(R.id.login_password), "testPassword");
         solo.waitForText("testPassword", 1, 2000);
-        solo.clickOnText("Login");
+        solo.clickOnView(solo.getView(R.id.login));
         solo.clickOnView(solo.getView(R.id.add_button));
     }
 
