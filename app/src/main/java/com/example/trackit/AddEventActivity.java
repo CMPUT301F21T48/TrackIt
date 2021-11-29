@@ -51,6 +51,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+
 public class AddEventActivity extends AppCompatActivity implements OnMapReadyCallback,
         GoogleMap.OnMarkerDragListener {
     private EditText comment;
@@ -85,7 +86,13 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
     final CollectionReference collectionReference = db.collection("Users");
     User user;
     Habit habit;
-
+    
+    /**
+     * Initializes the activity and records click listeners for the buttons for maps and camera
+     * If record button is clicked it sets the map fragment
+     * If photo button is clicked it opens camera
+     * @param savedInstanceState - previous state of the activity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -120,13 +127,15 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
                 locationText.setText(R.string.add_location);
             }
         });
+
+        //opening the camera if photo button is clicked
         photo_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 checkAndRequestPermissions();
 
                 if (cameraPermissionGranted) {
-
+                    // Create an intent to capture an image 
                     Intent photoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     if (photoIntent.resolveActivity(getPackageManager()) != null) {
                         photoIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
@@ -139,7 +148,12 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
             }
         });
     }
-
+    /***
+     * This method get photos from the photo activity and sets the image to the image view
+     * @param requestCode This is the integer request code allowing the app to identify the activity
+     * @param resultCode This is the integer result code returned by the activity
+     * @param data This is the result data returned by the activity
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         //ImageContext = getApplicationContext();
@@ -155,23 +169,33 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
             imageBitmap = downscaleBitmap(imageBitmap);
             this.image = imageBitmap;
 
-
+            //Set the imageview to the image
             imageView.setImageBitmap(imageBitmap);
-
             imageView.setVisibility(View.VISIBLE);
+            
+            //Encode the image to a string
             if ( ((ImageView) findViewById(R.id.photo)).getDrawable() != null ) {
                 Bitmap pic = ((BitmapDrawable) ((ImageView) findViewById(R.id.photo)).getDrawable()).getBitmap();
                 encodeBitmapAndResize(pic);
             }
         }
     }
+    
+    /**
+     * This method downscales the image bitmap so that it fits in Firestore
+     * @param pic Bitmap image to be downscaled
+     * @return downscaled bitmap
+     */
     private Bitmap downscaleBitmap(Bitmap pic) {
         double maxDimension = Math.max(pic.getHeight(), pic.getWidth());
         double scale = 275 / maxDimension;
         return Bitmap.createScaledBitmap(pic, (int) (pic.getWidth() * scale), (int) (pic.getHeight() * scale), false);
     }
 
-
+    /**
+     * This method encodes the bitmap to a string
+     * @param bitmap Bitmap image to be encoded
+     */
     public void encodeBitmapAndResize(Bitmap bitmap) {
         ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 64, byteArrayOS);
@@ -202,6 +226,9 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
     @Override
     public void onMarkerDragStart(@NonNull Marker marker) { }
 
+    /**
+     * This method checks if the permissions are granted and requests them if they are not
+     */
     private void checkAndRequestPermissions() {
         int permissionCamera = ContextCompat.checkSelfPermission(this,
                 Manifest.permission.CAMERA);
@@ -303,6 +330,10 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
         }
     }
 
+    /**
+     * This method is called when the user clicks the submit button and sets latitude, longitude and image
+     * @param view
+     */
     public void done(View view) {
         //taost if noen of the fields are entered
         if (comment.getText().toString().isEmpty() && image == null && isRecord == false)
@@ -335,6 +366,10 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
         }
     }
 
+    /**
+     * This method is called when the user clicks the skip button and finishes the activity
+     * @param view - instance of view
+     */
     public void skip(View view) {
         finish();
     }

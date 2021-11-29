@@ -45,6 +45,7 @@ import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class EditEventActivity extends AppCompatActivity implements OnMapReadyCallback,
         GoogleMap.OnMarkerDragListener {
 
@@ -77,6 +78,13 @@ public class EditEventActivity extends AppCompatActivity implements OnMapReadyCa
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     CollectionReference collectionReference;
 
+    /**
+     * Initializes the activity and records click listeners for the buttons for maps and camera
+     * If remove buttons are clicked it removes the location or photo accordingly
+     * If change button for location is clicked it changes the location
+     * If change button for photo is clicked it starts the camera to change the image
+     * @param savedInstanceState - previous state of the activity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -146,7 +154,7 @@ public class EditEventActivity extends AppCompatActivity implements OnMapReadyCa
         if (encodedImage == null) {
             removePhoto.setVisibility(View.INVISIBLE);
         }
-
+        // removes photo and sets image to null
         removePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -154,7 +162,7 @@ public class EditEventActivity extends AppCompatActivity implements OnMapReadyCa
                 removePhoto.setVisibility(View.INVISIBLE);
             }
         });
-
+        //to change photo camera is started
         changePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -170,7 +178,12 @@ public class EditEventActivity extends AppCompatActivity implements OnMapReadyCa
         });
     }
 
-
+    /***
+     * This method get photos from the photo activity and sets the image to the image view
+     * @param requestCode This is the integer request code allowing the app to identify the activity
+     * @param resultCode This is the integer result code returned by the activity
+     * @param data This is the result data returned by the activity
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         //ImageContext = getApplicationContext();
@@ -186,23 +199,33 @@ public class EditEventActivity extends AppCompatActivity implements OnMapReadyCa
             imageBitmap = downscaleBitmap(imageBitmap);
             this.newImage = imageBitmap;
 
-
+            //Set the imageview to the image
             imageView.setImageBitmap(imageBitmap);
-
             imageView.setVisibility(View.VISIBLE);
+
+            //Encode the image to a string
             if ( ((ImageView) findViewById(R.id.photo)).getDrawable() != null ) {
                 Bitmap pic = ((BitmapDrawable) ((ImageView) findViewById(R.id.photo)).getDrawable()).getBitmap();
                 encodeBitmapAndResize(pic);
             }
         }
     }
+
+    /**
+     * This method downscales the image bitmap so that it fits in Firestore
+     * @param pic Bitmap image to be downscaled
+     * @return downscaled bitmap
+     */
     private Bitmap downscaleBitmap(Bitmap pic) {
         double maxDimension = Math.max(pic.getHeight(), pic.getWidth());
         double scale = 275 / maxDimension;
         return Bitmap.createScaledBitmap(pic, (int) (pic.getWidth() * scale), (int) (pic.getHeight() * scale), false);
     }
 
-
+    /**
+     * This method encodes the bitmap to a string
+     * @param bitmap Bitmap image to be encoded
+     */
     public void encodeBitmapAndResize(Bitmap bitmap) {
         ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 64, byteArrayOS);
@@ -251,6 +274,9 @@ public class EditEventActivity extends AppCompatActivity implements OnMapReadyCa
     @Override
     public void onMarkerDragStart(@NonNull Marker marker) { }
 
+    /**
+     * This method checks if the permissions are granted and requests them if they are not
+     */
     private void checkAndRequestPermissions() {
         //getting camera and location permissions
         int permissionCamera = ContextCompat.checkSelfPermission(this,
@@ -353,6 +379,10 @@ public class EditEventActivity extends AppCompatActivity implements OnMapReadyCa
         }
     }
 
+    /**
+     * This method is called when the user clicks the submit button and sets latitude, longitude and image
+     * @param view
+     */
     public void done(View view) {
         //editing the required fields and updating the event in firebase
         event.setComment(commentText.getText().toString());
@@ -371,5 +401,9 @@ public class EditEventActivity extends AppCompatActivity implements OnMapReadyCa
         finish();
     }
 
+    /**
+     * This method is called when the user clicks the skip button and finishes the activity
+     * @param view - instance of view
+     */
     public void skip(View view) { finish(); }
 }
