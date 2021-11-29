@@ -29,13 +29,13 @@
             android:name=".FeedActivity"
             android:exported="false" />
         <activity
-            android:name=".EditEventActivity"
+            android:name=".Events.EditEventActivity"
             android:exported="false" />
         <activity
-            android:name=".ViewEventDetailsActivity"
+            android:name=".Events.ViewEventDetailsActivity"
             android:exported="false" />
         <activity
-            android:name=".AddEventActivity"
+            android:name=".Events.AddEventActivity"
             android:exported="false" />
         <activity
             android:name=".NotificationsActivity"
@@ -47,7 +47,7 @@
             android:name=".ViewHabitActivity"
             android:exported="false" />
         <activity
-            android:name=".ViewEventsForHabitActivity"
+            android:name=".Events.ViewEventsForHabitActivity"
             android:exported="false" />
 
         <meta-data

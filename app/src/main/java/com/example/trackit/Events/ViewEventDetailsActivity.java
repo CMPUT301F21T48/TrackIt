@@ -1,4 +1,4 @@
-package com.example.trackit;
+package com.example.trackit.Events;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -13,6 +13,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.trackit.Event;
+import com.example.trackit.Habit;
+import com.example.trackit.R;
+import com.example.trackit.User;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;

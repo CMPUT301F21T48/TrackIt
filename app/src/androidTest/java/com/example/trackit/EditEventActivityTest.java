@@ -2,6 +2,7 @@ package com.example.trackit;
 
 import static org.junit.Assert.assertTrue;
 
+import android.Manifest;
 import android.app.Activity;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
+import androidx.test.rule.GrantPermissionRule;
 
 import com.robotium.solo.Solo;
 
@@ -30,6 +32,11 @@ public class EditEventActivityTest {
     @Rule
     public ActivityTestRule<WelcomeActivity> rule =
             new ActivityTestRule<>(WelcomeActivity.class,true,true);
+
+    @Rule
+    public GrantPermissionRule automationPermissionRule
+            = GrantPermissionRule.grant(Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.CAMERA);
 
     /**
      * Runs before all tests and creates solo instance.
@@ -65,7 +72,7 @@ public class EditEventActivityTest {
     public void editAndVerify()
     {
         solo.clickOnText("View Events");
-        solo.clickOnText("11/29/2021");
+        solo.clickOnText("11/28/2021");
 
         // get Text
         assertTrue(solo.searchText("Test event 1"));
@@ -79,7 +86,7 @@ public class EditEventActivityTest {
         solo.enterText((EditText) solo.getView(R.id.add_comment), "Test event 1 edit");
         solo.waitForText("Hi 302", 1, 2000);
         solo.clickOnView(solo.getView(R.id.button_edit_event));
-        solo.clickOnText("11/29/2021");
+        solo.clickOnText("11/28/2021");
         assertTrue(solo.searchText("Test event 1 edit"));
 
 
