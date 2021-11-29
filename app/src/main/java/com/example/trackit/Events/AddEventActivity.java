@@ -365,6 +365,10 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
                 event.setImage(encodedPhoto);
             }
             if (isRecord) {
+                if (location == null) {
+                    location = new GeoPoint(defaultLocation.latitude, defaultLocation.longitude);
+                }
+
                 event.setLatitude(location.getLatitude());
                 event.setLongitude(location.getLongitude());
             }
