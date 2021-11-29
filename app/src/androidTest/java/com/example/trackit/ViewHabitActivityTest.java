@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
@@ -46,7 +47,7 @@ public class ViewHabitActivityTest {
         solo.waitForText("testPassword", 1, 2000);
         solo.clickOnText("Login");
         solo.clickOnText("Existing habit 3");
-        solo.clickOnText("View habit details");
+        solo.clickOnView((TextView) solo.getView(R.id.view_details));
     }
 
     /**
@@ -69,13 +70,13 @@ public class ViewHabitActivityTest {
         assertTrue(solo.searchText("Existing habit 3"));
         assertTrue(solo.searchText("Test 3 for view and delete"));
         assertTrue(solo.searchText("10/30/2021"));
-        assertTrue(solo.searchText("Monday"));
-        assertTrue(solo.searchText("Tuesday"));
-        assertTrue(solo.searchText("Wednesday"));
-        assertTrue(solo.searchText("Thursday"));
-        assertTrue(solo.searchText("Friday"));
-        assertTrue(solo.searchText("Saturday"));
-        assertTrue(solo.searchText("Sunday"));
+        assertTrue(solo.searchText("M"));
+        assertTrue(solo.searchText("T"));
+        assertTrue(solo.searchText("W"));
+        assertTrue(solo.searchText("R"));
+        assertTrue(solo.searchText("F"));
+        assertTrue(solo.searchText("S"));
+        assertTrue(solo.searchText("Su"));
     }
 
     /**
@@ -97,8 +98,7 @@ public class ViewHabitActivityTest {
     {
         solo.assertCurrentActivity("Wrong Activity", ViewHabitActivity.class);
         solo.clickOnText("View Event");
-        solo.waitForText("Coming soon");
-        solo.assertCurrentActivity("Wrong Activity", ViewHabitActivity.class);
+        solo.assertCurrentActivity("Wrong Activity", ViewEventsForHabitActivity.class);
     }
 
     /**

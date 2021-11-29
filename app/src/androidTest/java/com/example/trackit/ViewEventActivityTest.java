@@ -4,6 +4,7 @@ import static org.junit.Assert.assertTrue;
 
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
@@ -31,17 +32,13 @@ public class ViewEventActivityTest {
     {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
         solo.clickOnButton("Login");
-        solo.enterText((EditText) solo.getView(R.id.login_username), "Gerrie");
-        solo.waitForText("Gerrie", 1, 2000);
-        solo.enterText((EditText) solo.getView(R.id.login_password), "Gerrie");
-        solo.waitForText("Gerrie", 1, 2000);
+        solo.enterText((EditText) solo.getView(R.id.login_username), "testUser2");
+        solo.waitForText("testUser2", 1, 2000);
+        solo.enterText((EditText) solo.getView(R.id.login_password), "testPassword");
         solo.clickOnText("Login");
-        solo.clickOnText("asdfghjk");
-        solo.clickOnText("View habit details");
+        solo.clickOnText("Habit 1");
+        solo.clickOnView((TextView) solo.getView(R.id.view_details));
     }
-
-
-
 
     /**
      * Checks if an event is successfully displayed
@@ -51,7 +48,7 @@ public class ViewEventActivityTest {
     {
         solo.clickOnText("View Events");
         solo.clickOnText("11/29/2021");
-        assertTrue(solo.searchText("Hi guys"));
+        assertTrue(solo.searchText("Test event 1"));
     }
 
     /**

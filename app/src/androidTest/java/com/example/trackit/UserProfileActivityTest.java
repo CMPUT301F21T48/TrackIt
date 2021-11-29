@@ -94,6 +94,7 @@ public class UserProfileActivityTest {
     public void viewHabit() {
         solo.assertCurrentActivity("Wrong Activity", UserProfileActivity.class);
         solo.clickOnText("Habit 1");
+        solo.clickOnView((TextView) solo.getView(R.id.view_details));
         solo.assertCurrentActivity("Wrong Activity", ViewHabitActivity.class);
     }
 

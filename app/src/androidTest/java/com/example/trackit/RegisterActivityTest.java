@@ -80,7 +80,7 @@ public class RegisterActivityTest {
         solo.enterText((EditText) solo.getView(R.id.register_password), "testPassword");
         solo.waitForText("testPassword", 1, 2000);
         solo.clickOnText("Sign Up");
-        assertTrue(solo.searchText("Username is not unique"));
+        assertTrue(solo.searchText("Username already exists"));
         solo.assertCurrentActivity("Wrong Activity", RegisterActivity.class);
     }
 
