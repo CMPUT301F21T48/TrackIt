@@ -81,8 +81,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="42dp"
                         android:layout_weight="1"
-                        android:onClick="moveHabitUp"
                         android:padding="8dp"
+                        android:onClick="moveHabitUp"
                         android:src="@drawable/move_arrow"
                         android:layout_gravity="center"/>
                     <ImageView
@@ -91,9 +91,9 @@
                         android:layout_weight="1"
                         android:padding="8dp"
                         android:rotation="180"
+                        android:onClick="moveHabitDown"
                         android:src="@drawable/move_arrow"
                         android:id="@+id/button_move_down"
-                        android:onClick="moveHabitDown"
                         android:layout_gravity="center"/>
                 </LinearLayout>
                 <TextView
