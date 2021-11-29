@@ -20,20 +20,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/habit_done"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
-        android:text="@string/habit_done"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title_bar" />
-
-    <TextView
         android:id="@+id/comment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -44,7 +30,7 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/habit_done" />
+        app:layout_constraintTop_toBottomOf="@+id/title_bar" />
 
     <EditText
         android:id="@+id/add_comment"
@@ -70,8 +56,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
         android:text="@string/edit_photo"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -80,79 +66,79 @@
 
     <ImageView
         android:id="@+id/photo"
-        android:background="@color/status_bar"
         android:layout_width="match_parent"
         android:layout_height="90dp"
-        android:scaleType="fitCenter"
         android:layout_marginLeft="32dp"
         android:layout_marginTop="16dp"
         android:layout_marginRight="32dp"
+        android:background="@color/status_bar"
+        android:scaleType="fitCenter"
+        android:src="@android:drawable/ic_menu_gallery"
         android:text="@string/add_photo"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/photo_text"
-        android:src="@android:drawable/ic_menu_gallery"/>
+        app:layout_constraintTop_toBottomOf="@+id/photo_text" />
 
     <Button
         android:id="@+id/button_edit_event"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="done"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginBottom="16dp"
-        android:onClick="done"
         android:text="@string/button_save_event"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/button_skip"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_remove_location"
-        app:layout_constraintVertical_bias="0.243" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/button_skip"
         style="?android:attr/borderlessButtonStyle"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginBottom="4dp"
+        android:layout_marginBottom="16dp"
+        android:layout_height="wrap_content"
         android:onClick="skip"
         android:text="@string/button_cancel"
         android:textColor="@color/red"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_edit_event"
-        app:layout_constraintVertical_bias="0.875" />
+        app:layout_constraintStart_toStartOf="parent" />
 
+    <LinearLayout
+        android:id="@+id/button_layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/photo"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:orientation="vertical">
     <Button
         android:id="@+id/button_photo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginRight="32dp"
         android:backgroundTint="@android:color/tertiary_text_light"
-        android:text="@string/button_edit_image"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/photo" />
+        android:text="@string/button_edit_image" />
 
     <Button
         android:id="@+id/button_remove_photo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginRight="32dp"
         android:backgroundTint="@android:color/tertiary_text_light"
-        android:text="@string/button_remove_image"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_photo" />
+        android:text="@string/button_remove_image" />
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="button_layout"/>
 
     <Button
         android:id="@+id/button_location"
@@ -220,5 +206,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_remove_photo" />
+        app:layout_constraintTop_toBottomOf="@+id/barrier" />
 </androidx.constraintlayout.widget.ConstraintLayout>
