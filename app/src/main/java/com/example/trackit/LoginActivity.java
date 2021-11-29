@@ -5,23 +5,21 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.io.Serializable;
 import java.util.HashMap;
-import java.util.Objects;
 
 /**
  * This is the the start up launch activity where the user can login into the HabitUp
@@ -64,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
             // Ensure password is not ""
             else if (inputPassword.length()==0) {
                 inputPassword.requestFocus();
-                inputPassword.setError("Password field cannot be empty");
+                inputPassword.setError("Password field cannot be empty.");
             }
             else {
                 mAuth.signInWithEmailAndPassword(Username, givenPassword)
@@ -85,8 +83,7 @@ public class LoginActivity extends AppCompatActivity {
                                 } else {
                                     // If sign in fails, display a message to the user.
                                     Log.w(TAG, "signInWithEmail:failure", task.getException());
-                                    Toast.makeText(LoginActivity.this, "Authentication failed.",
-                                            Toast.LENGTH_SHORT).show();
+                                    Snackbar.make(findViewById(R.id.title_bar), "Incorrect username/password. Please try again.", Snackbar.LENGTH_SHORT).show();
                                 }
                             }
                         });
