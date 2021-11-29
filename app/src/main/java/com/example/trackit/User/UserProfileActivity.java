@@ -1,4 +1,4 @@
-package com.example.trackit;
+package com.example.trackit.User;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
@@ -19,6 +19,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.trackit.Habits.AddHabitActivity;
+import com.example.trackit.Habits.Habit;
+import com.example.trackit.Habits.HabitCustomList;
+import com.example.trackit.Habits.ViewHabitActivity;
+import com.example.trackit.R;
+import com.example.trackit.WelcomeActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;

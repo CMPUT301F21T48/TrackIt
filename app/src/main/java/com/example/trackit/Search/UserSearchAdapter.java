@@ -1,4 +1,4 @@
-package com.example.trackit;
+package com.example.trackit.Search;
 
 import static android.content.ContentValues.TAG;
 
@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.trackit.R;
 
 import java.util.ArrayList;
 import java.util.Collection;

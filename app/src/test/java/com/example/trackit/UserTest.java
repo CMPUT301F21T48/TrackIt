@@ -2,9 +2,9 @@ package com.example.trackit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.jupiter.api.Test;
+import com.example.trackit.User.User;
 
-import java.util.ArrayList;
+import org.junit.jupiter.api.Test;
 
 public class UserTest {
     private User mockUser()

@@ -1,4 +1,4 @@
-package com.example.trackit;
+package com.example.trackit.Feed;
 
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +9,9 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.trackit.Habits.Habit;
+import com.example.trackit.R;
+import com.example.trackit.User.User;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -19,6 +22,10 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+/**
+ * This is the activity to show the habits of other users that the user follows.
+ * It displays all of the habits that are to be done today.
+ */
 public class FeedActivity extends AppCompatActivity {
 
     ListView feedList;

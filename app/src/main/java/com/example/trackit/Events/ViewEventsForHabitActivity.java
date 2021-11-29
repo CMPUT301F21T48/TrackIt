@@ -11,11 +11,9 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.trackit.Event;
-import com.example.trackit.EventCustomList;
-import com.example.trackit.Habit;
+import com.example.trackit.Habits.Habit;
 import com.example.trackit.R;
-import com.example.trackit.User;
+import com.example.trackit.User.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;

@@ -11,6 +11,7 @@ import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.rule.GrantPermissionRule;
 
+import com.example.trackit.Habits.AddHabitActivity;
 import com.robotium.solo.Solo;
 
 import org.junit.Before;

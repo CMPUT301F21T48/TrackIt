@@ -12,6 +12,10 @@ import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
 import com.example.trackit.Events.AddEventActivity;
+import com.example.trackit.Habits.AddHabitActivity;
+import com.example.trackit.Habits.ViewHabitActivity;
+import com.example.trackit.Search.UserSearchActivity;
+import com.example.trackit.User.UserProfileActivity;
 import com.robotium.solo.Solo;
 
 import org.junit.Before;

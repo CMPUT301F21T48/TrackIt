@@ -1,4 +1,4 @@
-package com.example.trackit;
+package com.example.trackit.User;
 
 import java.io.Serializable;
 /**
