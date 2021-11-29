@@ -1,4 +1,4 @@
-package com.example.trackit;
+package com.example.trackit.Search;
 
 import static android.content.ContentValues.TAG;
 
@@ -17,6 +17,9 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.trackit.R;
+import com.example.trackit.User.User;
+import com.example.trackit.User.UserProfileActivity;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;

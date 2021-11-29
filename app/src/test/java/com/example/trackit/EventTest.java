@@ -2,10 +2,10 @@ package com.example.trackit;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.example.trackit.Events.Event;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
 
 class EventTest {
     Event event;

@@ -16,6 +16,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.trackit.Events.AddEventActivity;
+import com.example.trackit.Feed.FeedActivity;
+import com.example.trackit.Habits.AddHabitActivity;
+import com.example.trackit.Habits.Habit;
+import com.example.trackit.Habits.HabitCustomList;
+import com.example.trackit.Habits.ViewHabitActivity;
+import com.example.trackit.Notification.NotificationsActivity;
+import com.example.trackit.Search.UserSearchActivity;
+import com.example.trackit.User.User;
+import com.example.trackit.User.UserProfileActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;

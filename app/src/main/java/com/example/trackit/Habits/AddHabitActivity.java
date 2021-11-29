@@ -1,4 +1,4 @@
-package com.example.trackit;
+package com.example.trackit.Habits;
 
 import android.os.Bundle;
 import android.view.View;
@@ -7,30 +7,33 @@ import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.trackit.R;
+import com.example.trackit.User.User;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
-/**
- * This is the activity for editing a habit.
- * The user can change the start date and the associated attribute.
- * The user can add or remove more days for the habit's schedule, but must have at least 1 day selected.
- * If the user leaves a field empty while editing a habit the user is informed to not leave any missing fields
- */
-public class EditHabitActivity extends AppCompatActivity {
 
-    EditText editHabitTitle;
-    EditText editHabitReason;
-    Button editHabitButton;
+/**
+ * This is the activity to add a habit. The user must set a habit name and a descritption for the habit.
+ * By default, the start date of the habit is set to the current date.
+ * The user may change it to another date.
+ * The user must select at least 1 day for the habit schedule.
+ * If the user misses a field while adding habit the user is informed to not leave any missing fields
+ *
+ */
+public class AddHabitActivity extends AppCompatActivity {
+
+    EditText addHabitTitle;
+    EditText addHabitReason;
+    Button addHabitButton;
     Button cancelButton;
-    String habitID;
     DatePicker datePicker;
     TextView selectedDate;
     String addStartDate;
@@ -43,27 +46,24 @@ public class EditHabitActivity extends AppCompatActivity {
     CheckBox repeatSunday;
     RadioButton publicPrivacy;
     RadioButton privatePrivacy;
-    RadioGroup privacyGroup;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     final CollectionReference collectionReference = db.collection("Users");
     User user;
-    Habit habit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setContentView(R.layout.activity_add_habit);
         user = (User) getIntent().getSerializableExtra("User");
-        habit = (Habit) getIntent().getSerializableExtra("Habit");
-        habitID = habit.getHabitID();
-        setContentView(R.layout.activity_edit_habit);
+
         selectedDate = findViewById(R.id.add_start_date_text);
         datePicker = findViewById(R.id.select_start_date);
-        editHabitButton = findViewById(R.id.button_edit_habit);
+
+        addHabitButton = findViewById(R.id.button_add_habit);
         cancelButton = findViewById(R.id.button_cancel);
-        editHabitReason = findViewById(R.id.add_reason);
-        editHabitTitle = findViewById(R.id.add_title);
+        addHabitReason = findViewById(R.id.add_reason);
+        addHabitTitle = findViewById(R.id.add_title);
         repeatMonday = findViewById(R.id.checkbox_monday);
         repeatTuesday = findViewById(R.id.checkbox_tuesday);
         repeatWednesday = findViewById(R.id.checkbox_wednesday);
@@ -71,42 +71,13 @@ public class EditHabitActivity extends AppCompatActivity {
         repeatFriday = findViewById(R.id.checkbox_friday);
         repeatSaturday = findViewById(R.id.checkbox_saturday);
         repeatSunday = findViewById(R.id.checkbox_sunday);
+
         publicPrivacy = findViewById(R.id.privacy_button_public);
         privatePrivacy = findViewById(R.id.privacy_button_private);
-        privacyGroup = findViewById(R.id.habit_privacy_group);
-
-        //adding the previous information for habit in the fields
-        editHabitTitle.setText(habit.getTitle());
-        editHabitReason.setText(habit.getReason());
-        selectedDate.setText(habit.getStartDate());
-        if (habit.getPrivacy().equals("public")){
-            privacyGroup.check(R.id.privacy_button_public);
-        } else{
-            privacyGroup.check(R.id.privacy_button_private);
-        }
-
-        ArrayList<String> repeatDays = habit.getRepeatDays();
-        for (int i = 0; i < repeatDays.size(); i++)
-        {
-            if (repeatDays.get(i).equals("M"))
-                repeatMonday.setChecked(true);
-            else if (repeatDays.get(i).equals("T"))
-                repeatTuesday.setChecked(true);
-            else if (repeatDays.get(i).equals("W"))
-                repeatWednesday.setChecked(true);
-            else if (repeatDays.get(i).equals("R"))
-                repeatThursday.setChecked(true);
-            else if (repeatDays.get(i).equals("F"))
-                repeatFriday.setChecked(true);
-            else if (repeatDays.get(i).equals("S"))
-                repeatSaturday.setChecked(true);
-            else if (repeatDays.get(i).equals("Su"))
-                repeatSunday.setChecked(true);
-        }
     }
 
     /**
-     *  Selects the date using datePicker and sets the textview to selected date
+     * Uses datePicker to select date and sets that in the textview
      * @param view
      *      instance of object View
      */
@@ -125,18 +96,19 @@ public class EditHabitActivity extends AppCompatActivity {
         selectedDate.setText(addStartDate);
     }
 
-
     /**
-     *  Save the changes for the habit 
+     * Adds habit to Firestore and to listview
      * @param view
+     *      instance of object View
      */
-    public void saveChanges(View view) {
-        String habitTitle = editHabitTitle.getText().toString();
-        String habitReason = editHabitReason.getText().toString();
+    public void addHabit(View view) {
+        String habitTitle = addHabitTitle.getText().toString();
+        String habitReason = addHabitReason.getText().toString();
         String habitStartDate = selectedDate.getText().toString();
         ArrayList<String> repeatDays = new ArrayList<>();
         String habitPrivacy = null;
 
+        // Add days of the Habit to the array
         if (repeatMonday.isChecked()){
             repeatDays.add("M");
         }
@@ -168,24 +140,21 @@ public class EditHabitActivity extends AppCompatActivity {
         }
 
         // inform the user to not leave any field empty
-        if (habitTitle.isEmpty() || habitReason.isEmpty() || habitStartDate.equals("MM/DD/YYYY") || repeatDays.isEmpty()) {
+        if (habitTitle.isEmpty() || habitReason.isEmpty() || habitStartDate.equals("MM/DD/YYYY") || repeatDays.isEmpty() || habitPrivacy.isEmpty()) {
             Snackbar.make(this, view, "Do not leave any field(s) empty", Snackbar.LENGTH_LONG).show();
         }
         // add the habit to firestore
         else {
-            habit.setTitle(habitTitle);
-            habit.setReason(habitReason);
-            habit.setStartDate(habitStartDate);
-            habit.setRepeatDays(repeatDays);
-            habit.setPrivacy(habitPrivacy);
-            collectionReference.document(user.getUsername()).collection("Habits").document(habitID).set(habit);
+            Habit habit = new Habit(habitTitle, habitReason, habitStartDate, repeatDays, habitPrivacy);
+            String id = collectionReference.document(user.getUsername()).collection("Habits").document().getId();
+            habit.setHabitID(id);
+            collectionReference.document(user.getUsername()).collection("Habits").document(id).set(habit);
             finish();
         }
     }
 
-    /**
-     *  Cancel the add habit
-     * @param view
-     */
-    public void cancelAddHabit(View view) { finish(); }
+    // cancel option for AddHabit
+    public void cancelAddHabit(View view) {
+        finish();
+    }
 }

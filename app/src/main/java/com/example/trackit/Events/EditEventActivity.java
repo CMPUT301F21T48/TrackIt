@@ -1,4 +1,4 @@
-package com.example.trackit;
+package com.example.trackit.Events;
 
 import static android.content.ContentValues.TAG;
 
@@ -23,9 +23,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.trackit.Habits.Habit;
+import com.example.trackit.R;
+import com.example.trackit.User.User;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;

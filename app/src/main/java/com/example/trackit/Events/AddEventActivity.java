@@ -1,4 +1,4 @@
- package com.example.trackit;
+ package com.example.trackit.Events;
 
 import static android.content.ContentValues.TAG;
 
@@ -27,6 +27,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.example.trackit.Habits.Habit;
+import com.example.trackit.R;
+import com.example.trackit.User.User;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;

@@ -1,4 +1,4 @@
-package com.example.trackit;
+package com.example.trackit.Events;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.example.trackit.Events.Event;
+import com.example.trackit.R;
 
 import java.util.ArrayList;
 

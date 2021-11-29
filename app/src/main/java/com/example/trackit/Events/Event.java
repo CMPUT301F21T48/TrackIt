@@ -1,4 +1,4 @@
-package com.example.trackit;
+package com.example.trackit.Events;
 
 import java.io.Serializable;
 

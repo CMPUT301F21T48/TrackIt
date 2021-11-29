@@ -3,15 +3,15 @@ package com.example.trackit;
 import static org.junit.Assert.assertTrue;
 
 import android.app.Activity;
-import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
-import androidx.test.runner.AndroidJUnit4;
 
+import com.example.trackit.Habits.EditHabitActivity;
+import com.example.trackit.Habits.ViewHabitActivity;
 import com.robotium.solo.Solo;
 
 import org.junit.Before;
@@ -19,7 +19,6 @@ import org.junit.After;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.Rule;
-import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 
 /**

@@ -26,28 +26,28 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TrackIt">
         <activity
-            android:name=".FeedActivity"
+            android:name=".Feed.FeedActivity"
             android:exported="false" />
         <activity
-            android:name=".EditEventActivity"
+            android:name=".Events.EditEventActivity"
             android:exported="false" />
         <activity
-            android:name=".ViewEventDetailsActivity"
+            android:name=".Events.ViewEventDetailsActivity"
             android:exported="false" />
         <activity
-            android:name=".AddEventActivity"
+            android:name=".Events.AddEventActivity"
             android:exported="false" />
         <activity
-            android:name=".NotificationsActivity"
+            android:name=".Notification.NotificationsActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".LoginAndRegister.LoginActivity"
             android:exported="true" />
         <activity
-            android:name=".ViewHabitActivity"
+            android:name=".Habits.ViewHabitActivity"
             android:exported="false" />
         <activity
-            android:name=".ViewEventsForHabitActivity"
+            android:name=".Events.ViewEventsForHabitActivity"
             android:exported="false" />
 
         <meta-data
@@ -58,14 +58,14 @@
             android:name=".TodaysHabitsActivity"
             android:exported="false" />
         <activity
-            android:name=".EditHabitActivity"
+            android:name=".Habits.EditHabitActivity"
             android:exported="false" />
         <activity
-            android:name=".AddHabitActivity"
+            android:name=".Habits.AddHabitActivity"
             android:exported="false"
             android:hardwareAccelerated="false" />
         <activity
-            android:name=".RegisterActivity"
+            android:name=".LoginAndRegister.RegisterActivity"
             android:exported="false" />
         <activity
             android:name=".WelcomeActivity"
@@ -77,10 +77,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".UserSearchActivity"
+            android:name=".Search.UserSearchActivity"
             android:exported="false" />
         <activity
-            android:name=".UserProfileActivity"
+            android:name=".User.UserProfileActivity"
             android:exported="false" />
 
         <meta-data

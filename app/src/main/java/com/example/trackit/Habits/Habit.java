@@ -1,4 +1,4 @@
-package com.example.trackit;
+package com.example.trackit.Habits;
 
 import java.io.Serializable;
 import java.lang.*;

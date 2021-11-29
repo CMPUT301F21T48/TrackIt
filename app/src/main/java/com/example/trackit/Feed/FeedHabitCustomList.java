@@ -1,4 +1,4 @@
-package com.example.trackit;
+package com.example.trackit.Feed;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,8 +11,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.trackit.R;
+import com.example.trackit.User.User;
+
 import java.util.ArrayList;
 
+/**
+ * This is a feed object custom list to display the username, habit title and habit reason.
+ */
 public class FeedHabitCustomList extends ArrayAdapter<FeedHabit> {
 
     private final ArrayList<FeedHabit> habits;

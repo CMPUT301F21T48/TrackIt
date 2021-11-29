@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddEventActivity">
+    tools:context=".Events.AddEventActivity">
 
     <TextView
         android:id="@+id/title_bar"
@@ -144,7 +144,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/location"
-            tools:context=".AddEventActivity" />
+            tools:context=".Events.AddEventActivity" />
     </LinearLayout>
 
     <Button
