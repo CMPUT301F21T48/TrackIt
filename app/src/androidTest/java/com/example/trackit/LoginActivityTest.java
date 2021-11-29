@@ -80,7 +80,7 @@ public class LoginActivityTest {
         solo.enterText((EditText) solo.getView(R.id.login_password), "testpassword");
         solo.waitForText("testpassword", 1, 2000);
         solo.clickOnText("Login");
-        assertTrue(solo.searchText("Authentication failed."));
+        assertTrue(solo.searchText("Incorrect username/password. Please try again."));
         solo.assertCurrentActivity("Wrong Activity", LoginActivity.class);
     }
 
@@ -96,7 +96,7 @@ public class LoginActivityTest {
         solo.enterText((EditText) solo.getView(R.id.login_password), "testPassword");
         solo.waitForText("testPassword", 1, 2000);
         solo.clickOnText("Login");
-        assertTrue(solo.searchText("Authentication failed"));
+        assertTrue(solo.searchText("Incorrect username/password. Please try again."));
         solo.assertCurrentActivity("Wrong Activity", LoginActivity.class);
     }
 

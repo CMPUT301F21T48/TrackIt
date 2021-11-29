@@ -59,10 +59,9 @@ public class AddEventActivityTest {
     {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
         solo.clickOnButton("Login");
-        solo.enterText((EditText) solo.getView(R.id.login_username), "Gerrie");
-        solo.waitForText("Gerrie", 1, 2000);
-        solo.enterText((EditText) solo.getView(R.id.login_password), "Gerrie");
-        solo.waitForText("Gerrie", 1, 2000);
+        solo.enterText((EditText) solo.getView(R.id.login_username), "testUser2");
+        solo.waitForText("testUser2", 1, 2000);
+        solo.enterText((EditText) solo.getView(R.id.login_password), "testPassword");
         solo.clickOnView(solo.getView(R.id.login));
         solo.clickOnView(solo.getView(R.id.add_button));
         // Can't use it right now cause of the layout

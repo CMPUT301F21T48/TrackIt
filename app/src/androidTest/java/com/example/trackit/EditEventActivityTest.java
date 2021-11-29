@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import android.app.Activity;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
@@ -39,13 +40,12 @@ public class EditEventActivityTest {
     {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
         solo.clickOnButton("Login");
-        solo.enterText((EditText) solo.getView(R.id.login_username), "Gerrie");
-        solo.waitForText("Gerrie", 1, 2000);
-        solo.enterText((EditText) solo.getView(R.id.login_password), "Gerrie");
-        solo.waitForText("Gerrie", 1, 2000);
+        solo.enterText((EditText) solo.getView(R.id.login_username), "testUser2");
+        solo.waitForText("testUser2", 1, 2000);
+        solo.enterText((EditText) solo.getView(R.id.login_password), "testPassword");
         solo.clickOnText("Login");
-        solo.clickOnText("asdfghjk");
-        solo.clickOnText("View habit details");
+        solo.clickOnText("Habit 1");
+        solo.clickOnView((TextView) solo.getView(R.id.view_details));
     }
 
     /**
@@ -68,7 +68,7 @@ public class EditEventActivityTest {
         solo.clickOnText("11/29/2021");
 
         // get Text
-        assertTrue(solo.searchText("Hi 301"));
+        assertTrue(solo.searchText("Test event 1"));
         solo.clickOnText("Edit Event");
 
 
@@ -76,19 +76,19 @@ public class EditEventActivityTest {
         EditText editText;
         editText = (EditText) solo.getView(R.id.add_comment);
         editText.getText().clear();
-        solo.enterText((EditText) solo.getView(R.id.add_comment), "Hi 302");
+        solo.enterText((EditText) solo.getView(R.id.add_comment), "Test event 1 edit");
         solo.waitForText("Hi 302", 1, 2000);
         solo.clickOnView(solo.getView(R.id.button_edit_event));
         solo.clickOnText("11/29/2021");
-        assertTrue(solo.searchText("Hi 302"));
+        assertTrue(solo.searchText("Test event 1 edit"));
 
 
         // reset it
         solo.clickOnText("Edit Event");
         editText = (EditText) solo.getView(R.id.add_comment);
         editText.getText().clear();
-        solo.enterText((EditText) solo.getView(R.id.add_comment), "Hi 301");
-        solo.waitForText("Hi 301", 1, 2000);
+        solo.enterText((EditText) solo.getView(R.id.add_comment), "Test event 1");
+        solo.waitForText("Test event 1", 1, 2000);
 
     }
 
