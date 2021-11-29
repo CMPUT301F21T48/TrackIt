@@ -35,7 +35,12 @@ public class ViewEventsForHabitActivity extends AppCompatActivity {
     final String TAG = "Sample";
     Event selectedEvent;
 
-
+    /**
+     * This method is called when the activity is created.
+     * It gets all the textviews and imageviews
+     * Gets all the event details from firebase then sets the textviews and imageviews
+     * Arrays are used to store the data for the list view.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +57,14 @@ public class ViewEventsForHabitActivity extends AppCompatActivity {
         eventDataList = new ArrayList<>();
         eventAdapter = new EventCustomList(this, eventDataList);
         eventList.setAdapter(eventAdapter);
+        //getting all the events from firebase
         collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+
+            /**
+             *
+             * @param queryDocumentSnapshots
+             * @param error
+             */
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
                 eventDataList.clear();
@@ -77,6 +89,7 @@ public class ViewEventsForHabitActivity extends AppCompatActivity {
             }
         });
 
+        //starting an intent when a event is clicked
         eventList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
