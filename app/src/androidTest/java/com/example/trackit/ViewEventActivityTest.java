@@ -2,12 +2,14 @@ package com.example.trackit;
 
 import static org.junit.Assert.assertTrue;
 
+import android.Manifest;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
+import androidx.test.rule.GrantPermissionRule;
 
 import com.robotium.solo.Solo;
 
@@ -22,6 +24,11 @@ public class ViewEventActivityTest {
     @Rule
     public ActivityTestRule<WelcomeActivity> rule =
             new ActivityTestRule<>(WelcomeActivity.class,true,true);
+
+    @Rule
+    public GrantPermissionRule automationPermissionRule
+            = GrantPermissionRule.grant(Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.CAMERA);
 
     /**
      * Runs before all tests and creates solo instance.
@@ -47,7 +54,7 @@ public class ViewEventActivityTest {
     public void viewEvent()
     {
         solo.clickOnText("View Events");
-        solo.clickOnText("11/29/2021");
+        solo.clickOnText("11/28/2021");
         assertTrue(solo.searchText("Test event 1"));
     }
 

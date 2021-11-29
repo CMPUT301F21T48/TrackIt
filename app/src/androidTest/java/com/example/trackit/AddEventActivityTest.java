@@ -2,12 +2,14 @@ package com.example.trackit;
 
 import static org.junit.Assert.assertTrue;
 
+import android.Manifest;
 import android.app.Activity;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
+import androidx.test.rule.GrantPermissionRule;
 
 import com.robotium.solo.Solo;
 
@@ -50,6 +52,10 @@ public class AddEventActivityTest {
     public ActivityTestRule<WelcomeActivity> rule =
             new ActivityTestRule<>(WelcomeActivity.class,true,true);
 
+    @Rule
+    public GrantPermissionRule automationPermissionRule
+            = GrantPermissionRule.grant(Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.CAMERA);
     /**
      * Runs before all tests and creates solo instance.
      * @throws Exception
@@ -59,8 +65,8 @@ public class AddEventActivityTest {
     {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
         solo.clickOnButton("Login");
-        solo.enterText((EditText) solo.getView(R.id.login_username), "testUser2");
-        solo.waitForText("testUser2", 1, 2000);
+        solo.enterText((EditText) solo.getView(R.id.login_username), "testUser3");
+        solo.waitForText("testUser3", 1, 2000);
         solo.enterText((EditText) solo.getView(R.id.login_password), "testPassword");
         solo.clickOnView(solo.getView(R.id.login));
         solo.clickOnView(solo.getView(R.id.add_button));
