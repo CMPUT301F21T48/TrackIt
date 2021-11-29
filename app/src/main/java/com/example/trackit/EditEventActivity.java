@@ -347,10 +347,8 @@ public class EditEventActivity extends AppCompatActivity implements OnMapReadyCa
                                         map.moveCamera(CameraUpdateFactory.newLatLngZoom(
                                                 new LatLng(curLocation.getLatitude(),
                                                         curLocation.getLongitude()), DEFAULT_ZOOM));
-                                        currentMarker = map.addMarker(new MarkerOptions()
-                                                .position(new LatLng(curLocation.getLatitude(),
-                                                        curLocation.getLongitude()))
-                                                .draggable(true));
+                                        currentMarker.setPosition(new LatLng(curLocation.getLatitude(),
+                                                        curLocation.getLongitude()));
                                         location = new GeoPoint (curLocation.getLatitude(),
                                                 curLocation.getLongitude());
 
@@ -367,9 +365,7 @@ public class EditEventActivity extends AppCompatActivity implements OnMapReadyCa
             }
             else
             {
-                currentMarker = map.addMarker(new MarkerOptions()
-                        .position(defaultLocation)
-                        .draggable(true));
+                currentMarker.setPosition(defaultLocation);
                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(
                         defaultLocation, DEFAULT_ZOOM));
                 location = new GeoPoint (defaultLocation.latitude, defaultLocation.longitude);
@@ -395,9 +391,15 @@ public class EditEventActivity extends AppCompatActivity implements OnMapReadyCa
             event.setImage(encodedImage);
         }
 
-        collectionReference.document(user.getUsername()).collection("Habits")
-                .document(habit.getHabitID()).collection("Events")
-                .document(event.getEventID()).set(event);
+        if (event.getComment().equals("") && event.getLongitude() == null && event.getLatitude() == null && event.getImage() == null)
+        {
+            Toast.makeText(this, "All fields are empty, please delete the evevnt.", Toast.LENGTH_SHORT);
+        }
+        else {
+            collectionReference.document(user.getUsername()).collection("Habits")
+                    .document(habit.getHabitID()).collection("Events")
+                    .document(event.getEventID()).set(event);
+        }
         finish();
     }
 
