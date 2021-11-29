@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.os.Bundle;
@@ -44,11 +43,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 
@@ -367,6 +362,10 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
                 event.setImage(encodedPhoto);
             }
             if (isRecord) {
+                if (location == null) {
+                    location = new GeoPoint(defaultLocation.latitude, defaultLocation.longitude);
+                }
+
                 event.setLatitude(location.getLatitude());
                 event.setLongitude(location.getLongitude());
             }
