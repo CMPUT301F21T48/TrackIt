@@ -203,6 +203,11 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
 
     }
 
+    /***
+     * This method updates the map UI accordingly to the permissions given and calls functin
+     * which gets the device's current location if permission is granted
+     * @param googleMap The map to be displayed
+     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         this.map = googleMap;
@@ -216,6 +221,10 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
     @Override
     public void onMarkerDrag(@NonNull Marker marker) { }
 
+    /***
+     * This method gets the position of the marker when it is done dragging
+     * @param marker this is the marker being dragged
+     */
     @Override
     public void onMarkerDragEnd(@NonNull Marker marker) {
         //gets the location on marker drag end

@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import android.app.Activity;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
@@ -121,7 +122,7 @@ public class TodaysHabitsActivityTest {
         solo.assertCurrentActivity("Wrong Activity", TodaysHabitsActivity.class);
         solo.clickOnText("Existing habit 1");
         assertTrue(solo.searchText("View habit details"));
-        solo.clickOnText("View habit details");
+        solo.clickOnView((TextView) solo.getView(R.id.view_details));
         solo.assertCurrentActivity("Wrong Activity", ViewHabitActivity.class);
     }
 
@@ -142,7 +143,7 @@ public class TodaysHabitsActivityTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        assertFalse(solo.searchText("Existing habit 1"));
+        solo.assertCurrentActivity("Wrong Activity", AddEventActivity.class);
     }
 
     /**
