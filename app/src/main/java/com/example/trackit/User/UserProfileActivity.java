@@ -204,6 +204,7 @@ public class UserProfileActivity extends AppCompatActivity {
                             public void onCallBack(Boolean exists) {
                                 if(exists){
                                     followButton.setText("Unfollow");
+                                    addButton.setVisibility(GONE);
 
                                     collectionReference.document(chosenUserName).collection("Habits").addSnapshotListener(new EventListener<QuerySnapshot>() {
                                         @Override
@@ -237,6 +238,7 @@ public class UserProfileActivity extends AppCompatActivity {
                                 }
                                 else{
                                     followButton.setText("Requested");
+                                    addButton.setVisibility(GONE);
                                     emptyMessage.setVisibility(VISIBLE);
                                     emptyMessage.setText("You do not have permission to view this user's habits.");
                                 }
@@ -258,6 +260,7 @@ public class UserProfileActivity extends AppCompatActivity {
                     }
                     else{
                         followButton.setText("Follow");
+                        addButton.setVisibility(GONE);
                         emptyMessage.setVisibility(VISIBLE);
                         emptyMessage.setText("You do not have permission to view this user's habits.");
                         followButton.setOnClickListener(new View.OnClickListener() {
