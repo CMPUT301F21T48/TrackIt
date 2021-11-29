@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
@@ -48,7 +49,7 @@ public class EditHabitActivityTest {
         solo.waitForText("testPassword", 1, 2000);
         solo.clickOnText("Login");
         solo.clickOnText("Existing habit 4");
-        solo.clickOnText("View habit details");
+        solo.clickOnView((TextView) solo.getView(R.id.view_details));
         solo.clickOnText("Edit Habit");
     }
 
@@ -124,7 +125,7 @@ public class EditHabitActivityTest {
         solo.clickOnButton("Save Changes");
         solo.assertCurrentActivity("Wrong Activity", TodaysHabitsActivity.class);
         solo.clickOnText("Existing habit 4");
-        solo.clickOnText("View habit details");
+        solo.clickOnView((TextView) solo.getView(R.id.view_details));
         solo.assertCurrentActivity("Wrong Activity", ViewHabitActivity.class);
         assertTrue(solo.searchText("11/10/2021"));
     }

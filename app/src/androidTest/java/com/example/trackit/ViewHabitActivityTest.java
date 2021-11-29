@@ -97,8 +97,7 @@ public class ViewHabitActivityTest {
     {
         solo.assertCurrentActivity("Wrong Activity", ViewHabitActivity.class);
         solo.clickOnText("View Event");
-        solo.waitForText("Coming soon");
-        solo.assertCurrentActivity("Wrong Activity", ViewHabitActivity.class);
+        solo.assertCurrentActivity("Wrong Activity", ViewEventsForHabitActivity.class);
     }
 
     /**
