@@ -61,8 +61,6 @@ public class TodaysHabitsActivity extends AppCompatActivity {
     Integer currentHabitIndex;
     Integer previousHabitIndex;
     Integer nextHabitIndex;
-    View previousHabitMenu;
-    View nextHabitMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -207,6 +205,10 @@ public class TodaysHabitsActivity extends AppCompatActivity {
                 } else if (selectedItem.equals("Notifications")) {
 //                    Toast.makeText(TodaysHabitsActivity.this, "Coming soon.", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(TodaysHabitsActivity.this, NotificationsActivity.class);
+                    intent.putExtra("User", user);
+                    startActivity(intent);
+                } else if (selectedItem.equals("Feed")) {
+                    Intent intent = new Intent(TodaysHabitsActivity.this, FeedActivity.class);
                     intent.putExtra("User", user);
                     startActivity(intent);
                 }
