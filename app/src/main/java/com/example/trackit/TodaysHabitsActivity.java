@@ -96,6 +96,7 @@ public class TodaysHabitsActivity extends AppCompatActivity {
 
         FloatingActionButton addButton = findViewById(R.id.add_button);
 
+        // Add new habit
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,6 +119,7 @@ public class TodaysHabitsActivity extends AppCompatActivity {
                     String habitLastDone = (String) doc.getData().get("lastDone");
                     String habitPrivacy = (String) doc.getData().get("privacy");
 
+                    // Filter for today's habits
                     int flag = 0;
                     String day = LocalDate.now().getDayOfWeek().name();
                     String dayFirstLetter = String.valueOf(day.charAt(0));
@@ -151,6 +153,7 @@ public class TodaysHabitsActivity extends AppCompatActivity {
                         }
                     }
                 }
+                // Displays message if there are no habits for today
                 if (habitDataList.size() == 0) {
                     emptyMessage.setVisibility(View.VISIBLE);
                 } else {
@@ -160,7 +163,7 @@ public class TodaysHabitsActivity extends AppCompatActivity {
             }
         });
 
-        //my edits to be removed before commit
+        // Displays/hides the habit menu where users can update progress, reorder habits, or view habit details
         habitList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, View view, int position, long arg3) {
@@ -263,6 +266,10 @@ public class TodaysHabitsActivity extends AppCompatActivity {
         isClicked[0] = false;
     }
 
+    /**
+     * Moves selected habit up in the list.
+     * @param view
+     */
     public void moveHabitUp(View view) {
         currentHabitIndex = habitDataList.indexOf(habit);
         if (currentHabitIndex != 0) {
@@ -271,12 +278,10 @@ public class TodaysHabitsActivity extends AppCompatActivity {
             habitDataList.set(previousHabitIndex, habit);
             habitDataList.set(currentHabitIndex, tempHabit);
             habitAdapter.notifyDataSetChanged();
-//            previousHabitMenu.setVisibility(View.VISIBLE);
             habitMenu.setVisibility(GONE);
             isClicked[0] = false;
-//            nextHabitMenu.setVisibility(View.VISIBLE);
-//            isClicked[0] = true;
         }
+        // If habit is at the top of the list
         else {
             Snackbar.make(this, view, "Habit cannot be moved up any further.", Snackbar.LENGTH_SHORT).show();
             habitMenu.setVisibility(GONE);
@@ -284,6 +289,10 @@ public class TodaysHabitsActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Moves selected habit down in the list.
+     * @param view
+     */
     public void moveHabitDown(View view) {
         currentHabitIndex = habitDataList.indexOf(habit);
         if (currentHabitIndex != habitDataList.size()-1) {
@@ -294,10 +303,8 @@ public class TodaysHabitsActivity extends AppCompatActivity {
             habitAdapter.notifyDataSetChanged();
             habitMenu.setVisibility(GONE);
             isClicked[0] = false;
-//            nextHabitMenu.setVisibility(View.VISIBLE);
-//            isClicked[0] = true;
         }
-
+        // If habit is at the bottom of the list
         else {
             Snackbar.make(this, view, "Habit cannot be moved down any further.", Snackbar.LENGTH_SHORT).show();
             habitMenu.setVisibility(GONE);

@@ -39,10 +39,8 @@ public class ViewEventsForHabitActivity extends AppCompatActivity {
     Event selectedEvent;
 
     /**
-     * This method is called when the activity is created.
-     * It gets all the textviews and imageviews
-     * Gets all the event details from firebase then sets the textviews and imageviews
-     * Arrays are used to store the data for the list view.
+     * This is the activity to show the list of events created for the selected habit.
+     * It displays all the events by the dates they were created on.
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,11 +61,6 @@ public class ViewEventsForHabitActivity extends AppCompatActivity {
         //getting all the events from firebase
         collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
 
-            /**
-             *
-             * @param queryDocumentSnapshots
-             * @param error
-             */
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
                 eventDataList.clear();
@@ -92,7 +85,7 @@ public class ViewEventsForHabitActivity extends AppCompatActivity {
             }
         });
 
-        //starting an intent when a event is clicked
+        //starting an intent to view event details when an event in the list is clicked
         eventList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

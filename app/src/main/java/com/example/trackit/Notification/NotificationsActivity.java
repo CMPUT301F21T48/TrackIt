@@ -25,8 +25,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 
 /**
- * This is a notification displaying activity, this activity displays specific notification when
- * a request is received or accepted.
+ * This activity displays notifications to the user when another user requests to follow them.
+ * Users can then decide to deny or accept the other user's follow request.
  */
 public class NotificationsActivity extends AppCompatActivity {
 
@@ -76,6 +76,8 @@ public class NotificationsActivity extends AppCompatActivity {
             }
         });
 
+
+        // Displays/hides menu to accept/deny follow request
         notificationList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, View view, int position, long arg3) {
@@ -93,6 +95,7 @@ public class NotificationsActivity extends AppCompatActivity {
             }
         });
 
+        // Displays message if no new follow requests are present
         if (notificationDataList.size() == 0){
             message.setVisibility(View.VISIBLE);
         } else{

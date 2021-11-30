@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 /**
  * This is a notification custom list to display specific text for when other users request to
- * follow or if they accpet the follwo request.
+ * follow.
  */
 public class NotificationCustomList extends ArrayAdapter<User> {
 

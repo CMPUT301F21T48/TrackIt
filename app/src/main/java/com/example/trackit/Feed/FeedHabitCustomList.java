@@ -17,7 +17,7 @@ import com.example.trackit.User.User;
 import java.util.ArrayList;
 
 /**
- * This is a feed object custom list to display the username, habit title and habit reason.
+ * This is a feed object custom list to display the username, habit title, habit reason, and progress.
  */
 public class FeedHabitCustomList extends ArrayAdapter<FeedHabit> {
 

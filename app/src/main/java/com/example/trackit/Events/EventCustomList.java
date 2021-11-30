@@ -10,11 +10,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.trackit.Events.Event;
 import com.example.trackit.R;
 
 import java.util.ArrayList;
 
+/**
+ * This is an event object custom list to display the date the event was created on.
+ */
 public class EventCustomList extends ArrayAdapter<Event> {
     private final ArrayList<Event> events;
     private final Context context;

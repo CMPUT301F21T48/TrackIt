@@ -105,6 +105,7 @@ public class UserProfileActivity extends AppCompatActivity {
             }
         });
 
+        // Displaying Followers and Following counts
         getDataFromFB(new AsyncCall() {
             @Override
             public void onCallBack(Integer finalCheckValue) {
@@ -122,9 +123,9 @@ public class UserProfileActivity extends AppCompatActivity {
             }
         }, chosenUserName, "Following");
 
-
-
+        // If opened profile is current user's profile
         if(chosenUserName.compareTo(currentUserName) == 0){
+            // User can logout from here
             followButton.setText("Logout");
             followButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -136,6 +137,7 @@ public class UserProfileActivity extends AppCompatActivity {
                 }
             });
 
+            // Retrieves and displays all of the user's habits
             collectionReference.document(currentUserName).collection("Habits").addSnapshotListener(new EventListener<QuerySnapshot>() {
                 @Override
                 public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
@@ -165,6 +167,7 @@ public class UserProfileActivity extends AppCompatActivity {
                 };
             });
 
+            // User can reorder habits or choose to view habit details from this menu
             habitList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> arg0, View view, int position, long arg3) {
@@ -202,10 +205,12 @@ public class UserProfileActivity extends AppCompatActivity {
                         checkFollow(new FollowExistsAsyncCall() {
                             @Override
                             public void onCallBack(Boolean exists) {
+                                // If current user is following selected user
                                 if(exists){
                                     followButton.setText("Unfollow");
                                     addButton.setVisibility(GONE);
 
+                                    // Retrieves and displays only public events of selected user
                                     collectionReference.document(chosenUserName).collection("Habits").addSnapshotListener(new EventListener<QuerySnapshot>() {
                                         @Override
                                         public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
@@ -236,6 +241,7 @@ public class UserProfileActivity extends AppCompatActivity {
                                         }
                                     });
                                 }
+                                // If current user has sent a follow request but has not yet been approved
                                 else{
                                     followButton.setText("Requested");
                                     addButton.setVisibility(GONE);
@@ -258,6 +264,7 @@ public class UserProfileActivity extends AppCompatActivity {
                             };
                         });
                     }
+                    // If current user is not following and has not requested to follow selected user
                     else{
                         followButton.setText("Follow");
                         addButton.setVisibility(GONE);

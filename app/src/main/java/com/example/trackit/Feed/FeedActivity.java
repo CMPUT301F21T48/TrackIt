@@ -56,9 +56,14 @@ public class FeedActivity extends AppCompatActivity {
         createFeed(user);
     }
 
+    /**
+     * This function creates the feed where public today's habits of all users that the current user
+     * is following are displayed
+     * @param user
+     */
     public void createFeed(User user) {
         collectionReference = db.collection("Users").document(user.getUsername()).collection("Following");
-        ArrayList<User> returnList = new ArrayList<>();
+        ArrayList<User> returnList = new ArrayList<>(); // List of all users that the current user is following
         collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -88,7 +93,7 @@ public class FeedActivity extends AppCompatActivity {
                                 ArrayList<String> repeatDays = (ArrayList<String>) doc.getData().get("repeatDays");
                                 String habitPrivacy = (String) doc.getData().get("privacy");
 
-
+                                // Filter habits for today
                                 int flag = 0;
                                 String day = LocalDate.now().getDayOfWeek().name();
                                 String dayFirstLetter = String.valueOf(day.charAt(0));
@@ -122,6 +127,7 @@ public class FeedActivity extends AppCompatActivity {
                                     }
                                 }
                             }
+                            // Display message if there are no habits to display on feed
                             if (feedDataList.size() == 0) {
                                 emptyMessage.setVisibility(View.VISIBLE);
                                 emptyMessage.setText("The users you are following do not have any habits listed for today.");
